@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BuyNext Admin - Product Moderation</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#A2AF9B",
+                        "primary-dark": "#8a9683",
+                        "background-cream": "#FAF9EE",
+                        "accent-tan": "#DCCFC0",
+                        "accent-tan-dark": "#c2b5a5",
+                        "neutral-gray": "#EEEEEE",
+                        "text-main": "#2D302C",
+                        "text-muted": "#6B7280",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem", 
+                        "lg": "1rem", 
+                        "xl": "1.5rem",
+                        "2xl": "2rem",
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                    }
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply bg-background-cream text-text-main font-display antialiased;
+            }
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            @apply bg-primary/20 rounded-full;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+<nav class="sticky top-0 z-50 bg-background-cream/90 backdrop-blur-md border-b border-primary/10">
+<div class="container mx-auto px-4 md:px-6 h-20 flex items-center justify-between gap-4 md:gap-8">
+<div class="flex items-center gap-2 md:gap-4">
+<button class="lg:hidden p-2 -ml-2 text-text-muted hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-2xl">menu</span>
+</button>
+<a class="flex items-center gap-2 group" href="#">
+<div class="w-8 h-8 rounded-lg bg-text-main flex items-center justify-center text-white font-bold text-lg group-hover:bg-black transition-colors shrink-0">
+                        A
+                    </div>
+<div class="hidden sm:flex flex-col">
+<span class="text-xl font-bold tracking-tight leading-none">BuyNext</span>
+<span class="text-[10px] text-primary font-bold uppercase tracking-wider leading-none">Admin Console</span>
+</div>
+</a>
+</div>
+<div class="flex-1 max-w-xl relative mx-2 md:mx-0">
+<div class="hidden md:block relative w-full">
+<input class="w-full pl-12 pr-4 py-2.5 rounded-full bg-white border-none ring-1 ring-primary/20 focus:ring-2 focus:ring-primary shadow-sm text-sm placeholder-gray-400 transition-shadow" placeholder="Global search for products, sellers, or categories..." type="text"/>
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary">search</span>
+</div>
+</div>
+<div class="flex items-center gap-2 md:gap-4 shrink-0">
+<button class="relative p-2 text-text-muted hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-2xl">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-400 rounded-full border-2 border-background-cream"></span>
+</button>
+<div class="h-8 w-[1px] bg-primary/10 mx-2 hidden sm:block"></div>
+<button class="flex items-center gap-3 hover:text-primary transition-all">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-semibold">Administrator</p>
+<p class="text-[10px] text-text-muted">Super Admin Access</p>
+</div>
+<div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-text-main flex items-center justify-center overflow-hidden shrink-0">
+<span class="material-symbols-outlined text-white">shield_person</span>
+</div>
+</button>
+</div>
+</div>
+</nav>
+<div class="flex flex-1 overflow-hidden relative">
+<aside class="group/sidebar w-0 md:w-20 lg:w-64 border-r border-primary/10 bg-white hidden md:flex flex-col py-8 transition-all duration-300 overflow-hidden shrink-0">
+<div class="px-3 lg:px-4 space-y-2">
+<a class="flex items-center justify-center lg:justify-start px-0 lg:px-4 py-3 rounded-lg text-text-muted hover:bg-primary/5 hover:text-primary font-medium transition-all" href="#" title="Overview">
+<span class="material-symbols-outlined text-2xl lg:mr-3">dashboard</span>
+<span class="hidden lg:inline">Overview</span>
+</a>
+<a class="flex items-center justify-center lg:justify-start px-0 lg:px-4 py-3 rounded-lg text-text-muted hover:bg-primary/5 hover:text-primary font-medium transition-all" href="#" title="Sellers">
+<span class="material-symbols-outlined text-2xl lg:mr-3">storefront</span>
+<span class="hidden lg:inline">Sellers</span>
+</a>
+<a class="flex items-center justify-center lg:justify-start px-0 lg:px-4 py-3 rounded-lg text-text-muted hover:bg-primary/5 hover:text-primary font-medium transition-all" href="#" title="Customers">
+<span class="material-symbols-outlined text-2xl lg:mr-3">group</span>
+<span class="hidden lg:inline">Customers</span>
+</a>
+<a class="flex items-center justify-center lg:justify-start px-0 lg:px-4 py-3 rounded-lg text-text-muted hover:bg-primary/5 hover:text-primary font-medium transition-all" href="#" title="Users">
+<span class="material-symbols-outlined text-2xl lg:mr-3">manage_accounts</span>
+<span class="hidden lg:inline">Users</span>
+</a>
+<a class="flex items-center justify-center lg:justify-start px-0 lg:px-4 py-3 rounded-lg bg-primary text-white font-medium transition-all shadow-sm" href="#" title="Products">
+<span class="material-symbols-outlined text-2xl lg:mr-3">inventory_2</span>
+<span class="hidden lg:inline">Products</span>
+</a>
+<a class="flex items-center justify-center lg:justify-start px-0 lg:px-4 py-3 rounded-lg text-text-muted hover:bg-primary/5 hover:text-primary font-medium transition-all" href="#" title="Finance">
+<span class="material-symbols-outlined text-2xl lg:mr-3">account_balance_wallet</span>
+<span class="hidden lg:inline">Finance</span>
+</a>
+<a class="flex items-center justify-center lg:justify-start px-0 lg:px-4 py-3 rounded-lg text-text-muted hover:bg-primary/5 hover:text-primary font-medium transition-all" href="#" title="Reports">
+<span class="material-symbols-outlined text-2xl lg:mr-3">bar_chart</span>
+<span class="hidden lg:inline">Reports</span>
+</a>
+<div class="h-px bg-primary/10 my-4 mx-4"></div>
+<a class="flex items-center justify-center lg:justify-start px-0 lg:px-4 py-3 rounded-lg text-text-muted hover:bg-primary/5 hover:text-primary font-medium transition-all" href="#" title="System Settings">
+<span class="material-symbols-outlined text-2xl lg:mr-3">settings</span>
+<span class="hidden lg:inline">System Settings</span>
+</a>
+</div>
+</aside>
+<main class="flex-1 p-4 md:p-8 lg:p-10 overflow-y-auto custom-scrollbar relative">
+<div class="max-w-[1400px] mx-auto pb-20 md:pb-0 h-full flex flex-col">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 shrink-0">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="text-xs font-bold text-text-muted uppercase tracking-widest">Admin Console</span>
+<span class="text-xs text-text-muted">/</span>
+<span class="text-xs font-bold text-primary uppercase tracking-widest">Products</span>
+</div>
+<h1 class="text-2xl md:text-3xl font-bold text-text-main tracking-tight">Rejected Products</h1>
+<p class="text-sm md:text-base text-text-muted mt-1">Products that did not meet the quality standards or policy guidelines.</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex bg-white rounded-lg shadow-sm border border-neutral-gray p-1">
+<button class="px-4 py-1.5 text-xs font-semibold text-text-muted hover:bg-neutral-gray/50 rounded-md transition-all">Pending</button>
+<button class="px-4 py-1.5 text-xs font-semibold text-text-muted hover:bg-neutral-gray/50 rounded-md transition-all">Approved</button>
+<button class="px-4 py-1.5 text-xs font-semibold bg-accent-tan text-text-main rounded-md shadow-sm transition-all">Rejected</button>
+</div>
+</div>
+</div>
+<div class="bg-white p-4 rounded-xl shadow-soft border border-neutral-gray mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="w-full md:w-96 relative">
+<input class="w-full pl-10 pr-4 py-2 rounded-lg border border-neutral-gray focus:border-accent-tan focus:ring-1 focus:ring-accent-tan text-sm transition-colors outline-none" placeholder="Search by product name, SKU, or seller..." type="text"/>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-muted text-lg">search</span>
+</div>
+<div class="flex gap-3 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
+<select class="pl-3 pr-8 py-2 border border-neutral-gray rounded-lg text-sm text-text-muted focus:border-accent-tan focus:ring-accent-tan bg-white cursor-pointer">
+<option value="">All Categories</option>
+<option value="electronics">Electronics</option>
+<option value="fashion">Fashion</option>
+<option value="home">Home &amp; Garden</option>
+</select>
+<select class="pl-3 pr-8 py-2 border border-neutral-gray rounded-lg text-sm text-text-muted focus:border-accent-tan focus:ring-accent-tan bg-white cursor-pointer">
+<option value="">Recent Rejections</option>
+<option value="oldest">Oldest First</option>
+<option value="reason">Reason Type</option>
+</select>
+<button class="px-4 py-2 text-sm text-text-muted font-medium bg-neutral-gray/50 hover:bg-neutral-gray rounded-lg transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-lg">filter_list</span>
+                            Filters
+                        </button>
+</div>
+</div>
+<div class="bg-white rounded-xl shadow-soft border border-neutral-gray overflow-hidden flex-1 flex flex-col">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-background-cream/50 border-b border-neutral-gray">
+<th class="p-4 pl-6 text-xs font-bold text-text-muted uppercase tracking-wider w-[35%]">Product</th>
+<th class="p-4 text-xs font-bold text-text-muted uppercase tracking-wider w-[15%]">Seller Info</th>
+<th class="p-4 text-xs font-bold text-text-muted uppercase tracking-wider w-[20%]">Rejection Reason</th>
+<th class="p-4 text-xs font-bold text-text-muted uppercase tracking-wider w-[10%]">Price</th>
+<th class="p-4 pr-6 text-xs font-bold text-text-muted uppercase tracking-wider text-right w-[20%]">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-neutral-gray">
+<tr class="group hover:bg-background-cream/30 transition-colors">
+<td class="p-4 pl-6">
+<div class="flex items-start gap-4">
+<div class="w-16 h-16 rounded-lg bg-neutral-100 border border-neutral-gray shrink-0 overflow-hidden relative group/img">
+<img alt="Modern Beige Sofa" class="w-full h-full object-cover grayscale opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDun4mO24H4jXLlRwb5Xe90lPQ8djVsBQVH29Kjm1LQuNfby4ji8h7CxgcdqKV7Cqs_1fBhsJco_QgT6Al6K2Q_4Fqv-Q6k_7FyQb4PIiCFAhU5q9olNOBhc2Vf_VF1C1Sz2jYwI2cjoXLgiwrVs32SO09SoJ40gf64T3rgwu_Kp7pEBeJljBuZCXmmNI_qNPWxZkPNdeS4n9VWIITxBPVCQQyI6dOT27eRlGI4SRkzgQHK1FiFFpKP_GzuMe19n5nr7J3CzJ-pJGSX"/>
+</div>
+<div>
+<p class="text-sm font-semibold text-text-main group-hover:text-primary transition-colors">Minimalist Beige 3-Seater Sofa</p>
+<p class="text-xs text-text-muted mt-0.5">SKU: FUR-2023-001</p>
+<div class="flex items-center gap-2 mt-1.5">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-accent-tan text-text-main border border-accent-tan-dark/30">
+                                                    Rejected
+                                                </span>
+<span class="text-[10px] text-text-muted">Rejected 2 hours ago</span>
+</div>
+</div>
+</div>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-accent-tan flex items-center justify-center text-white text-xs font-bold">L</div>
+<span class="text-sm text-text-main font-medium">Luxe Living</span>
+</div>
+<p class="text-xs text-text-muted mt-1 ml-8">Verified Seller</p>
+</td>
+<td class="p-4">
+<div class="max-w-[180px]">
+<p class="text-xs font-medium text-red-800 bg-red-50 inline-block px-1.5 py-0.5 rounded mb-1">Low Image Quality</p>
+<p class="text-xs text-text-muted line-clamp-2">Main image resolution is too low and blurry for homepage feature.</p>
+</div>
+</td>
+<td class="p-4 text-sm font-semibold text-text-main">
+                                        $1,299.00
+                                    </td>
+<td class="p-4 pr-6 text-right">
+<div class="flex flex-col items-end gap-1">
+<button class="text-xs text-primary font-medium hover:underline flex items-center gap-1 group/link">
+                                        View Rejection Details
+                                        <span class="material-symbols-outlined text-[14px] group-hover/link:translate-x-0.5 transition-transform">arrow_forward</span>
+</button>
+<button class="mt-1 px-3 py-1.5 bg-white border border-neutral-gray rounded-md shadow-sm text-xs font-semibold text-text-muted hover:text-primary hover:border-primary transition-all flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">restore_page</span>
+                                        Restore to Review
+                                    </button>
+</div>
+</td>
+</tr>
+<tr class="group hover:bg-background-cream/30 transition-colors">
+<td class="p-4 pl-6">
+<div class="flex items-start gap-4">
+<div class="w-16 h-16 rounded-lg bg-neutral-100 border border-neutral-gray shrink-0 overflow-hidden relative group/img">
+<img alt="Organic Ceramic Vase" class="w-full h-full object-cover grayscale opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzxPdV2Ly0N7k4h_KaDNpffMoGNDWDWLfqUcueyCIOt9vN6yUJOyNZK2RE58jNYc8tD3UaQUa7Ym0Scm4xjpvCPiEvUcTpSvDIvpleuwwvFbsCjd0tcN1mQwOoJu_7uDBnwnaoo3a4QUEa8cQuaPPOIRj_PFDk2UPGpc8Lcnm3EYaysyznEZW_OAyHOUbkqUyUVSxCWH_gduFcEWyHrhSd4OVEqIdnDJWVUOely-vbr4__R0qECTkSo-LJ8otlmA7zG4ITmURIzaEu"/>
+</div>
+<div>
+<p class="text-sm font-semibold text-text-main group-hover:text-primary transition-colors">Handcrafted Organic Ceramic Vase</p>
+<p class="text-xs text-text-muted mt-0.5">SKU: DEC-ART-882</p>
+<div class="flex items-center gap-2 mt-1.5">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-accent-tan text-text-main border border-accent-tan-dark/30">
+                                                    Rejected
+                                                </span>
+<span class="text-[10px] text-text-muted">Rejected 5 hours ago</span>
+</div>
+</div>
+</div>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold">A</div>
+<span class="text-sm text-text-main font-medium">Artisan Home</span>
+</div>
+<p class="text-xs text-text-muted mt-1 ml-8">New Seller</p>
+</td>
+<td class="p-4">
+<div class="max-w-[180px]">
+<p class="text-xs font-medium text-red-800 bg-red-50 inline-block px-1.5 py-0.5 rounded mb-1">Policy Violation</p>
+<p class="text-xs text-text-muted line-clamp-2">Item description contains prohibited external links.</p>
+</div>
+</td>
+<td class="p-4 text-sm font-semibold text-text-main">
+                                        $85.00
+                                    </td>
+<td class="p-4 pr-6 text-right">
+<div class="flex flex-col items-end gap-1">
+<button class="text-xs text-primary font-medium hover:underline flex items-center gap-1 group/link">
+                                        View Rejection Details
+                                        <span class="material-symbols-outlined text-[14px] group-hover/link:translate-x-0.5 transition-transform">arrow_forward</span>
+</button>
+<button class="mt-1 px-3 py-1.5 bg-white border border-neutral-gray rounded-md shadow-sm text-xs font-semibold text-text-muted hover:text-primary hover:border-primary transition-all flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">restore_page</span>
+                                        Restore to Review
+                                    </button>
+</div>
+</td>
+</tr>
+<tr class="group hover:bg-background-cream/30 transition-colors">
+<td class="p-4 pl-6">
+<div class="flex items-start gap-4">
+<div class="w-16 h-16 rounded-lg bg-neutral-100 border border-neutral-gray shrink-0 overflow-hidden relative group/img">
+<img alt="Leather Tote Bag" class="w-full h-full object-cover grayscale opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVfrFTTeFDEUwP8u-0bpUARDpIfktYc02fQ1Bl2khKH6XymiJZDnDRTXBX9j18lPi_yItJ5BIdupTERfF4mPcyD98k66aEz4IxTbgYLEFsMFHLFenyXHu5JfcsarU7YcbIjpBmRk6lRVQAc9w7bQ1Crd7Q07d3AKcSEcR0q-f0hf-5DhHPo29SDq49sYb4p65wxNCxQpIJU-8hoZDA3kX6tuY-eR2HH9YB5yWCQDD8nbd3sFrTfngunR7J6aXKu3kkohb7Cv6raz2z"/>
+</div>
+<div>
+<p class="text-sm font-semibold text-text-main group-hover:text-primary transition-colors">Classic Tan Leather Tote Bag</p>
+<p class="text-xs text-text-muted mt-0.5">SKU: ACC-LTH-404</p>
+<div class="flex items-center gap-2 mt-1.5">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-accent-tan text-text-main border border-accent-tan-dark/30">
+                                                    Rejected
+                                                </span>
+<span class="text-[10px] text-text-muted">Rejected 1 day ago</span>
+</div>
+</div>
+</div>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-gray-600 flex items-center justify-center text-white text-xs font-bold">U</div>
+<span class="text-sm text-text-main font-medium">Urban Style</span>
+</div>
+<p class="text-xs text-text-muted mt-1 ml-8">Verified Seller</p>
+</td>
+<td class="p-4">
+<div class="max-w-[180px]">
+<p class="text-xs font-medium text-red-800 bg-red-50 inline-block px-1.5 py-0.5 rounded mb-1">Missing Information</p>
+<p class="text-xs text-text-muted line-clamp-2">Material composition details are missing from specs.</p>
+</div>
+</td>
+<td class="p-4 text-sm font-semibold text-text-main">
+                                        $245.00
+                                    </td>
+<td class="p-4 pr-6 text-right">
+<div class="flex flex-col items-end gap-1">
+<button class="text-xs text-primary font-medium hover:underline flex items-center gap-1 group/link">
+                                        View Rejection Details
+                                        <span class="material-symbols-outlined text-[14px] group-hover/link:translate-x-0.5 transition-transform">arrow_forward</span>
+</button>
+<button class="mt-1 px-3 py-1.5 bg-white border border-neutral-gray rounded-md shadow-sm text-xs font-semibold text-text-muted hover:text-primary hover:border-primary transition-all flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">restore_page</span>
+                                        Restore to Review
+                                    </button>
+</div>
+</td>
+</tr>
+<tr class="group hover:bg-background-cream/30 transition-colors">
+<td class="p-4 pl-6">
+<div class="flex items-start gap-4">
+<div class="w-16 h-16 rounded-lg bg-neutral-100 border border-neutral-gray shrink-0 overflow-hidden relative group/img">
+<img alt="Smart Watch Series 5" class="w-full h-full object-cover grayscale opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1n5j2qiKMrfAiHwY6eQdFb8dQF-QxSMsChWxlbftwuWD9hqKrsBlYkH2XoMr42fQCD-ahdH2No035wMRjxuI4SUIyzB13AE7QDMAN2zLhmbv2ZJerDPmbD8nfEJyiJycyImRfaSK1mzwjyLeQsKbzdR9yPPVlU3KNLve9fASzlQ7ltIhMCTlHJRHYqqdm3mZmH4XtjDTBbMEUllwJHE9vl7R7jiQ8Sn1tS7an6b1YPIaWvHHyIknUGgGBH7eUrTJBO6aZidLK_flA"/>
+</div>
+<div>
+<p class="text-sm font-semibold text-text-main group-hover:text-primary transition-colors">NextGen Smart Watch Series 5</p>
+<p class="text-xs text-text-muted mt-0.5">SKU: ELEC-WAT-005</p>
+<div class="flex items-center gap-2 mt-1.5">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-accent-tan text-text-main border border-accent-tan-dark/30">
+                                                    Rejected
+                                                </span>
+<span class="text-[10px] text-text-muted">Rejected 1 day ago</span>
+</div>
+</div>
+</div>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-text-main flex items-center justify-center text-white text-xs font-bold">T</div>
+<span class="text-sm text-text-main font-medium">TechWorld</span>
+</div>
+<p class="text-xs text-text-muted mt-1 ml-8">Premium Partner</p>
+</td>
+<td class="p-4">
+<div class="max-w-[180px]">
+<p class="text-xs font-medium text-red-800 bg-red-50 inline-block px-1.5 py-0.5 rounded mb-1">Pricing Error</p>
+<p class="text-xs text-text-muted line-clamp-2">Price is significantly lower than MSRP without promo tag.</p>
+</div>
+</td>
+<td class="p-4 text-sm font-semibold text-text-main">
+                                        $399.00
+                                    </td>
+<td class="p-4 pr-6 text-right">
+<div class="flex flex-col items-end gap-1">
+<button class="text-xs text-primary font-medium hover:underline flex items-center gap-1 group/link">
+                                        View Rejection Details
+                                        <span class="material-symbols-outlined text-[14px] group-hover/link:translate-x-0.5 transition-transform">arrow_forward</span>
+</button>
+<button class="mt-1 px-3 py-1.5 bg-white border border-neutral-gray rounded-md shadow-sm text-xs font-semibold text-text-muted hover:text-primary hover:border-primary transition-all flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">restore_page</span>
+                                        Restore to Review
+                                    </button>
+</div>
+</td>
+</tr>
+<tr class="group hover:bg-background-cream/30 transition-colors">
+<td class="p-4 pl-6">
+<div class="flex items-start gap-4">
+<div class="w-16 h-16 rounded-lg bg-neutral-100 border border-neutral-gray shrink-0 overflow-hidden relative group/img">
+<img alt="Wooden Coffee Table" class="w-full h-full object-cover grayscale opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUTquIzzZEmlkly2f9LZQoQ8OXflPJifPi7Vc-LM5dFLjYf-SUMlgz5jUl7LJak_2WuqKtu_xfGbiyQEAVxcLNk94gdOWBV1G1PoIyE_ufUm6-s2qmoQT8aBnWPPPXvtaD3lazoG5W_adAaKpU6tE8noKrQKsHyA-M_grcL0gXF7ptQjWr_CTVMGjbs2mmoYR7EUTz4W2MUuSEYBxrl_mRSRt3kBKXL9ej-nVKCsjN2Pbpq7ICtx_Uq27X3SAxBIed7ayygUB-08CX"/>
+</div>
+<div>
+<p class="text-sm font-semibold text-text-main group-hover:text-primary transition-colors">Oak Finish Coffee Table</p>
+<p class="text-xs text-text-muted mt-0.5">SKU: FUR-TAB-112</p>
+<div class="flex items-center gap-2 mt-1.5">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-accent-tan text-text-main border border-accent-tan-dark/30">
+                                                    Rejected
+                                                </span>
+<span class="text-[10px] text-text-muted">Rejected 2 days ago</span>
+</div>
+</div>
+</div>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-accent-tan flex items-center justify-center text-white text-xs font-bold">H</div>
+<span class="text-sm text-text-main font-medium">HomeGoods</span>
+</div>
+<p class="text-xs text-text-muted mt-1 ml-8">Verified Seller</p>
+</td>
+<td class="p-4">
+<div class="max-w-[180px]">
+<p class="text-xs font-medium text-red-800 bg-red-50 inline-block px-1.5 py-0.5 rounded mb-1">Duplicate</p>
+<p class="text-xs text-text-muted line-clamp-2">This SKU already exists in the catalog under a different ID.</p>
+</div>
+</td>
+<td class="p-4 text-sm font-semibold text-text-main">
+                                        $189.50
+                                    </td>
+<td class="p-4 pr-6 text-right">
+<div class="flex flex-col items-end gap-1">
+<button class="text-xs text-primary font-medium hover:underline flex items-center gap-1 group/link">
+                                        View Rejection Details
+                                        <span class="material-symbols-outlined text-[14px] group-hover/link:translate-x-0.5 transition-transform">arrow_forward</span>
+</button>
+<button class="mt-1 px-3 py-1.5 bg-white border border-neutral-gray rounded-md shadow-sm text-xs font-semibold text-text-muted hover:text-primary hover:border-primary transition-all flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">restore_page</span>
+                                        Restore to Review
+                                    </button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 border-t border-neutral-gray flex items-center justify-between bg-white">
+<span class="text-sm text-text-muted">Showing <span class="font-medium text-text-main">1</span> to <span class="font-medium text-text-main">5</span> of <span class="font-medium text-text-main">12</span> rejected products</span>
+<div class="flex items-center gap-2">
+<button class="p-2 border border-neutral-gray rounded-lg text-text-muted hover:border-primary hover:text-primary disabled:opacity-50 disabled:cursor-not-allowed transition-colors" disabled="">
+<span class="material-symbols-outlined text-lg">chevron_left</span>
+</button>
+<button class="p-2 border border-neutral-gray rounded-lg text-text-muted hover:border-primary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<footer class="bg-white border-t border-primary/10 py-4 mt-auto">
+<div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-[11px] text-text-muted uppercase tracking-widest font-bold gap-2">
+<span>© 2023 BuyNext Admin Console</span>
+<div class="flex gap-6">
+<a class="hover:text-primary" href="#">System Status</a>
+<a class="hover:text-primary" href="#">Admin Policy</a>
+</div>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BuyNext Admin - Category Management</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#A2AF9B",
+                        "primary-dark": "#8a9683",
+                        "background-cream": "#FAF9EE",
+                        "accent-tan": "#DCCFC0",
+                        "accent-tan-dark": "#c2b5a5",
+                        "neutral-gray": "#EEEEEE",
+                        "text-main": "#2D302C",
+                        "text-muted": "#6B7280",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem", 
+                        "lg": "1rem", 
+                        "xl": "1.5rem",
+                        "2xl": "2rem",
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                    }
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply bg-background-cream text-text-main font-display antialiased;
+            }
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            @apply bg-primary/20 rounded-full;
+        }.tree-line {
+            @apply border-l border-neutral-gray absolute h-full top-0 left-0;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+<nav class="sticky top-0 z-50 bg-background-cream/90 backdrop-blur-md border-b border-primary/10">
+<div class="container mx-auto px-4 md:px-6 h-20 flex items-center justify-between gap-4 md:gap-8">
+<div class="flex items-center gap-2 md:gap-4">
+<button class="lg:hidden p-2 -ml-2 text-text-muted hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-2xl">menu</span>
+</button>
+<a class="flex items-center gap-2 group" href="#">
+<div class="w-8 h-8 rounded-lg bg-text-main flex items-center justify-center text-white font-bold text-lg group-hover:bg-black transition-colors shrink-0">
+                        A
+                    </div>
+<div class="hidden sm:flex flex-col">
+<span class="text-xl font-bold tracking-tight leading-none">BuyNext</span>
+<span class="text-[10px] text-primary font-bold uppercase tracking-wider leading-none">Admin Console</span>
+</div>
+</a>
+</div>
+<div class="flex-1 max-w-xl relative mx-2 md:mx-0">
+<div class="hidden md:block relative w-full">
+<input class="w-full pl-12 pr-4 py-2.5 rounded-full bg-white border-none ring-1 ring-primary/20 focus:ring-2 focus:ring-primary shadow-sm text-sm placeholder-gray-400 transition-shadow" placeholder="Global search for products, sellers, or categories..." type="text"/>
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary">search</span>
+</div>
+</div>
+<div class="flex items-center gap-2 md:gap-4 shrink-0">
+<button class="relative p-2 text-text-muted hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-2xl">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-400 rounded-full border-2 border-background-cream"></span>
+</button>
+<div class="h-8 w-[1px] bg-primary/10 mx-2 hidden sm:block"></div>
+<button class="flex items-center gap-3 hover:text-primary transition-all">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-semibold">Administrator</p>
+<p class="text-[10px] text-text-muted">Super Admin Access</p>
+</div>
+<div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-text-main flex items-center justify-center overflow-hidden shrink-0">
+<span class="material-symbols-outlined text-white">shield_person</span>
+</div>
+</button>
+</div>
+</div>
+</nav>
+<div class="flex flex-1 overflow-hidden relative">
+<aside class="group/sidebar w-0 md:w-20 lg:w-64 border-r border-primary/10 bg-white hidden md:flex flex-col py-8 transition-all duration-300 overflow-hidden shrink-0">
+<div class="px-3 lg:px-4 space-y-2">
+<a class="flex items-center justify-center lg:justify-start px-0 lg:px-4 py-3 rounded-lg text-text-muted hover:bg-primary/5 hover:text-primary font-medium transition-all" href="#" title="Overview">
+<span class="material-symbols-outlined text-2xl lg:mr-3">dashboard</span>
+<span class="hidden lg:inline">Overview</span>
+</a>
+<a class="flex items-center justify-center lg:justify-start px-0 lg:px-4 py-3 rounded-lg text-text-muted hover:bg-primary/5 hover:text-primary font-medium transition-all" href="#" title="Sellers">
+<span class="material-symbols-outlined text-2xl lg:mr-3">storefront</span>
+<span class="hidden lg:inline">Sellers</span>
+</a>
+<a class="flex items-center justify-center lg:justify-start px-0 lg:px-4 py-3 rounded-lg text-text-muted hover:bg-primary/5 hover:text-primary font-medium transition-all" href="#" title="Customers">
+<span class="material-symbols-outlined text-2xl lg:mr-3">group</span>
+<span class="hidden lg:inline">Customers</span>
+</a>
+<a class="flex items-center justify-center lg:justify-start px-0 lg:px-4 py-3 rounded-lg text-text-muted hover:bg-primary/5 hover:text-primary font-medium transition-all" href="#" title="Users">
+<span class="material-symbols-outlined text-2xl lg:mr-3">manage_accounts</span>
+<span class="hidden lg:inline">Users</span>
+</a>
+<a class="flex items-center justify-center lg:justify-start px-0 lg:px-4 py-3 rounded-lg bg-primary text-white font-medium transition-all shadow-sm" href="#" title="Products">
+<span class="material-symbols-outlined text-2xl lg:mr-3">inventory_2</span>
+<span class="hidden lg:inline">Products</span>
+</a>
+<a class="flex items-center justify-center lg:justify-start px-0 lg:px-4 py-3 rounded-lg text-text-muted hover:bg-primary/5 hover:text-primary font-medium transition-all" href="#" title="Finance">
+<span class="material-symbols-outlined text-2xl lg:mr-3">account_balance_wallet</span>
+<span class="hidden lg:inline">Finance</span>
+</a>
+<a class="flex items-center justify-center lg:justify-start px-0 lg:px-4 py-3 rounded-lg text-text-muted hover:bg-primary/5 hover:text-primary font-medium transition-all" href="#" title="Reports">
+<span class="material-symbols-outlined text-2xl lg:mr-3">bar_chart</span>
+<span class="hidden lg:inline">Reports</span>
+</a>
+<div class="h-px bg-primary/10 my-4 mx-4"></div>
+<a class="flex items-center justify-center lg:justify-start px-0 lg:px-4 py-3 rounded-lg text-text-muted hover:bg-primary/5 hover:text-primary font-medium transition-all" href="#" title="System Settings">
+<span class="material-symbols-outlined text-2xl lg:mr-3">settings</span>
+<span class="hidden lg:inline">System Settings</span>
+</a>
+</div>
+</aside>
+<main class="flex-1 p-4 md:p-8 lg:p-10 overflow-y-auto custom-scrollbar relative">
+<div class="max-w-[1400px] mx-auto pb-20 md:pb-0 h-full flex flex-col">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 shrink-0">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="text-xs font-bold text-text-muted uppercase tracking-widest">Admin Console</span>
+<span class="text-xs text-text-muted">/</span>
+<span class="text-xs font-bold text-primary uppercase tracking-widest">Inventory</span>
+</div>
+<h1 class="text-2xl md:text-3xl font-bold text-text-main tracking-tight">Category Management</h1>
+<p class="text-sm md:text-base text-text-muted mt-1">Organize product hierarchy, manage categories, and configure subcategories.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-4 py-2 text-sm font-semibold bg-white border border-neutral-gray text-text-muted hover:text-primary hover:border-primary rounded-lg shadow-sm transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">download</span>
+                            Export
+                         </button>
+<button class="px-4 py-2 text-sm font-semibold bg-primary text-white rounded-lg shadow-sm hover:bg-primary-dark transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">add</span>
+                            New Root Category
+                         </button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 h-full">
+<div class="lg:col-span-5 flex flex-col h-full min-h-[500px]">
+<div class="bg-white p-6 rounded-xl shadow-soft border border-neutral-gray flex flex-col h-full">
+<div class="flex items-center justify-between mb-6 pb-4 border-b border-neutral-gray">
+<h2 class="text-lg font-bold text-text-main">Category Hierarchy</h2>
+<div class="flex gap-2">
+<button class="p-1.5 text-text-muted hover:text-primary hover:bg-background-cream rounded transition-colors" title="Expand All">
+<span class="material-symbols-outlined text-xl">unfold_more</span>
+</button>
+<button class="p-1.5 text-text-muted hover:text-primary hover:bg-background-cream rounded transition-colors" title="Collapse All">
+<span class="material-symbols-outlined text-xl">unfold_less</span>
+</button>
+</div>
+</div>
+<div class="relative mb-4">
+<input class="w-full pl-9 pr-4 py-2 rounded-lg border border-neutral-gray focus:border-primary focus:ring-1 focus:ring-primary text-sm transition-colors outline-none bg-background-cream/30" placeholder="Filter categories..." type="text"/>
+<span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-text-muted text-lg">filter_list</span>
+</div>
+<div class="flex-1 overflow-y-auto custom-scrollbar pr-2">
+<ul class="space-y-1">
+<li>
+<div class="group flex items-center gap-2 p-2 rounded-lg hover:bg-background-cream cursor-pointer border border-transparent hover:border-neutral-gray transition-all">
+<button class="p-0.5 text-text-muted hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg transform rotate-90">chevron_right</span>
+</button>
+<span class="material-symbols-outlined text-primary text-xl">chair</span>
+<span class="text-sm font-semibold text-text-main flex-1">Furniture</span>
+<div class="opacity-0 group-hover:opacity-100 flex items-center gap-1 transition-opacity">
+<button class="p-1 hover:bg-white rounded text-text-muted hover:text-primary shadow-sm" title="Edit">
+<span class="material-symbols-outlined text-base">edit</span>
+</button>
+<button class="p-1 hover:bg-white rounded text-text-muted hover:text-red-400 shadow-sm" title="Delete">
+<span class="material-symbols-outlined text-base">delete</span>
+</button>
+</div>
+</div>
+<ul class="pl-8 mt-1 space-y-1 border-l border-neutral-gray ml-3">
+<li>
+<div class="group flex items-center gap-2 p-2 rounded-lg bg-primary/5 border border-primary/20 cursor-pointer transition-all">
+<button class="p-0.5 text-text-muted hover:text-primary transition-colors invisible">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+<span class="text-sm text-primary font-medium flex-1">Living Room</span>
+<span class="text-[10px] bg-white px-2 py-0.5 rounded text-text-muted border border-neutral-gray shadow-sm">124 Items</span>
+</div>
+</li>
+<li>
+<div class="group flex items-center gap-2 p-2 rounded-lg hover:bg-background-cream cursor-pointer border border-transparent hover:border-neutral-gray transition-all">
+<button class="p-0.5 text-text-muted hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+<span class="text-sm text-text-main flex-1">Bedroom</span>
+</div>
+</li>
+<li>
+<div class="group flex items-center gap-2 p-2 rounded-lg hover:bg-background-cream cursor-pointer border border-transparent hover:border-neutral-gray transition-all">
+<button class="p-0.5 text-text-muted hover:text-primary transition-colors invisible">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+<span class="text-sm text-text-main flex-1">Office</span>
+</div>
+</li>
+</ul>
+</li>
+<li>
+<div class="group flex items-center gap-2 p-2 rounded-lg hover:bg-background-cream cursor-pointer border border-transparent hover:border-neutral-gray transition-all">
+<button class="p-0.5 text-text-muted hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+<span class="material-symbols-outlined text-accent-tan-dark text-xl">local_florist</span>
+<span class="text-sm font-semibold text-text-main flex-1">Decor</span>
+<span class="text-[10px] text-text-muted bg-neutral-gray px-1.5 rounded">3 Sub</span>
+</div>
+</li>
+<li>
+<div class="group flex items-center gap-2 p-2 rounded-lg hover:bg-background-cream cursor-pointer border border-transparent hover:border-neutral-gray transition-all">
+<button class="p-0.5 text-text-muted hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+<span class="material-symbols-outlined text-accent-tan-dark text-xl">styler</span>
+<span class="text-sm font-semibold text-text-main flex-1">Fashion</span>
+<span class="text-[10px] text-text-muted bg-neutral-gray px-1.5 rounded">8 Sub</span>
+</div>
+</li>
+<li>
+<div class="group flex items-center gap-2 p-2 rounded-lg hover:bg-background-cream cursor-pointer border border-transparent hover:border-neutral-gray transition-all">
+<button class="p-0.5 text-text-muted hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+<span class="material-symbols-outlined text-accent-tan-dark text-xl">devices</span>
+<span class="text-sm font-semibold text-text-main flex-1">Electronics</span>
+<span class="text-[10px] text-text-muted bg-neutral-gray px-1.5 rounded">5 Sub</span>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="lg:col-span-7">
+<div class="bg-white p-6 md:p-8 rounded-xl shadow-soft border border-neutral-gray h-full">
+<div class="flex items-center justify-between mb-8 pb-4 border-b border-neutral-gray">
+<div>
+<h2 class="text-xl font-bold text-text-main">Edit Category</h2>
+<p class="text-sm text-text-muted mt-1">Editing "Living Room" details</p>
+</div>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 text-xs font-semibold text-text-muted hover:text-red-500 border border-neutral-gray rounded-lg hover:border-red-200 transition-all">
+                                        Delete Category
+                                    </button>
+</div>
+</div>
+<form class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="text-xs font-bold text-text-muted uppercase tracking-wider">Category Name</label>
+<input class="w-full px-4 py-2.5 rounded-lg border border-neutral-gray focus:border-primary focus:ring-1 focus:ring-primary text-sm outline-none transition-colors" type="text" value="Living Room"/>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold text-text-muted uppercase tracking-wider">URL Slug</label>
+<div class="flex">
+<span class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-neutral-gray bg-background-cream text-text-muted text-sm">/shop/</span>
+<input class="w-full px-4 py-2.5 rounded-r-lg border border-neutral-gray focus:border-primary focus:ring-1 focus:ring-primary text-sm outline-none transition-colors" type="text" value="living-room"/>
+</div>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold text-text-muted uppercase tracking-wider">Parent Category</label>
+<div class="relative">
+<select class="w-full px-4 py-2.5 rounded-lg border border-neutral-gray focus:border-primary focus:ring-1 focus:ring-primary text-sm outline-none transition-colors appearance-none bg-white cursor-pointer">
+<option value="furniture">Furniture</option>
+<option value="decor">Decor</option>
+<option value="fashion">Fashion</option>
+<option value="electronics">Electronics</option>
+<option value="none">-- Root Category --</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none">expand_more</span>
+</div>
+<p class="text-[11px] text-text-muted">Select a parent to nest this category under.</p>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold text-text-muted uppercase tracking-wider">Description</label>
+<textarea class="w-full px-4 py-2.5 rounded-lg border border-neutral-gray focus:border-primary focus:ring-1 focus:ring-primary text-sm outline-none transition-colors h-24 resize-none" placeholder="Enter category description..."></textarea>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold text-text-muted uppercase tracking-wider">Category Thumbnail</label>
+<div class="flex items-start gap-6">
+<div class="w-24 h-24 rounded-lg bg-neutral-100 border border-neutral-gray shrink-0 overflow-hidden relative group/img">
+<img alt="Category Thumbnail" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDun4mO24H4jXLlRwb5Xe90lPQ8djVsBQVH29Kjm1LQuNfby4ji8h7CxgcdqKV7Cqs_1fBhsJco_QgT6Al6K2Q_4Fqv-Q6k_7FyQb4PIiCFAhU5q9olNOBhc2Vf_VF1C1Sz2jYwI2cjoXLgiwrVs32SO09SoJ40gf64T3rgwu_Kp7pEBeJljBuZCXmmNI_qNPWxZkPNdeS4n9VWIITxBPVCQQyI6dOT27eRlGI4SRkzgQHK1FiFFpKP_GzuMe19n5nr7J3CzJ-pJGSX"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined text-white">edit</span>
+</div>
+</div>
+<div class="flex-1">
+<div class="flex justify-center px-6 pt-5 pb-6 border-2 border-neutral-gray border-dashed rounded-lg hover:bg-background-cream/50 transition-colors cursor-pointer group/upload">
+<div class="space-y-1 text-center">
+<span class="material-symbols-outlined text-3xl text-text-muted group-hover/upload:text-primary transition-colors">cloud_upload</span>
+<div class="flex text-sm text-text-muted justify-center">
+<label class="relative cursor-pointer rounded-md font-medium text-primary hover:text-primary-dark focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary">
+<span>Upload a file</span>
+<input class="sr-only" name="file-upload" type="file"/>
+</label>
+<p class="pl-1">or drag and drop</p>
+</div>
+<p class="text-xs text-text-muted">PNG, JPG, GIF up to 2MB</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+<div class="flex items-center gap-3 p-3 border border-neutral-gray rounded-lg">
+<input checked="" class="w-4 h-4 text-primary bg-white border-gray-300 rounded focus:ring-primary" type="checkbox"/>
+<div>
+<p class="text-sm font-semibold text-text-main">Active</p>
+<p class="text-[10px] text-text-muted">Visible on the storefront</p>
+</div>
+</div>
+<div class="flex items-center gap-3 p-3 border border-neutral-gray rounded-lg">
+<input class="w-4 h-4 text-primary bg-white border-gray-300 rounded focus:ring-primary" type="checkbox"/>
+<div>
+<p class="text-sm font-semibold text-text-main">Featured</p>
+<p class="text-[10px] text-text-muted">Show in homepage sections</p>
+</div>
+</div>
+</div>
+<div class="pt-6 flex items-center justify-end gap-3 border-t border-neutral-gray mt-6">
+<button class="px-6 py-2.5 text-sm font-semibold text-text-muted bg-white border border-neutral-gray hover:bg-neutral-gray rounded-lg transition-all" type="button">
+                                        Cancel
+                                    </button>
+<button class="px-6 py-2.5 text-sm font-semibold text-white bg-primary hover:bg-primary-dark rounded-lg shadow-sm shadow-primary/30 transition-all flex items-center gap-2" type="submit">
+<span class="material-symbols-outlined text-lg">save</span>
+                                        Save Changes
+                                    </button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<footer class="bg-white border-t border-primary/10 py-4 mt-auto">
+<div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-[11px] text-text-muted uppercase tracking-widest font-bold gap-2">
+<span>© 2023 BuyNext Admin Console</span>
+<div class="flex gap-6">
+<a class="hover:text-primary" href="#">System Status</a>
+<a class="hover:text-primary" href="#">Admin Policy</a>
+</div>
+</div>
+</footer>
+
+</body></html>

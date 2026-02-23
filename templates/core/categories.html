@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BuyNext Category Listing Page</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#a3b09c", // Sage Green - #A2AF9B requested for active pagination, keeping this close
+                        "primary-active": "#A2AF9B", // Specifically requested color
+                        "primary-dark": "#8a9683", 
+                        "primary-light": "#eff2ee", 
+                        "background-light": "#FAF9EE", 
+                        "background-dark": "#191a18",
+                        "footer-bg": "#EEEEEE",
+                        "text-main": "#2D302C", 
+                        "text-muted": "#6B7280", 
+                        "border-subtle": "#EEEEEE"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem", 
+                        "lg": "1rem", 
+                        "xl": "1.5rem",
+                        "2xl": "2rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>.no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-main antialiased transition-colors duration-300">
+<nav class="sticky top-0 z-50 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-primary/10">
+<div class="container mx-auto px-4 md:px-6 h-20 flex items-center justify-between gap-8">
+<a class="flex items-center gap-2 group" href="#">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-lg group-hover:bg-primary-dark transition-colors">
+                    B
+                </div>
+<span class="text-xl font-bold tracking-tight text-text-main dark:text-white">BuyNext</span>
+</a>
+<div class="hidden md:flex flex-1 max-w-xl relative">
+<input class="w-full pl-12 pr-4 py-3 rounded-full bg-white dark:bg-zinc-800 border-none ring-1 ring-primary/20 focus:ring-2 focus:ring-primary shadow-sm text-sm placeholder-gray-400 transition-shadow" placeholder="Search for premium essentials..." type="text"/>
+<span class="material-icons-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary">search</span>
+</div>
+<div class="flex items-center gap-4 text-text-main dark:text-white">
+<button class="md:hidden p-2 hover:bg-primary/10 rounded-full">
+<span class="material-icons-outlined">search</span>
+</button>
+<button class="flex items-center gap-2 hover:text-primary transition-colors">
+<span class="material-icons-outlined text-2xl">person_outline</span>
+<span class="hidden lg:block text-sm font-medium">Account</span>
+</button>
+<button class="flex items-center gap-2 hover:text-primary transition-colors">
+<span class="material-icons-outlined text-2xl">favorite_border</span>
+</button>
+<button class="relative flex items-center gap-2 hover:text-primary transition-colors">
+<span class="material-icons-outlined text-2xl">shopping_bag</span>
+<span class="absolute -top-1 -right-1 w-4 h-4 bg-primary text-white text-[10px] flex items-center justify-center rounded-full font-bold">2</span>
+<span class="hidden lg:block text-sm font-medium">Cart</span>
+</button>
+</div>
+</div>
+<div class="border-t border-primary/5 py-3 hidden md:block">
+<div class="container mx-auto px-6 flex justify-center gap-8 text-sm font-medium text-text-muted dark:text-gray-300">
+<a class="hover:text-primary transition-colors" href="#">New Arrivals</a>
+<a class="text-primary font-semibold" href="#">Home &amp; Living</a>
+<a class="hover:text-primary transition-colors" href="#">Electronics</a>
+<a class="hover:text-primary transition-colors" href="#">Fashion</a>
+<a class="hover:text-primary transition-colors" href="#">Beauty</a>
+<a class="hover:text-primary transition-colors" href="#">Sale</a>
+</div>
+</div>
+</nav>
+<div class="container mx-auto px-4 md:px-6 py-8">
+<div class="flex items-center gap-2 text-sm text-text-muted mb-6">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span class="material-icons-outlined text-xs">chevron_right</span>
+<span class="text-text-main font-medium">Home &amp; Living</span>
+</div>
+<div class="flex flex-col lg:flex-row gap-8">
+<aside class="w-full lg:w-64 flex-shrink-0">
+<button class="lg:hidden w-full flex items-center justify-between bg-white dark:bg-zinc-800 p-4 rounded-xl border border-gray-200 dark:border-zinc-700 mb-4 font-medium">
+<span class="flex items-center gap-2">
+<span class="material-icons-outlined">tune</span> Filters
+                    </span>
+<span class="material-icons-outlined">expand_more</span>
+</button>
+<div class="hidden lg:block space-y-8 pr-4">
+<div>
+<h3 class="font-bold text-text-main dark:text-white mb-4">Categories</h3>
+<ul class="space-y-2 text-sm text-text-muted">
+<li><a class="block py-1 text-primary font-medium" href="#">All Home &amp; Living</a></li>
+<li><a class="block py-1 hover:text-primary transition-colors" href="#">Furniture</a></li>
+<li><a class="block py-1 hover:text-primary transition-colors" href="#">Decor</a></li>
+<li><a class="block py-1 hover:text-primary transition-colors" href="#">Lighting</a></li>
+<li><a class="block py-1 hover:text-primary transition-colors" href="#">Kitchen &amp; Dining</a></li>
+<li><a class="block py-1 hover:text-primary transition-colors" href="#">Storage</a></li>
+</ul>
+</div>
+<div>
+<h3 class="font-bold text-text-main dark:text-white mb-4">Price Range</h3>
+<div class="space-y-4">
+<div class="flex items-center gap-3">
+<div class="relative flex-1">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs">$</span>
+<input class="w-full pl-6 pr-2 py-2 text-sm rounded-lg border-gray-200 focus:border-primary focus:ring-primary bg-white dark:bg-zinc-800 dark:border-zinc-700" placeholder="Min" type="number"/>
+</div>
+<span class="text-gray-400">-</span>
+<div class="relative flex-1">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs">$</span>
+<input class="w-full pl-6 pr-2 py-2 text-sm rounded-lg border-gray-200 focus:border-primary focus:ring-primary bg-white dark:bg-zinc-800 dark:border-zinc-700" placeholder="Max" type="number"/>
+</div>
+</div>
+<input class="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary" type="range"/>
+</div>
+</div>
+<div>
+<h3 class="font-bold text-text-main dark:text-white mb-4">Color</h3>
+<div class="flex flex-wrap gap-2">
+<button class="w-8 h-8 rounded-full bg-[#E5E5E5] border border-transparent hover:ring-2 hover:ring-primary ring-offset-2 transition-all"></button>
+<button class="w-8 h-8 rounded-full bg-[#2D302C] border border-transparent hover:ring-2 hover:ring-primary ring-offset-2 transition-all"></button>
+<button class="w-8 h-8 rounded-full bg-[#A2AF9B] border border-transparent ring-2 ring-primary ring-offset-2 transition-all"></button>
+<button class="w-8 h-8 rounded-full bg-[#D4C4B7] border border-transparent hover:ring-2 hover:ring-primary ring-offset-2 transition-all"></button>
+<button class="w-8 h-8 rounded-full bg-[#8B96A8] border border-transparent hover:ring-2 hover:ring-primary ring-offset-2 transition-all"></button>
+</div>
+</div>
+<div>
+<h3 class="font-bold text-text-main dark:text-white mb-4">Rating</h3>
+<div class="space-y-2">
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="rounded border-gray-300 text-primary focus:ring-primary dark:bg-zinc-800 dark:border-zinc-600" type="checkbox"/>
+<div class="flex text-yellow-400 text-sm">
+<span class="material-icons-outlined text-base">star</span>
+<span class="material-icons-outlined text-base">star</span>
+<span class="material-icons-outlined text-base">star</span>
+<span class="material-icons-outlined text-base">star</span>
+<span class="material-icons-outlined text-base">star</span>
+</div>
+<span class="text-xs text-text-muted group-hover:text-primary">(450)</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="rounded border-gray-300 text-primary focus:ring-primary dark:bg-zinc-800 dark:border-zinc-600" type="checkbox"/>
+<div class="flex text-yellow-400 text-sm">
+<span class="material-icons-outlined text-base">star</span>
+<span class="material-icons-outlined text-base">star</span>
+<span class="material-icons-outlined text-base">star</span>
+<span class="material-icons-outlined text-base">star_border</span>
+<span class="material-icons-outlined text-base">star_border</span>
+</div>
+<span class="text-xs text-text-muted group-hover:text-primary text-nowrap">&amp; Up</span>
+</label>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1">
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+<div>
+<h1 class="text-2xl md:text-3xl font-bold text-text-main dark:text-white mb-2">Home &amp; Living</h1>
+<p class="text-text-muted text-sm">Showing 1-12 of 48 products</p>
+</div>
+<div class="relative group">
+<select class="appearance-none bg-white dark:bg-zinc-800 pl-4 pr-10 py-2.5 rounded-lg border border-gray-200 dark:border-zinc-700 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary cursor-pointer shadow-sm hover:shadow-md transition-shadow">
+<option>Sort by: Featured</option>
+<option>Price: Low to High</option>
+<option>Price: High to Low</option>
+<option>Newest Arrivals</option>
+<option>Best Selling</option>
+</select>
+<span class="material-icons-outlined absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-lg">expand_more</span>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+<div class="group bg-white dark:bg-zinc-800 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-border-subtle dark:border-zinc-700">
+<div class="relative aspect-[4/5] overflow-hidden bg-gray-100 dark:bg-zinc-700">
+<span class="absolute top-3 left-3 bg-primary text-white text-[10px] font-bold px-2 py-1 rounded-sm z-10">BESTSELLER</span>
+<img alt="Modern minimalist table lamp" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZDh52LWaJN4y7fbxRu5BdJVt-2chBi3LPS7ku1dfi0oZTU4Vzo1G9PokFYT0FKrug71mZsNyjwpx7cG3drpO2Y8k6hCBuIKXoYfJjOT6njrCP7QRuQ_cS5EiU4XMmmMye0qlM-EjNmBA10zDd41yIA79g3HQ9xrtT1LLLMyYp8PPthY3tNrpW_rqhxAtmycU5W25Kwehfyl7d_XEmRIiaPYk7Vf1uWasAmywQqPrxu0wDpkI5aiXh8yZBYqbO934BI_EnNchODyik"/>
+<div class="absolute inset-x-0 bottom-4 px-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex justify-center">
+<button class="w-full bg-white text-text-main font-medium py-3 rounded-lg shadow-lg flex items-center justify-center gap-2 hover:bg-primary hover:text-white transition-colors">
+<span class="material-icons-outlined text-lg">shopping_cart</span>
+                                    Add to Cart
+                                </button>
+</div>
+<button class="absolute top-3 right-3 bg-white/80 p-2 rounded-full text-gray-400 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-icons-outlined text-xl">favorite</span>
+</button>
+</div>
+<div class="p-4">
+<p class="text-xs text-text-muted font-medium mb-1">LUMINA</p>
+<h3 class="text-lg font-bold text-text-main dark:text-white mb-2 group-hover:text-primary transition-colors">Geometric Desk Lamp</h3>
+<div class="flex items-center gap-2">
+<span class="text-lg font-bold text-primary">$125.00</span>
+</div>
+</div>
+</div>
+<div class="group bg-white dark:bg-zinc-800 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-border-subtle dark:border-zinc-700">
+<div class="relative aspect-[4/5] overflow-hidden bg-gray-100 dark:bg-zinc-700">
+<img alt="Minimalist home decor vase" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQhSzCuxw4Q3gVPoYa-Z15XDQQAl064Tm38l9SpqYe0lGWnOrRGCfvmv-cPg_takQ5esNYWEC4FMr7T4GozuphQu4Og85qju3_zYegLZUnex9rfMzvtLncwVzQvfEUJANvqjAz2nPRfqpEfwlRVvuUE6sFHf4yLLvsynxnOpf35A5elt1WNTXLsH3BAwWCARqZmoEwMsZwBKIKRSZyhxbrmmhcxFeEASf0BsYWqs-Q9bwOin-RDLJd9VF_r4mRF1AFWHov9pB1fNc1"/>
+<div class="absolute inset-x-0 bottom-4 px-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex justify-center">
+<button class="w-full bg-white text-text-main font-medium py-3 rounded-lg shadow-lg flex items-center justify-center gap-2 hover:bg-primary hover:text-white transition-colors">
+<span class="material-icons-outlined text-lg">shopping_cart</span>
+                                    Add to Cart
+                                </button>
+</div>
+<button class="absolute top-3 right-3 bg-white/80 p-2 rounded-full text-gray-400 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-icons-outlined text-xl">favorite</span>
+</button>
+</div>
+<div class="p-4">
+<p class="text-xs text-text-muted font-medium mb-1">ARTISAN</p>
+<h3 class="text-lg font-bold text-text-main dark:text-white mb-2 group-hover:text-primary transition-colors">Ceramic Clay Vase</h3>
+<div class="flex items-center gap-2">
+<span class="text-lg font-bold text-primary">$48.00</span>
+<span class="text-sm text-gray-400 line-through">$60.00</span>
+<span class="text-xs font-semibold text-green-600 bg-green-100 px-1.5 py-0.5 rounded">Save 20%</span>
+</div>
+</div>
+</div>
+<div class="group bg-white dark:bg-zinc-800 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-border-subtle dark:border-zinc-700">
+<div class="relative aspect-[4/5] overflow-hidden bg-gray-100 dark:bg-zinc-700">
+<img alt="Minimalist coffee maker" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoK_E3TR7uH7DrZGzXUgAx66nECfPHiqrTI7SNWNBfS9weUlG9IkfS5KTIT27n-XSykr2sxbyTP5syXB329nhTmWZapgihjrZMRcYOjH6CZjS6cB77L3lwJbvaUsFw1VFNfdQ6Yd-8HINerJDfEH9D-RKw6F2SZ88eysFTSpv1FBIVgFtQIaz6CTPTfvRZs0vUdZ-G23MTbrHd9NtsQN1u-L3htIDKukKuE5BhXkf2lR11EDgEbwigNmZrS6tY75xMulCQd7q1WJea"/>
+<div class="absolute inset-x-0 bottom-4 px-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex justify-center">
+<button class="w-full bg-white text-text-main font-medium py-3 rounded-lg shadow-lg flex items-center justify-center gap-2 hover:bg-primary hover:text-white transition-colors">
+<span class="material-icons-outlined text-lg">shopping_cart</span>
+                                    Add to Cart
+                                </button>
+</div>
+<button class="absolute top-3 right-3 bg-white/80 p-2 rounded-full text-gray-400 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-icons-outlined text-xl">favorite</span>
+</button>
+</div>
+<div class="p-4">
+<p class="text-xs text-text-muted font-medium mb-1">BREW CO.</p>
+<h3 class="text-lg font-bold text-text-main dark:text-white mb-2 group-hover:text-primary transition-colors">Pour Over Kit</h3>
+<div class="flex items-center gap-2">
+<span class="text-lg font-bold text-primary">$85.00</span>
+</div>
+</div>
+</div>
+<div class="group bg-white dark:bg-zinc-800 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-border-subtle dark:border-zinc-700">
+<div class="relative aspect-[4/5] overflow-hidden bg-gray-100 dark:bg-zinc-700">
+<span class="absolute top-3 left-3 bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded-sm z-10">-15%</span>
+<img alt="Abstract wall art" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPrLXfnpPNFkLkhwf7kulv5zGAkBzF3Bs2VcDD_UawH5vw8WyzLemTbGzwzufQdsmAY9TOpHKkt6-Z1xB_sYj7dYnZ1er5ug7hNbLxgyiBH1hVTmQuT_jq1LTG1VV_Fx1-Bm5-xAOtKDLK9yXsMxCV4dhKZFnx8Sa5ijcBn6fxUBiiwIwtHZ6QvbeAKqeY7OOS7MVm4UUbKrYOccCCf3kAzfinqwj-G42E7tGoVNq75_wGIzWxWAeWyTsWxIeChF4R4LC0BP-Y2ZVh"/>
+<div class="absolute inset-x-0 bottom-4 px-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex justify-center">
+<button class="w-full bg-white text-text-main font-medium py-3 rounded-lg shadow-lg flex items-center justify-center gap-2 hover:bg-primary hover:text-white transition-colors">
+<span class="material-icons-outlined text-lg">shopping_cart</span>
+                                    Add to Cart
+                                </button>
+</div>
+<button class="absolute top-3 right-3 bg-white/80 p-2 rounded-full text-gray-400 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-icons-outlined text-xl">favorite</span>
+</button>
+</div>
+<div class="p-4">
+<p class="text-xs text-text-muted font-medium mb-1">DECOR</p>
+<h3 class="text-lg font-bold text-text-main dark:text-white mb-2 group-hover:text-primary transition-colors">Abstract Wall Art</h3>
+<div class="flex items-center gap-2">
+<span class="text-lg font-bold text-primary">$136.00</span>
+<span class="text-sm text-gray-400 line-through">$160.00</span>
+</div>
+</div>
+</div>
+<div class="group bg-white dark:bg-zinc-800 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-border-subtle dark:border-zinc-700">
+<div class="relative aspect-[4/5] overflow-hidden bg-gray-100 dark:bg-zinc-700">
+<img alt="Modern armchair" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1J_-gpcrmvuSDeM5q87GC6cwfzsDW0Sa6sRjT3623m03ghdFV4kiNUVjnIYK4n9DW43TmVZn2E5D_Ku5pc7IqGVnmtSFP3mwe_--JvWyG8g-ytn3iGtqq_Aik8UqN2cfJmNEAlCuQt8jkfIaaTG3flgv1et7ZcOu4_-R6aFLCl3nzYWjrJNqWXMItWOD3HWqWiyo764Yi5ejBNC5nXcJo3vc59x5pcGBF4ynEBEAP3hSKmWraEwgX0-5Bcl1sBqcPQJcCdhuuNMio"/>
+<div class="absolute inset-x-0 bottom-4 px-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex justify-center">
+<button class="w-full bg-white text-text-main font-medium py-3 rounded-lg shadow-lg flex items-center justify-center gap-2 hover:bg-primary hover:text-white transition-colors">
+<span class="material-icons-outlined text-lg">shopping_cart</span>
+                                    Add to Cart
+                                </button>
+</div>
+<button class="absolute top-3 right-3 bg-white/80 p-2 rounded-full text-gray-400 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-icons-outlined text-xl">favorite</span>
+</button>
+</div>
+<div class="p-4">
+<p class="text-xs text-text-muted font-medium mb-1">INTERIOR</p>
+<h3 class="text-lg font-bold text-text-main dark:text-white mb-2 group-hover:text-primary transition-colors">Lounge Armchair</h3>
+<div class="flex items-center gap-2">
+<span class="text-lg font-bold text-primary">$350.00</span>
+</div>
+</div>
+</div>
+<div class="group bg-white dark:bg-zinc-800 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-border-subtle dark:border-zinc-700">
+<div class="relative aspect-[4/5] overflow-hidden bg-gray-100 dark:bg-zinc-700">
+<img alt="Wooden serving tray" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOBWwU8cBJCbfrJOjpvdYPX0Ymrd4QWk3R14X19qvO5sDIhevYh1TxUpBGaE1BHcIaFBPlT4uxaxqIbyVLFVESHfWQ7qJ_xrpQTffjjAz5ZE4uJkerGIPot874i9iFoI65-pgFxYt4YJLkQTae3np7FtVFLKikkUUY1WIWCO_p3Cdcl18cmeAQ7olD6ub9LgkYTbJaA-u6y0gY5LatAcwOzTTkd8mCtwTAV8k-93C7q3YfzgAYUOzSvtU8p77DmVmPckXmVbI-vXey"/>
+<div class="absolute inset-x-0 bottom-4 px-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex justify-center">
+<button class="w-full bg-white text-text-main font-medium py-3 rounded-lg shadow-lg flex items-center justify-center gap-2 hover:bg-primary hover:text-white transition-colors">
+<span class="material-icons-outlined text-lg">shopping_cart</span>
+                                    Add to Cart
+                                </button>
+</div>
+<button class="absolute top-3 right-3 bg-white/80 p-2 rounded-full text-gray-400 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-icons-outlined text-xl">favorite</span>
+</button>
+</div>
+<div class="p-4">
+<p class="text-xs text-text-muted font-medium mb-1">KITCHEN</p>
+<h3 class="text-lg font-bold text-text-main dark:text-white mb-2 group-hover:text-primary transition-colors">Oak Serving Tray</h3>
+<div class="flex items-center gap-2">
+<span class="text-lg font-bold text-primary">$45.00</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-center items-center gap-2">
+<button class="w-10 h-10 rounded-lg flex items-center justify-center border border-gray-200 hover:border-primary hover:text-primary transition-colors bg-white dark:bg-zinc-800 dark:border-zinc-700">
+<span class="material-icons-outlined text-sm">chevron_left</span>
+</button>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center bg-primary-active text-white font-medium shadow-md">
+                        1
+                    </button>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center border border-gray-200 hover:border-primary hover:text-primary transition-colors bg-white dark:bg-zinc-800 dark:border-zinc-700 font-medium">
+                        2
+                    </button>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center border border-gray-200 hover:border-primary hover:text-primary transition-colors bg-white dark:bg-zinc-800 dark:border-zinc-700 font-medium">
+                        3
+                    </button>
+<span class="px-2 text-gray-400">...</span>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center border border-gray-200 hover:border-primary hover:text-primary transition-colors bg-white dark:bg-zinc-800 dark:border-zinc-700 font-medium">
+                        8
+                    </button>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center border border-gray-200 hover:border-primary hover:text-primary transition-colors bg-white dark:bg-zinc-800 dark:border-zinc-700">
+<span class="material-icons-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</main>
+</div>
+</div>
+<footer class="bg-footer-bg dark:bg-zinc-900 pt-16 pb-8 border-t border-gray-200 dark:border-zinc-800 mt-12">
+<div class="container mx-auto px-4 md:px-6">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+<div>
+<a class="flex items-center gap-2 mb-6" href="#">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-lg">
+                            B
+                        </div>
+<span class="text-xl font-bold tracking-tight text-text-main dark:text-white">BuyNext</span>
+</a>
+<p class="text-text-muted text-sm leading-relaxed mb-6">
+                        Your premium destination for curated lifestyle essentials. We believe in quality, sustainability, and timeless design.
+                    </p>
+<div class="flex gap-4">
+<a class="text-gray-400 hover:text-primary transition-colors" href="#"><i class="material-icons-outlined">facebook</i></a>
+<a class="text-gray-400 hover:text-primary transition-colors" href="#"><i class="material-icons-outlined">photo_camera</i></a> 
+<a class="text-gray-400 hover:text-primary transition-colors" href="#"><i class="material-icons-outlined">alternate_email</i></a> 
+</div>
+</div>
+<div>
+<h4 class="font-bold text-text-main dark:text-white mb-6">Company</h4>
+<ul class="space-y-3 text-sm text-text-muted">
+<li><a class="hover:text-primary transition-colors" href="#">About Us</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Careers</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Press</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Sustainability</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-text-main dark:text-white mb-6">Support</h4>
+<ul class="space-y-3 text-sm text-text-muted">
+<li><a class="hover:text-primary transition-colors" href="#">Help Center</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Shipping &amp; Returns</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Order Status</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Contact Us</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-text-main dark:text-white mb-6">Contact</h4>
+<ul class="space-y-4 text-sm text-text-muted">
+<li class="flex items-start gap-3">
+<span class="material-icons-outlined text-primary mt-0.5">location_on</span>
+<span>123 Innovation Drive,<br/>Tech City, TC 94000</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-icons-outlined text-primary">phone</span>
+<span>+1 (555) 123-4567</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-icons-outlined text-primary">email</span>
+<span>support@buynext.com</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="border-t border-gray-300 dark:border-zinc-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-sm text-text-muted">© 2023 BuyNext Inc. All rights reserved.</p>
+<div class="flex gap-6 text-sm text-text-muted">
+<a class="hover:text-primary" href="#">Privacy Policy</a>
+<a class="hover:text-primary" href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+</footer>
+
+</body></html>

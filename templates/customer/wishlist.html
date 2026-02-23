@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BuyNext Premium Wishlist Grid</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#9cb0b0",
+                        "accent": "#A2AF9B",
+                        "canvas": "#FAF9EE",
+                        "background-light": "#f7f7f7",
+                        "background-dark": "#181a1a",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FAF9EE;
+        }
+        .product-card-shadow {
+            box-shadow: 0 4px 20px -2px rgba(156, 176, 176, 0.1);
+        }
+        .product-card-shadow:hover {
+            box-shadow: 0 10px 30px -5px rgba(156, 176, 176, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-canvas dark:bg-background-dark font-display text-slate-800 dark:text-slate-200">
+<!-- Master Style Header -->
+<header class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-primary/10">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-20">
+<!-- Logo -->
+<div class="flex-shrink-0 flex items-center gap-2">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+<span class="text-white font-bold text-xl">B</span>
+</div>
+<span class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">BuyNext</span>
+</div>
+<!-- Global Search -->
+<div class="hidden md:flex flex-1 max-w-md mx-8">
+<div class="relative w-full">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<i class="material-icons text-primary/60">search</i>
+</span>
+<input class="block w-full pl-10 pr-3 py-2 border-none bg-primary/10 rounded-full leading-5 placeholder-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/40 sm:text-sm" placeholder="Search premium collection..." type="text"/>
+</div>
+</div>
+<!-- Icons -->
+<div class="flex items-center space-x-6">
+<button class="text-slate-600 dark:text-slate-300 hover:text-primary transition-colors">
+<i class="material-icons">account_circle</i>
+</button>
+<button class="relative text-slate-600 dark:text-slate-300 hover:text-primary transition-colors">
+<i class="material-icons">favorite</i>
+<span class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-[10px] text-white">12</span>
+</button>
+<button class="text-slate-600 dark:text-slate-300 hover:text-primary transition-colors">
+<i class="material-icons">shopping_bag</i>
+</button>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+<div>
+<nav aria-label="Breadcrumb" class="flex mb-2 text-sm text-primary/60 uppercase tracking-widest font-semibold">
+<span>Home</span>
+<span class="mx-2">/</span>
+<span class="text-primary">Wishlist</span>
+</nav>
+<h1 class="text-4xl font-bold text-slate-900 dark:text-white">My Wishlist</h1>
+<p class="text-slate-500 dark:text-slate-400 mt-1">12 Items curated for your next purchase</p>
+</div>
+<!-- Utility Bar -->
+<div class="flex items-center space-x-4">
+<div class="relative inline-block text-left">
+<button class="inline-flex items-center justify-center w-full rounded-lg px-4 py-2 bg-white dark:bg-slate-800 text-sm font-medium text-slate-700 dark:text-slate-200 border border-primary/20 hover:bg-slate-50">
+                        Sort by: Latest
+                        <i class="material-icons text-sm ml-2">expand_more</i>
+</button>
+</div>
+<button class="p-2 rounded-lg bg-white dark:bg-slate-800 border border-primary/20 text-slate-600">
+<i class="material-icons">filter_list</i>
+</button>
+</div>
+</div>
+<!-- Wishlist Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+<!-- Product Card 1 -->
+<div class="group bg-white dark:bg-slate-900 rounded-xl overflow-hidden product-card-shadow transition-all duration-300">
+<div class="relative aspect-[4/5] overflow-hidden m-3">
+<img class="w-full h-full object-cover rounded-xl transition-transform duration-500 group-hover:scale-105" data-alt="Premium merino wool sweater in neutral tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCy_s42J30_2qbGRZnlC_wjAkiChjkS_mvmPJcMk_zBUhS_KuX2t6711JZYJIdQQvB7LpHMBe0tDzb__DeNmpkTa7ggwqFesNAa4oG5FfdJCOB8Kc8SpnlmFbCLuxWBpUC_rAUKfzUJaTCCfP1q4IHIiYscL044e_7v-EskiIfye0DyVQvbIn9LYxANgg7Fay7dUwgLOo88azlEL8dhzSNx9Vm-hOzC0VvZyEu6o5RKx3bWc58SmU4SYEX8sS0bmZIi2FqH8YSw4cky"/>
+<button class="absolute top-3 right-3 p-2 bg-white/90 backdrop-blur-sm rounded-full text-slate-400 hover:text-red-400 transition-colors">
+<i class="material-icons text-sm">close</i>
+</button>
+</div>
+<div class="px-5 pb-6">
+<h3 class="text-lg font-medium text-slate-900 dark:text-white truncate">Premium Merino Wool Sweater</h3>
+<p class="text-sm text-primary/80 mb-3">Natural Earth Collection</p>
+<div class="flex items-baseline space-x-3 mb-6">
+<span class="text-xl font-bold text-slate-900 dark:text-white">$120.00</span>
+<span class="text-sm text-slate-400 line-through">$180.00</span>
+<span class="text-xs font-semibold text-accent px-2 py-1 bg-accent/10 rounded-full">33% OFF</span>
+</div>
+<div class="space-y-3">
+<button class="w-full py-3 bg-[#A2AF9B] hover:bg-[#8f9d88] text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2">
+<i class="material-icons text-lg">shopping_cart</i>
+                            Move to Cart
+                        </button>
+<button class="w-full py-2 text-primary hover:text-primary/70 text-sm font-medium transition-colors">
+                            Remove from Wishlist
+                        </button>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="group bg-white dark:bg-slate-900 rounded-xl overflow-hidden product-card-shadow transition-all duration-300">
+<div class="relative aspect-[4/5] overflow-hidden m-3">
+<img class="w-full h-full object-cover rounded-xl transition-transform duration-500 group-hover:scale-105" data-alt="Artisanal ceramic vase set on table" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUlqEQtPZkxgukHq7CI9VNIzK6RbwHJyKmP183Gvg2J-NPjuJXjWjqoME8YSh66_Evh5hsyCIgXHpiJAY96GiroGHC8o-zxzaiCig_LPA9zufXORxY3djgZozC34nCVN3i0kRHS-wATnvB_Tzxfk5e06IVHaha-UdsVsacPTO78W3Dq6OZnsKnZ8WyCmt8xXkozabBqsLB6X0Ll4QYPejfY7FosHhzy1olwjRXdiC7AL9bRYTFBVbo3njn9DJFHly2n5vaDgLeqG8a"/>
+<button class="absolute top-3 right-3 p-2 bg-white/90 backdrop-blur-sm rounded-full text-slate-400 hover:text-red-400 transition-colors">
+<i class="material-icons text-sm">close</i>
+</button>
+</div>
+<div class="px-5 pb-6">
+<h3 class="text-lg font-medium text-slate-900 dark:text-white truncate">Artisanal Ceramic Vase</h3>
+<p class="text-sm text-primary/80 mb-3">Home Decor &amp; Lifestyle</p>
+<div class="flex items-baseline space-x-3 mb-6">
+<span class="text-xl font-bold text-slate-900 dark:text-white">$85.00</span>
+<span class="text-sm text-slate-400 line-through">$110.00</span>
+<span class="text-xs font-semibold text-accent px-2 py-1 bg-accent/10 rounded-full">22% OFF</span>
+</div>
+<div class="space-y-3">
+<button class="w-full py-3 bg-[#A2AF9B] hover:bg-[#8f9d88] text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2">
+<i class="material-icons text-lg">shopping_cart</i>
+                            Move to Cart
+                        </button>
+<button class="w-full py-2 text-primary hover:text-primary/70 text-sm font-medium transition-colors">
+                            Remove from Wishlist
+                        </button>
+</div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="group bg-white dark:bg-slate-900 rounded-xl overflow-hidden product-card-shadow transition-all duration-300">
+<div class="relative aspect-[4/5] overflow-hidden m-3">
+<img class="w-full h-full object-cover rounded-xl transition-transform duration-500 group-hover:scale-105" data-alt="Minimalist white smart watch with band" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUFTP_yQ-6dxWOCBwfEfWNsMJN-gGhGkSzqObIav7KdfzOpX7Eo0BUuHKqE0mmlHG5fLI-24e-kN0FirX-TR1hCuLX2fPSU93QxhOwNtUCCGykQzMWmbSg2FhbfQyyk7vySZmPRKcHBKKvglxvB_cn0KEisAD9lHh0qfvbltkV3vsOyMQzF3XMiIWcCqfUWOgE4GjcCUOKzmGkaddHRcCxMRfno_u9fMvASxY0bUODQGANbvYhaYFErao3jW3J4AxhE1cqMycj40Lm"/>
+<button class="absolute top-3 right-3 p-2 bg-white/90 backdrop-blur-sm rounded-full text-slate-400 hover:text-red-400 transition-colors">
+<i class="material-icons text-sm">close</i>
+</button>
+</div>
+<div class="px-5 pb-6">
+<h3 class="text-lg font-medium text-slate-900 dark:text-white truncate">Series 8 Minimalist Watch</h3>
+<p class="text-sm text-primary/80 mb-3">Electronics &amp; Wearables</p>
+<div class="flex items-baseline space-x-3 mb-6">
+<span class="text-xl font-bold text-slate-900 dark:text-white">$349.00</span>
+<span class="text-sm text-slate-400 line-through">$399.00</span>
+<span class="text-xs font-semibold text-accent px-2 py-1 bg-accent/10 rounded-full">12% OFF</span>
+</div>
+<div class="space-y-3">
+<button class="w-full py-3 bg-[#A2AF9B] hover:bg-[#8f9d88] text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2">
+<i class="material-icons text-lg">shopping_cart</i>
+                            Move to Cart
+                        </button>
+<button class="w-full py-2 text-primary hover:text-primary/70 text-sm font-medium transition-colors">
+                            Remove from Wishlist
+                        </button>
+</div>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="group bg-white dark:bg-slate-900 rounded-xl overflow-hidden product-card-shadow transition-all duration-300">
+<div class="relative aspect-[4/5] overflow-hidden m-3">
+<img class="w-full h-full object-cover rounded-xl transition-transform duration-500 group-hover:scale-105" data-alt="Modern minimalist interior chair in linen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCarT59IWhtCdw8Ks7Omld1D0nB6revEuXJYp6bimOtlXXczKzqHN064Tk0A5QP8p1485trAoxag-Uc06v1W7o2-zUn0usSSiQ1SKNnf-Xxa-sqFlY-4CCw-fJQCFnYFTB6qoWJqv4PGS9BDxVP1Cu3z9T62V9OLh9tikFsOlln7Wm4PiQF_tS-oPRYHpWeEZPDYW4Ym0mPbJifODCpExWbKB3hWvR_MJSYInrdhaZk3uv2MbPPxATuUeGA6CLRzs3SZY8PYUr8riLh"/>
+<button class="absolute top-3 right-3 p-2 bg-white/90 backdrop-blur-sm rounded-full text-slate-400 hover:text-red-400 transition-colors">
+<i class="material-icons text-sm">close</i>
+</button>
+</div>
+<div class="px-5 pb-6">
+<h3 class="text-lg font-medium text-slate-900 dark:text-white truncate">Linen Lounge Chair</h3>
+<p class="text-sm text-primary/80 mb-3">Furniture &amp; Interior</p>
+<div class="flex items-baseline space-x-3 mb-6">
+<span class="text-xl font-bold text-slate-900 dark:text-white">$210.00</span>
+<span class="text-sm text-slate-400 line-through">$320.00</span>
+<span class="text-xs font-semibold text-accent px-2 py-1 bg-accent/10 rounded-full">34% OFF</span>
+</div>
+<div class="space-y-3">
+<button class="w-full py-3 bg-[#A2AF9B] hover:bg-[#8f9d88] text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2">
+<i class="material-icons text-lg">shopping_cart</i>
+                            Move to Cart
+                        </button>
+<button class="w-full py-2 text-primary hover:text-primary/70 text-sm font-medium transition-colors">
+                            Remove from Wishlist
+                        </button>
+</div>
+</div>
+</div>
+<!-- More products can be repeated here for the grid... -->
+</div>
+<!-- Empty State Preview (Hidden by default but for design demonstration) -->
+<div class="hidden flex-col items-center justify-center py-24 text-center">
+<div class="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+<i class="material-icons text-4xl text-primary">favorite_border</i>
+</div>
+<h2 class="text-2xl font-semibold text-slate-900 dark:text-white">Your wishlist is empty</h2>
+<p class="text-slate-500 max-w-xs mt-2">Save items that you like and they will show up here for later purchase.</p>
+<button class="mt-8 px-8 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-colors">
+                Start Exploring
+            </button>
+</div>
+</main>
+<!-- Premium Footer -->
+<footer class="bg-white dark:bg-background-dark border-t border-primary/10 pt-16 pb-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+<div class="col-span-1 md:col-span-1">
+<div class="flex items-center gap-2 mb-6">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+<span class="text-white font-bold">B</span>
+</div>
+<span class="text-xl font-bold tracking-tight">BuyNext</span>
+</div>
+<p class="text-slate-500 text-sm leading-relaxed">
+                        Curating premium experiences through minimalist design and sustainable commerce solutions.
+                    </p>
+</div>
+<div>
+<h4 class="font-semibold mb-6 uppercase text-xs tracking-widest text-primary">Company</h4>
+<ul class="space-y-4 text-sm text-slate-600 dark:text-slate-400">
+<li><a class="hover:text-primary transition-colors" href="#">About Us</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Careers</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Sustainability</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Press</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-semibold mb-6 uppercase text-xs tracking-widest text-primary">Support</h4>
+<ul class="space-y-4 text-sm text-slate-600 dark:text-slate-400">
+<li><a class="hover:text-primary transition-colors" href="#">Shipping &amp; Returns</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Size Guide</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Contact Us</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">FAQs</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-semibold mb-6 uppercase text-xs tracking-widest text-primary">Newsletter</h4>
+<p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Join for exclusive early access and style updates.</p>
+<div class="flex gap-2">
+<input class="bg-primary/5 border-none rounded-lg focus:ring-1 focus:ring-primary text-sm w-full" placeholder="Your email" type="email"/>
+<button class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
+<i class="material-icons text-sm">arrow_forward</i>
+</button>
+</div>
+</div>
+</div>
+<div class="border-t border-primary/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-400 uppercase tracking-widest">
+<p>© 2024 BuyNext Enterprise. All rights reserved.</p>
+<div class="flex space-x-6 mt-4 md:mt-0">
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

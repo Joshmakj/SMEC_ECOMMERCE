@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BuyNext Orders History</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#A2AF9B", // Sage Green
+                        "primary-dark": "#8d9c85", 
+                        "primary-light": "#eff2ee",
+                        "accent-processing": "#DCCFC0", // Muted Beige
+                        "background-light": "#FAF9EE",
+                        "background-dark": "#191a18",
+                        "footer-bg": "#EEEEEE",
+                        "input-border": "#EEEEEE",
+                        "text-main": "#2D302C",
+                        "text-muted": "#6B7280",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem", 
+                        "lg": "1rem", 
+                        "xl": "1.5rem",
+                        "2xl": "2rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer base {
+            input, select {
+                @apply border-input-border focus:border-primary focus:ring-primary focus:ring-opacity-20 transition-all rounded-lg text-sm h-12;
+            }
+            label {
+                @apply block text-xs font-semibold uppercase tracking-wider text-text-muted mb-2;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-main antialiased transition-colors duration-300 min-h-screen">
+<nav class="sticky top-0 z-50 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-primary/10">
+<div class="container mx-auto px-4 md:px-6 h-20 flex items-center justify-between gap-8">
+<a class="flex items-center gap-2 group" href="#">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-lg group-hover:bg-primary-dark transition-colors">
+                B
+            </div>
+<span class="text-xl font-bold tracking-tight text-text-main dark:text-white">BuyNext</span>
+</a>
+<div class="hidden md:flex flex-1 max-w-xl relative">
+<input class="w-full pl-12 pr-4 py-3 rounded-full bg-white dark:bg-zinc-800 border-none ring-1 ring-primary/20 focus:ring-2 focus:ring-primary shadow-sm text-sm placeholder-gray-400 transition-shadow" placeholder="Search for premium essentials..." type="text"/>
+<span class="material-icons-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary">search</span>
+</div>
+<div class="flex items-center gap-4 text-text-main dark:text-white">
+<button class="flex items-center gap-2 text-primary font-semibold transition-colors">
+<span class="material-icons-outlined text-2xl">person_outline</span>
+<span class="hidden lg:block text-sm font-medium">Account</span>
+</button>
+<button class="flex items-center gap-2 hover:text-primary transition-colors">
+<span class="material-icons-outlined text-2xl">favorite_border</span>
+</button>
+<button class="relative flex items-center gap-2 hover:text-primary transition-colors">
+<span class="material-icons-outlined text-2xl">shopping_bag</span>
+<span class="absolute -top-1 -right-1 w-4 h-4 bg-primary text-white text-[10px] flex items-center justify-center rounded-full font-bold">2</span>
+<span class="hidden lg:block text-sm font-medium">Cart</span>
+</button>
+</div>
+</div>
+</nav>
+<main class="container mx-auto px-4 md:px-6 py-12">
+<div class="flex flex-col lg:flex-row gap-12">
+<aside class="w-full lg:w-64 space-y-2 shrink-0">
+<div class="mb-8">
+<h1 class="text-2xl font-bold text-text-main dark:text-white">Settings</h1>
+<p class="text-text-muted text-sm">Manage your account preferences</p>
+</div>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-text-muted hover:text-primary hover:bg-white dark:hover:bg-zinc-800 transition-all rounded-xl group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">person</span>
+                    Profile
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 bg-white dark:bg-zinc-800 border border-primary/20 rounded-xl text-primary font-bold shadow-sm" href="#">
+<span class="material-symbols-outlined text-[20px]">local_shipping</span>
+                    Orders
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-text-muted hover:text-primary hover:bg-white dark:hover:bg-zinc-800 transition-all rounded-xl group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">location_on</span>
+                    Addresses
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-text-muted hover:text-primary hover:bg-white dark:hover:bg-zinc-800 transition-all rounded-xl group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">shield</span>
+                    Security
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-text-muted hover:text-primary hover:bg-white dark:hover:bg-zinc-800 transition-all rounded-xl group border-t border-gray-100 dark:border-zinc-800 mt-4" href="#">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+                    Sign Out
+                </a>
+</nav>
+</aside>
+<div class="flex-1 space-y-6">
+<div class="flex justify-between items-center mb-2">
+<h2 class="text-2xl font-bold text-text-main dark:text-white">My Orders</h2>
+<div class="flex gap-2">
+<button class="px-4 py-2 text-sm font-medium bg-white dark:bg-zinc-800 rounded-lg border border-gray-100 dark:border-zinc-700 shadow-sm hover:border-primary transition-colors">All Orders</button>
+<button class="px-4 py-2 text-sm font-medium text-text-muted hover:text-primary transition-colors">Active</button>
+<button class="px-4 py-2 text-sm font-medium text-text-muted hover:text-primary transition-colors">Cancelled</button>
+</div>
+</div>
+<div class="bg-white dark:bg-zinc-900 rounded-xl shadow-sm border border-gray-100 dark:border-zinc-800 overflow-hidden hover:shadow-md transition-shadow">
+<div class="p-6 md:p-8">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div class="flex-1">
+<div class="flex items-center gap-3 mb-2">
+<span class="text-lg font-bold text-text-main dark:text-white">#BN-10293</span>
+<span class="px-3 py-1 text-xs font-bold rounded-full bg-primary/10 text-primary border border-primary/20 uppercase tracking-wide">Delivered</span>
+</div>
+<p class="text-sm text-text-muted mb-4">Placed on Oct 24, 2023</p>
+<div class="flex items-center gap-3">
+<div class="flex -space-x-3 overflow-hidden">
+<img alt="Product 1" class="inline-block h-12 w-12 rounded-lg ring-2 ring-white dark:ring-zinc-900 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBw6TWNmbQ6R6IMSIpzzQ-5Emw27glv1cdGY-o7MyxxtqsIKD8OCYPoqy7KymEl5oFn1TwolrY6exPkPXzRMqx3wR75I-uGQJQ4UdxCuXzWkwPw93h3e71LVkDTuZuG7abi1vVO6ntq-pFhgyvvQfc7-zj5F9PTSuWEPPLhu__z_AK_-bFF7uWIdNpRu2oiKa0ZhLiDRMAGBl3R_EyTHExeCrUj1N9PAW3S5LeZTupLMn50RbsBTlDTGviF0AbSDiRgIYYYf9rtao9V"/>
+<img alt="Product 2" class="inline-block h-12 w-12 rounded-lg ring-2 ring-white dark:ring-zinc-900 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBw6TWNmbQ6R6IMSIpzzQ-5Emw27glv1cdGY-o7MyxxtqsIKD8OCYPoqy7KymEl5oFn1TwolrY6exPkPXzRMqx3wR75I-uGQJQ4UdxCuXzWkwPw93h3e71LVkDTuZuG7abi1vVO6ntq-pFhgyvvQfc7-zj5F9PTSuWEPPLhu__z_AK_-bFF7uWIdNpRu2oiKa0ZhLiDRMAGBl3R_EyTHExeCrUj1N9PAW3S5LeZTupLMn50RbsBTlDTGviF0AbSDiRgIYYYf9rtao9V"/>
+<div class="flex items-center justify-center h-12 w-12 rounded-lg ring-2 ring-white dark:ring-zinc-900 bg-gray-50 dark:bg-zinc-800 text-[10px] font-bold text-text-muted">+1</div>
+</div>
+<span class="text-sm font-medium text-text-muted ml-2">3 Items</span>
+</div>
+</div>
+<div class="flex flex-col md:items-end gap-4 shrink-0">
+<div class="text-right">
+<p class="text-xs text-text-muted uppercase font-semibold tracking-wider mb-1">Total Amount</p>
+<p class="text-xl font-bold text-text-main dark:text-white">$342.50</p>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-2.5 bg-primary hover:bg-primary-dark text-white rounded-lg font-bold text-sm transition-all shadow-sm">View Details</button>
+<button class="px-6 py-2.5 border border-primary text-primary hover:bg-primary hover:text-white rounded-lg font-bold text-sm transition-all">Reorder</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-zinc-900 rounded-xl shadow-sm border border-gray-100 dark:border-zinc-800 overflow-hidden hover:shadow-md transition-shadow">
+<div class="p-6 md:p-8">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div class="flex-1">
+<div class="flex items-center gap-3 mb-2">
+<span class="text-lg font-bold text-text-main dark:text-white">#BN-10288</span>
+<span class="px-3 py-1 text-xs font-bold rounded-full bg-accent-processing/20 text-[#8B7E6E] border border-accent-processing uppercase tracking-wide">Processing</span>
+</div>
+<p class="text-sm text-text-muted mb-4">Placed on Oct 26, 2023</p>
+<div class="flex items-center gap-3">
+<div class="flex -space-x-3 overflow-hidden">
+<img alt="Product 3" class="inline-block h-12 w-12 rounded-lg ring-2 ring-white dark:ring-zinc-900 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBw6TWNmbQ6R6IMSIpzzQ-5Emw27glv1cdGY-o7MyxxtqsIKD8OCYPoqy7KymEl5oFn1TwolrY6exPkPXzRMqx3wR75I-uGQJQ4UdxCuXzWkwPw93h3e71LVkDTuZuG7abi1vVO6ntq-pFhgyvvQfc7-zj5F9PTSuWEPPLhu__z_AK_-bFF7uWIdNpRu2oiKa0ZhLiDRMAGBl3R_EyTHExeCrUj1N9PAW3S5LeZTupLMn50RbsBTlDTGviF0AbSDiRgIYYYf9rtao9V"/>
+</div>
+<span class="text-sm font-medium text-text-muted ml-2">1 Item</span>
+</div>
+</div>
+<div class="flex flex-col md:items-end gap-4 shrink-0">
+<div class="text-right">
+<p class="text-xs text-text-muted uppercase font-semibold tracking-wider mb-1">Total Amount</p>
+<p class="text-xl font-bold text-text-main dark:text-white">$89.00</p>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-2.5 bg-primary hover:bg-primary-dark text-white rounded-lg font-bold text-sm transition-all shadow-sm">View Details</button>
+<button class="px-6 py-2.5 border border-primary text-primary hover:bg-primary hover:text-white rounded-lg font-bold text-sm transition-all">Reorder</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-zinc-900 rounded-xl shadow-sm border border-gray-100 dark:border-zinc-800 overflow-hidden hover:shadow-md transition-shadow opacity-90">
+<div class="p-6 md:p-8">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div class="flex-1">
+<div class="flex items-center gap-3 mb-2">
+<span class="text-lg font-bold text-text-main dark:text-white">#BN-10255</span>
+<span class="px-3 py-1 text-xs font-bold rounded-full bg-primary/10 text-primary border border-primary/20 uppercase tracking-wide">Delivered</span>
+</div>
+<p class="text-sm text-text-muted mb-4">Placed on Sep 15, 2023</p>
+<div class="flex items-center gap-3">
+<div class="flex -space-x-3 overflow-hidden">
+<img alt="Product 4" class="inline-block h-12 w-12 rounded-lg ring-2 ring-white dark:ring-zinc-900 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBw6TWNmbQ6R6IMSIpzzQ-5Emw27glv1cdGY-o7MyxxtqsIKD8OCYPoqy7KymEl5oFn1TwolrY6exPkPXzRMqx3wR75I-uGQJQ4UdxCuXzWkwPw93h3e71LVkDTuZuG7abi1vVO6ntq-pFhgyvvQfc7-zj5F9PTSuWEPPLhu__z_AK_-bFF7uWIdNpRu2oiKa0ZhLiDRMAGBl3R_EyTHExeCrUj1N9PAW3S5LeZTupLMn50RbsBTlDTGviF0AbSDiRgIYYYf9rtao9V"/>
+<img alt="Product 5" class="inline-block h-12 w-12 rounded-lg ring-2 ring-white dark:ring-zinc-900 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBw6TWNmbQ6R6IMSIpzzQ-5Emw27glv1cdGY-o7MyxxtqsIKD8OCYPoqy7KymEl5oFn1TwolrY6exPkPXzRMqx3wR75I-uGQJQ4UdxCuXzWkwPw93h3e71LVkDTuZuG7abi1vVO6ntq-pFhgyvvQfc7-zj5F9PTSuWEPPLhu__z_AK_-bFF7uWIdNpRu2oiKa0ZhLiDRMAGBl3R_EyTHExeCrUj1N9PAW3S5LeZTupLMn50RbsBTlDTGviF0AbSDiRgIYYYf9rtao9V"/>
+</div>
+<span class="text-sm font-medium text-text-muted ml-2">2 Items</span>
+</div>
+</div>
+<div class="flex flex-col md:items-end gap-4 shrink-0">
+<div class="text-right">
+<p class="text-xs text-text-muted uppercase font-semibold tracking-wider mb-1">Total Amount</p>
+<p class="text-xl font-bold text-text-main dark:text-white">$1,250.00</p>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-2.5 bg-primary hover:bg-primary-dark text-white rounded-lg font-bold text-sm transition-all shadow-sm">View Details</button>
+<button class="px-6 py-2.5 border border-primary text-primary hover:bg-primary hover:text-white rounded-lg font-bold text-sm transition-all">Reorder</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-8 flex justify-center">
+<nav class="flex items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 dark:border-zinc-800 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary text-white font-bold">1</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors text-text-muted">2</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors text-text-muted">3</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 dark:border-zinc-800 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</nav>
+</div>
+</div>
+</div>
+</main>
+<footer class="bg-footer-bg dark:bg-zinc-900 pt-16 pb-8 border-t border-gray-200 dark:border-zinc-800 mt-20">
+<div class="container mx-auto px-4 md:px-6">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+<div>
+<a class="flex items-center gap-2 mb-6" href="#">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-lg">B</div>
+<span class="text-xl font-bold tracking-tight text-text-main dark:text-white">BuyNext</span>
+</a>
+<p class="text-text-muted text-sm leading-relaxed mb-6">
+                    Your premium destination for curated lifestyle essentials. We believe in quality, sustainability, and timeless design.
+                </p>
+<div class="flex gap-4">
+<a class="text-gray-400 hover:text-primary transition-colors" href="#"><span class="material-icons-outlined">facebook</span></a>
+<a class="text-gray-400 hover:text-primary transition-colors" href="#"><span class="material-icons-outlined">photo_camera</span></a>
+<a class="text-gray-400 hover:text-primary transition-colors" href="#"><span class="material-icons-outlined">alternate_email</span></a>
+</div>
+</div>
+<div>
+<h4 class="font-bold text-text-main dark:text-white mb-6">Company</h4>
+<ul class="space-y-3 text-sm text-text-muted">
+<li><a class="hover:text-primary transition-colors" href="#">About Us</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Careers</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Sustainability</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-text-main dark:text-white mb-6">Support</h4>
+<ul class="space-y-3 text-sm text-text-muted">
+<li><a class="hover:text-primary transition-colors" href="#">Help Center</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Shipping &amp; Returns</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Contact Us</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-text-main dark:text-white mb-6">Contact</h4>
+<ul class="space-y-4 text-sm text-text-muted">
+<li class="flex items-start gap-3">
+<span class="material-icons-outlined text-primary mt-0.5">location_on</span>
+<span>123 Innovation Drive,<br/>Tech City, TC 94000</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-icons-outlined text-primary">email</span>
+<span>support@buynext.com</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="border-t border-gray-300 dark:border-zinc-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-sm text-text-muted">© 2023 BuyNext Inc. All rights reserved.</p>
+<div class="flex gap-6 text-sm text-text-muted">
+<a class="hover:text-primary" href="#">Privacy Policy</a>
+<a class="hover:text-primary" href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+</footer>
+
+</body></html>

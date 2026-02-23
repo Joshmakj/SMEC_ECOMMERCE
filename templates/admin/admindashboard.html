@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BuyNext Admin - Dashboard Overview</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#A2AF9B",
+                        "primary-dark": "#8a9683",
+                        "background-cream": "#FAF9EE",
+                        "accent-tan": "#DCCFC0",
+                        "accent-tan-dark": "#c2b5a5",
+                        "neutral-gray": "#EEEEEE",
+                        "text-main": "#2D302C",
+                        "text-muted": "#6B7280",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem", 
+                        "lg": "1rem", 
+                        "xl": "1.5rem",
+                        "2xl": "2rem",
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                    }
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply bg-background-cream text-text-main font-display antialiased;
+            }
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            @apply bg-primary/20 rounded-full;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+<nav class="sticky top-0 z-50 bg-background-cream/90 backdrop-blur-md border-b border-primary/10">
+<div class="container mx-auto px-4 md:px-6 h-20 flex items-center justify-between gap-4 md:gap-8">
+<div class="flex items-center gap-2 md:gap-4">
+<button class="lg:hidden p-2 -ml-2 text-text-muted hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-2xl">menu</span>
+</button>
+<a class="flex items-center gap-2 group" href="#">
+<div class="w-8 h-8 rounded-lg bg-text-main flex items-center justify-center text-white font-bold text-lg group-hover:bg-black transition-colors shrink-0">
+                        A
+                    </div>
+<div class="hidden sm:flex flex-col">
+<span class="text-xl font-bold tracking-tight leading-none">BuyNext</span>
+<span class="text-[10px] text-primary font-bold uppercase tracking-wider leading-none">Admin Console</span>
+</div>
+</a>
+</div>
+<div class="flex-1 max-w-xl relative mx-2 md:mx-0">
+<div class="hidden md:block relative w-full">
+<input class="w-full pl-12 pr-4 py-2.5 rounded-full bg-white border-none ring-1 ring-primary/20 focus:ring-2 focus:ring-primary shadow-sm text-sm placeholder-gray-400 transition-shadow" placeholder="Global search for sellers, orders, or reports..." type="text"/>
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary">search</span>
+</div>
+</div>
+<div class="flex items-center gap-2 md:gap-4 shrink-0">
+<button class="relative p-2 text-text-muted hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-2xl">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-400 rounded-full border-2 border-background-cream"></span>
+</button>
+<div class="h-8 w-[1px] bg-primary/10 mx-2 hidden sm:block"></div>
+<button class="flex items-center gap-3 hover:text-primary transition-all">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-semibold">Administrator</p>
+<p class="text-[10px] text-text-muted">Super Admin Access</p>
+</div>
+<div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-text-main flex items-center justify-center overflow-hidden shrink-0">
+<span class="material-symbols-outlined text-white">shield_person</span>
+</div>
+</button>
+</div>
+</div>
+</nav>
+<div class="flex flex-1 overflow-hidden relative">
+<aside class="group/sidebar w-0 md:w-20 lg:w-64 border-r border-primary/10 bg-white hidden md:flex flex-col py-8 transition-all duration-300 overflow-hidden shrink-0">
+<div class="px-3 lg:px-4 space-y-2">
+<a class="flex items-center justify-center lg:justify-start px-0 lg:px-4 py-3 rounded-lg bg-primary text-white font-medium transition-all shadow-sm" href="#" title="Overview">
+<span class="material-symbols-outlined text-2xl lg:mr-3">dashboard</span>
+<span class="hidden lg:inline">Overview</span>
+</a>
+<a class="flex items-center justify-center lg:justify-start px-0 lg:px-4 py-3 rounded-lg text-text-muted hover:bg-primary/5 hover:text-primary font-medium transition-all" href="#" title="Sellers">
+<span class="material-symbols-outlined text-2xl lg:mr-3">storefront</span>
+<span class="hidden lg:inline">Sellers</span>
+</a>
+<a class="flex items-center justify-center lg:justify-start px-0 lg:px-4 py-3 rounded-lg text-text-muted hover:bg-primary/5 hover:text-primary font-medium transition-all" href="#" title="Customers">
+<span class="material-symbols-outlined text-2xl lg:mr-3">group</span>
+<span class="hidden lg:inline">Customers</span>
+</a>
+<a class="flex items-center justify-center lg:justify-start px-0 lg:px-4 py-3 rounded-lg text-text-muted hover:bg-primary/5 hover:text-primary font-medium transition-all" href="#" title="Products">
+<span class="material-symbols-outlined text-2xl lg:mr-3">inventory_2</span>
+<span class="hidden lg:inline">Products</span>
+</a>
+<a class="flex items-center justify-center lg:justify-start px-0 lg:px-4 py-3 rounded-lg text-text-muted hover:bg-primary/5 hover:text-primary font-medium transition-all" href="#" title="Finance">
+<span class="material-symbols-outlined text-2xl lg:mr-3">account_balance_wallet</span>
+<span class="hidden lg:inline">Finance</span>
+</a>
+<a class="flex items-center justify-center lg:justify-start px-0 lg:px-4 py-3 rounded-lg text-text-muted hover:bg-primary/5 hover:text-primary font-medium transition-all" href="#" title="Reports">
+<span class="material-symbols-outlined text-2xl lg:mr-3">bar_chart</span>
+<span class="hidden lg:inline">Reports</span>
+</a>
+<div class="h-px bg-primary/10 my-4 mx-4"></div>
+<a class="flex items-center justify-center lg:justify-start px-0 lg:px-4 py-3 rounded-lg text-text-muted hover:bg-primary/5 hover:text-primary font-medium transition-all" href="#" title="System Settings">
+<span class="material-symbols-outlined text-2xl lg:mr-3">settings</span>
+<span class="hidden lg:inline">System Settings</span>
+</a>
+</div>
+</aside>
+<main class="flex-1 p-4 md:p-8 lg:p-10 overflow-y-auto custom-scrollbar relative">
+<div class="max-w-[1400px] mx-auto pb-20 md:pb-0 h-full flex flex-col">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 shrink-0">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="text-xs font-bold text-text-muted uppercase tracking-widest">Dashboard</span>
+</div>
+<h1 class="text-2xl md:text-3xl font-bold text-text-main tracking-tight">Platform Overview</h1>
+<p class="text-sm md:text-base text-text-muted mt-1">Real-time insights into BuyNext ecosystem performance.</p>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-sm text-text-muted bg-white px-3 py-1 rounded-full border border-primary/10 shadow-sm flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                             System Operational
+                         </span>
+<button class="bg-white hover:bg-neutral-gray text-text-main border border-neutral-gray px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm">
+                            Last 30 Days
+                        </button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+<div class="bg-white rounded-xl shadow-soft p-6 border border-neutral-gray relative overflow-hidden group hover:shadow-lg transition-shadow duration-300">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">Total GMV</p>
+<h3 class="text-2xl font-bold text-text-main">$4,289,102</h3>
+</div>
+<div class="p-2 bg-green-50 rounded-lg text-green-600">
+<span class="material-symbols-outlined">payments</span>
+</div>
+</div>
+<div class="flex items-center text-xs font-medium">
+<span class="text-green-600 flex items-center bg-green-50 px-1.5 py-0.5 rounded mr-2">
+<span class="material-symbols-outlined text-[14px] mr-0.5">trending_up</span>
+                                12.5%
+                            </span>
+<span class="text-text-muted">vs last month</span>
+</div>
+</div>
+<div class="bg-white rounded-xl shadow-soft p-6 border border-neutral-gray relative overflow-hidden group hover:shadow-lg transition-shadow duration-300">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">Active Sellers</p>
+<h3 class="text-2xl font-bold text-text-main">1,402</h3>
+</div>
+<div class="p-2 bg-blue-50 rounded-lg text-blue-600">
+<span class="material-symbols-outlined">store</span>
+</div>
+</div>
+<div class="flex items-center text-xs font-medium">
+<span class="text-green-600 flex items-center bg-green-50 px-1.5 py-0.5 rounded mr-2">
+<span class="material-symbols-outlined text-[14px] mr-0.5">trending_up</span>
+                                5.2%
+                            </span>
+<span class="text-text-muted">vs last month</span>
+</div>
+</div>
+<div class="bg-white rounded-xl shadow-soft p-6 border border-neutral-gray relative overflow-hidden group hover:shadow-lg transition-shadow duration-300">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">Active Customers</p>
+<h3 class="text-2xl font-bold text-text-main">89,215</h3>
+</div>
+<div class="p-2 bg-purple-50 rounded-lg text-purple-600">
+<span class="material-symbols-outlined">person</span>
+</div>
+</div>
+<div class="flex items-center text-xs font-medium">
+<span class="text-red-500 flex items-center bg-red-50 px-1.5 py-0.5 rounded mr-2">
+<span class="material-symbols-outlined text-[14px] mr-0.5">trending_down</span>
+                                1.1%
+                            </span>
+<span class="text-text-muted">vs last month</span>
+</div>
+</div>
+<div class="bg-white rounded-xl shadow-soft p-6 border border-neutral-gray relative overflow-hidden group hover:shadow-lg transition-shadow duration-300">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">Pending Verifications</p>
+<h3 class="text-2xl font-bold text-text-main">48</h3>
+</div>
+<div class="p-2 bg-orange-50 rounded-lg text-orange-600">
+<span class="material-symbols-outlined">verified_user</span>
+</div>
+</div>
+<div class="flex items-center text-xs font-medium">
+<span class="text-orange-600 flex items-center bg-orange-50 px-1.5 py-0.5 rounded mr-2">
+                                Needs Action
+                            </span>
+<a class="text-primary hover:underline ml-auto" href="#">View Queue -&gt;</a>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-xl shadow-soft border border-neutral-gray p-6 mb-8">
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+<div>
+<h3 class="font-bold text-lg text-text-main">Platform Revenue &amp; Growth</h3>
+<p class="text-sm text-text-muted">Gross revenue across all categories over the fiscal year.</p>
+</div>
+<div class="flex gap-2 mt-4 sm:mt-0">
+<button class="px-3 py-1.5 text-xs font-medium rounded-md bg-primary/10 text-primary">Revenue</button>
+<button class="px-3 py-1.5 text-xs font-medium rounded-md text-text-muted hover:bg-neutral-gray transition-colors">Traffic</button>
+<button class="px-3 py-1.5 text-xs font-medium rounded-md text-text-muted hover:bg-neutral-gray transition-colors">Conversions</button>
+</div>
+</div>
+<div class="w-full h-80 bg-gray-50 rounded-lg border border-neutral-gray/50 relative flex items-end justify-between px-4 pb-0 pt-10 overflow-hidden">
+<div class="absolute inset-0 flex flex-col justify-between px-4 py-6 pointer-events-none">
+<div class="w-full h-px bg-gray-200"></div>
+<div class="w-full h-px bg-gray-200"></div>
+<div class="w-full h-px bg-gray-200"></div>
+<div class="w-full h-px bg-gray-200"></div>
+<div class="w-full h-px bg-gray-200"></div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-[70%] z-0 opacity-20 bg-gradient-to-t from-primary to-transparent" style="clip-path: polygon(0% 100%, 0% 60%, 10% 65%, 20% 50%, 30% 70%, 40% 40%, 50% 55%, 60% 30%, 70% 45%, 80% 20%, 90% 35%, 100% 10%, 100% 100%);"></div>
+<div class="absolute bottom-0 left-0 right-0 h-[70%] z-10" style="background: linear-gradient(to right, #A2AF9B 0%, #A2AF9B 100%); clip-path: polygon(0% 60%, 10% 65%, 20% 50%, 30% 70%, 40% 40%, 50% 55%, 60% 30%, 70% 45%, 80% 20%, 90% 35%, 100% 10%, 100% 11%, 90% 36%, 80% 21%, 70% 46%, 60% 31%, 50% 56%, 40% 41%, 30% 71%, 20% 51%, 10% 66%, 0% 61%);"></div>
+<div class="relative z-20 flex justify-between w-full text-[10px] text-text-muted pb-2">
+<span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Dec</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+<div class="bg-white rounded-xl shadow-soft border border-neutral-gray flex flex-col">
+<div class="p-5 border-b border-neutral-gray flex justify-between items-center">
+<h3 class="font-bold text-text-main flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">verified</span>
+                                Top Performing Sellers
+                            </h3>
+<a class="text-xs font-bold text-primary hover:underline" href="#">View All</a>
+</div>
+<div class="p-2">
+<div class="hover:bg-background-cream/50 p-3 rounded-lg transition-colors flex items-center gap-4 group cursor-pointer">
+<div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-sm shrink-0">
+                                    TS
+                                </div>
+<div class="flex-1 min-w-0">
+<h4 class="text-sm font-bold text-text-main truncate">TechSavvy Electronics</h4>
+<p class="text-xs text-text-muted truncate">Electronics &amp; Gadgets</p>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold text-text-main">$124k</p>
+<p class="text-[10px] text-green-600 font-medium">+12%</p>
+</div>
+</div>
+<div class="hover:bg-background-cream/50 p-3 rounded-lg transition-colors flex items-center gap-4 group cursor-pointer">
+<div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold text-sm shrink-0">
+                                    HL
+                                </div>
+<div class="flex-1 min-w-0">
+<h4 class="text-sm font-bold text-text-main truncate">Home &amp; Living Co.</h4>
+<p class="text-xs text-text-muted truncate">Furniture &amp; Decor</p>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold text-text-main">$98k</p>
+<p class="text-[10px] text-green-600 font-medium">+8%</p>
+</div>
+</div>
+<div class="hover:bg-background-cream/50 p-3 rounded-lg transition-colors flex items-center gap-4 group cursor-pointer">
+<div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold text-sm shrink-0">
+                                    BF
+                                </div>
+<div class="flex-1 min-w-0">
+<h4 class="text-sm font-bold text-text-main truncate">BeautyFirst Inc.</h4>
+<p class="text-xs text-text-muted truncate">Health &amp; Beauty</p>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold text-text-main">$82k</p>
+<p class="text-[10px] text-red-500 font-medium">-2%</p>
+</div>
+</div>
+<div class="hover:bg-background-cream/50 p-3 rounded-lg transition-colors flex items-center gap-4 group cursor-pointer">
+<div class="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center text-teal-600 font-bold text-sm shrink-0">
+                                    OG
+                                </div>
+<div class="flex-1 min-w-0">
+<h4 class="text-sm font-bold text-text-main truncate">Organic Garden</h4>
+<p class="text-xs text-text-muted truncate">Groceries</p>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold text-text-main">$76k</p>
+<p class="text-[10px] text-green-600 font-medium">+15%</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-xl shadow-soft border border-neutral-gray flex flex-col">
+<div class="p-5 border-b border-neutral-gray flex justify-between items-center">
+<h3 class="font-bold text-text-main flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">history</span>
+                                Recent Platform Activity
+                            </h3>
+<button class="text-text-muted hover:text-primary">
+<span class="material-symbols-outlined text-xl">filter_list</span>
+</button>
+</div>
+<div class="p-4 space-y-4">
+<div class="flex gap-4">
+<div class="flex flex-col items-center">
+<div class="w-2 h-2 bg-primary rounded-full mt-2"></div>
+<div class="w-px h-full bg-neutral-gray my-1"></div>
+</div>
+<div class="pb-4">
+<p class="text-sm text-text-main"><span class="font-bold">New Seller Application</span> submitted by "Urban Threads"</p>
+<p class="text-xs text-text-muted mt-1">2 minutes ago</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="flex flex-col items-center">
+<div class="w-2 h-2 bg-yellow-400 rounded-full mt-2"></div>
+<div class="w-px h-full bg-neutral-gray my-1"></div>
+</div>
+<div class="pb-4">
+<p class="text-sm text-text-main"><span class="font-bold">System Alert:</span> Payment gateway latency spike detected</p>
+<p class="text-xs text-text-muted mt-1">15 minutes ago</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="flex flex-col items-center">
+<div class="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
+<div class="w-px h-full bg-neutral-gray my-1"></div>
+</div>
+<div class="pb-4">
+<p class="text-sm text-text-main"><span class="font-bold">Payout Batch #9921</span> processed successfully</p>
+<p class="text-xs text-text-muted mt-1">1 hour ago</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="flex flex-col items-center">
+<div class="w-2 h-2 bg-gray-300 rounded-full mt-2"></div>
+</div>
+<div>
+<p class="text-sm text-text-main"><span class="font-bold">Report Generated:</span> Monthly Sales Analysis available</p>
+<p class="text-xs text-text-muted mt-1">3 hours ago</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<footer class="bg-white border-t border-primary/10 py-4 mt-auto">
+<div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-[11px] text-text-muted uppercase tracking-widest font-bold gap-2">
+<span>© 2023 BuyNext Admin Console</span>
+<div class="flex gap-6">
+<a class="hover:text-primary" href="#">System Status</a>
+<a class="hover:text-primary" href="#">Admin Policy</a>
+</div>
+</div>
+</footer>
+
+</body></html>

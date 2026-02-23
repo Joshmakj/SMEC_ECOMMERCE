@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BuyNext - Premium Product Detail</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#A2AF9B", // Sage Green Accent
+                        "primary-dark": "#8a9683",
+                        "primary-light": "#eff2ee",
+                        "background-light": "#FAF9EE", // Requested background
+                        "background-dark": "#191a18",
+                        "footer-bg": "#EEEEEE",
+                        "text-main": "#2D302C",
+                        "text-muted": "#6B7280",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem", 
+                        "lg": "1rem", 
+                        "xl": "1.5rem",
+                        "2xl": "2rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply bg-background-light text-text-main font-display antialiased;
+            }
+        }
+        .tab-active {
+            @apply border-primary text-primary font-semibold;
+        }
+        .tab-inactive {
+            @apply border-transparent text-text-muted hover:text-text-main;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="transition-colors duration-300">
+<nav class="sticky top-0 z-50 bg-background-light/90 backdrop-blur-md border-b border-primary/10">
+<div class="container mx-auto px-4 md:px-6 h-20 flex items-center justify-between gap-8">
+<a class="flex items-center gap-2 group" href="#">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-lg group-hover:bg-primary-dark transition-colors">
+                    B
+                </div>
+<span class="text-xl font-bold tracking-tight text-text-main">BuyNext</span>
+</a>
+<div class="hidden md:flex flex-1 max-w-xl relative">
+<input class="w-full pl-12 pr-4 py-3 rounded-full bg-white border-none ring-1 ring-primary/20 focus:ring-2 focus:ring-primary shadow-sm text-sm placeholder-gray-400 transition-shadow" placeholder="Search for premium essentials..." type="text"/>
+<span class="material-icons-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary">search</span>
+</div>
+<div class="flex items-center gap-4 text-text-main">
+<button class="flex items-center gap-2 hover:text-primary transition-colors">
+<span class="material-icons-outlined text-2xl">person_outline</span>
+<span class="hidden lg:block text-sm font-medium">Account</span>
+</button>
+<button class="flex items-center gap-2 hover:text-primary transition-colors">
+<span class="material-icons-outlined text-2xl">favorite_border</span>
+</button>
+<button class="relative flex items-center gap-2 hover:text-primary transition-colors">
+<span class="material-icons-outlined text-2xl">shopping_bag</span>
+<span class="absolute -top-1 -right-1 w-4 h-4 bg-primary text-white text-[10px] flex items-center justify-center rounded-full font-bold">2</span>
+<span class="hidden lg:block text-sm font-medium">Cart</span>
+</button>
+</div>
+</div>
+</nav>
+<div class="container mx-auto px-4 md:px-6 py-4">
+<nav aria-label="Breadcrumb" class="flex text-xs font-medium text-text-muted uppercase tracking-wider">
+<ol class="inline-flex items-center space-x-1 md:space-x-3">
+<li class="inline-flex items-center"><a class="hover:text-primary" href="#">Home</a></li>
+<li><div class="flex items-center"><span class="material-icons-outlined text-xs mx-1">chevron_right</span><a class="hover:text-primary" href="#">Lifestyle</a></div></li>
+<li><div class="flex items-center"><span class="material-icons-outlined text-xs mx-1">chevron_right</span><span class="text-primary">Organic Cotton Knit</span></div></li>
+</ol>
+</nav>
+</div>
+<main class="container mx-auto px-4 md:px-6">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+<div class="lg:col-span-7 flex flex-col-reverse md:flex-row gap-6">
+<div class="flex flex-row md:flex-col gap-4 w-full md:w-24 overflow-x-auto md:overflow-y-auto no-scrollbar">
+<div class="flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 border-primary cursor-pointer">
+<img alt="Thumbnail 1" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-zSi6vud9IIry33Z38O97vbhYJ8G0lFys7fFpQk5-5ORGYPRxho2_33f2bf8cVBF-exPbNPyTwskAIGRi06e-eFSOP68lJyHZqykm_bdX6aKHQZzt38Mb_4CvK9pUHKNPbx04RE-AwqAh4eblRKsPIovSikfOPRTQQMH879FDUWuAJwPl8cAE-RCqfovYZE2TR72E164toph_WIPgBpOtpOPiMLxpMNrNPd1TqHqUV27EyiJWuejA7UTO_LHFuv2m_6e4vVI1rHA5"/>
+</div>
+<div class="flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 border-transparent hover:border-primary/50 cursor-pointer transition-all">
+<img alt="Thumbnail 2" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuASrCAqkCBaIQ-xAnOShcj0Hsg-HShs8qqjE4tH43-ai6JwxXD_5LJKpQiRLuDl1HMvJzfwBcAwudd_6odX2W8jbKpREB8ZkpSZeQcxv9paBgBre-7YSM6i8YQ0ZIWoxxXZZ5KWDbnncJk4Ve7Z5AWKAVA-HrWWQtDClyr5J4zcQ4h8sxYBvlw4aFWdmaDyeScvPrr2Zffk5inHLkwZB0SKJI-rOZ5Oxhk9OoDzHNUHchPOxAfJvuq2zrQYRoEI-GsLNdR2qq3JFWoR"/>
+</div>
+<div class="flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 border-transparent hover:border-primary/50 cursor-pointer transition-all">
+<img alt="Thumbnail 3" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQhSzCuxw4Q3gVPoYa-Z15XDQQAl064Tm38l9SpqYe0lGWnOrRGCfvmv-cPg_takQ5esNYWEC4FMr7T4GozuphQu4Og85qju3_zYegLZUnex9rfMzvtLncwVzQvfEUJANvqjAz2nPRfqpEfwlRVvuUE6sFHf4yLLvsynxnOpf35A5elt1WNTXLsH3BAwWCARqZmoEwMsZwBKIKRSZyhxbrmmhcxFeEASf0BsYWqs-Q9bwOin-RDLJd9VF_r4mRF1AFWHov9pB1fNc1"/>
+</div>
+<div class="flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 border-transparent hover:border-primary/50 cursor-pointer transition-all">
+<img alt="Thumbnail 4" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGPBPta4ni2bEyW9P2IPByIP-8oWMiQSiFGg1211hMaioHhJjXXItGzqlr5JkTm6Vo4jZhotX39cO0O_dWMPzo04EZb12B1uALUMdPR_hQ6Zh4PevqgSEeYbWLnJNPnoFnOukYQ7-U8M1uTC0bXi_XeiXgM8k1WR1R-eaFQz8F8bl7SDq0TPnjW0UD5FokLZJnitcb1OKG_6df0CSzFaODVVc276PcpVDVb7rA8INaRquFA0Vc4q2aPvLt5C_eyZjHMf-OWCcvozg4"/>
+</div>
+</div>
+<div class="flex-1">
+<div class="aspect-[4/5] rounded-xl overflow-hidden bg-white shadow-sm">
+<img alt="Organic Cotton Knit Main Image" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-zSi6vud9IIry33Z38O97vbhYJ8G0lFys7fFpQk5-5ORGYPRxho2_33f2bf8cVBF-exPbNPyTwskAIGRi06e-eFSOP68lJyHZqykm_bdX6aKHQZzt38Mb_4CvK9pUHKNPbx04RE-AwqAh4eblRKsPIovSikfOPRTQQMH879FDUWuAJwPl8cAE-RCqfovYZE2TR72E164toph_WIPgBpOtpOPiMLxpMNrNPd1TqHqUV27EyiJWuejA7UTO_LHFuv2m_6e4vVI1rHA5"/>
+</div>
+</div>
+</div>
+<div class="lg:col-span-5 flex flex-col gap-8">
+<div>
+<span class="text-xs font-bold text-primary uppercase tracking-widest mb-2 block">NORDIC WEAR</span>
+<h1 class="text-3xl md:text-4xl font-bold text-text-main mb-3 leading-tight">Organic Cotton Premium Knit Sweater</h1>
+<div class="flex items-center gap-4 mb-6">
+<div class="flex text-[#FFD700]">
+<span class="material-icons-outlined">star</span>
+<span class="material-icons-outlined">star</span>
+<span class="material-icons-outlined">star</span>
+<span class="material-icons-outlined">star</span>
+<span class="material-icons-outlined">star_half</span>
+</div>
+<span class="text-sm font-medium text-text-muted">(128 Verified Reviews)</span>
+</div>
+<div class="flex items-end gap-4">
+<span class="text-4xl font-bold text-text-main">$64.00</span>
+<div class="flex flex-col mb-1">
+<span class="text-sm text-text-muted line-through">MRP $80.00</span>
+<span class="text-xs font-bold text-white bg-red-500 px-2 py-0.5 rounded-full mt-1">Save 20%</span>
+</div>
+</div>
+</div>
+<div class="h-px bg-primary/10"></div>
+<div>
+<div class="flex justify-between items-center mb-4">
+<span class="text-sm font-bold text-text-main">Select Size</span>
+<button class="text-xs font-medium text-primary underline">Size Guide</button>
+</div>
+<div class="grid grid-cols-4 gap-3">
+<button class="py-3 px-4 rounded-xl border border-primary bg-primary/10 text-primary font-bold text-sm transition-all">S</button>
+<button class="py-3 px-4 rounded-xl border border-primary/20 hover:border-primary text-text-main font-medium text-sm transition-all bg-white">M</button>
+<button class="py-3 px-4 rounded-xl border border-primary/20 hover:border-primary text-text-main font-medium text-sm transition-all bg-white">L</button>
+<button class="py-3 px-4 rounded-xl border border-primary/20 hover:border-primary text-text-main font-medium text-sm transition-all bg-white">XL</button>
+</div>
+</div>
+<div>
+<span class="text-sm font-bold text-text-main block mb-4">Color: Oatmeal</span>
+<div class="flex gap-3">
+<button class="w-12 h-12 rounded-xl border-2 border-primary p-0.5">
+<div class="w-full h-full rounded-lg bg-[#EAE3D6]"></div>
+</button>
+<button class="w-12 h-12 rounded-xl border-2 border-transparent hover:border-primary/30 p-0.5">
+<div class="w-full h-full rounded-lg bg-[#2D302C]"></div>
+</button>
+<button class="w-12 h-12 rounded-xl border-2 border-transparent hover:border-primary/30 p-0.5">
+<div class="w-full h-full rounded-lg bg-[#556B2F]"></div>
+</button>
+</div>
+</div>
+<div class="flex flex-col gap-3 mt-4">
+<button class="w-full bg-primary hover:bg-primary-dark text-white py-5 rounded-xl font-bold transition-all shadow-md flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">shopping_cart</span>
+                        Add to Cart
+                    </button>
+<button class="w-full bg-white border-2 border-primary text-primary hover:bg-primary/5 py-5 rounded-xl font-bold transition-all">
+                        Buy Now
+                    </button>
+</div>
+<div class="grid grid-cols-2 gap-4 mt-4">
+<div class="flex items-start gap-3 p-4 rounded-xl bg-white/50 border border-primary/5">
+<span class="material-symbols-outlined text-primary">local_shipping</span>
+<div>
+<p class="text-[10px] font-bold text-text-muted uppercase">Fast Delivery</p>
+<p class="text-xs font-medium">Free by Tuesday</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-4 rounded-xl bg-white/50 border border-primary/5">
+<span class="material-symbols-outlined text-primary">replay</span>
+<div>
+<p class="text-[10px] font-bold text-text-muted uppercase">Easy Returns</p>
+<p class="text-xs font-medium">30-day window</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-24">
+<div class="border-b border-primary/10">
+<nav class="flex gap-8 overflow-x-auto no-scrollbar">
+<button class="pb-4 text-base font-semibold border-b-2 border-primary text-primary whitespace-nowrap">Description</button>
+<button class="pb-4 text-base font-medium border-b-2 border-transparent text-text-muted hover:text-text-main whitespace-nowrap">Specifications</button>
+<button class="pb-4 text-base font-medium border-b-2 border-transparent text-text-muted hover:text-text-main whitespace-nowrap flex items-center gap-2">
+                        Reviews <span class="bg-primary/10 text-primary text-[10px] px-2 py-0.5 rounded-full">128</span>
+</button>
+</nav>
+</div>
+<div class="py-10 grid grid-cols-1 md:grid-cols-2 gap-16 border-b border-primary/10">
+<div class="space-y-6">
+<h3 class="text-xl font-bold">Unmatched Comfort and Style</h3>
+<p class="text-text-muted leading-relaxed">
+                        Elevate your wardrobe with our Organic Cotton Premium Knit Sweater. Crafted from the finest sustainably-sourced cotton, this piece offers a perfect balance of breathable comfort and sophisticated structure.
+                    </p>
+<p class="text-text-muted leading-relaxed">
+                        Designed for the modern minimalist, it features a subtle rib-knit texture at the cuffs and hem, ensuring a fit that lasts season after season. Whether paired with tailored trousers for the office or denim for a relaxed weekend, this sweater is a versatile essential for any premium collection.
+                    </p>
+<ul class="space-y-3">
+<li class="flex items-center gap-3 text-sm font-medium">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                            100% GOTS Certified Organic Cotton
+                        </li>
+<li class="flex items-center gap-3 text-sm font-medium">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                            Pre-shrunk for a consistent fit
+                        </li>
+<li class="flex items-center gap-3 text-sm font-medium">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                            Eco-friendly dyes and plastic-free packaging
+                        </li>
+</ul>
+</div>
+<div class="rounded-2xl overflow-hidden shadow-sm">
+<img alt="Lifestyle shot" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuASrCAqkCBaIQ-xAnOShcj0Hsg-HShs8qqjE4tH43-ai6JwxXD_5LJKpQiRLuDl1HMvJzfwBcAwudd_6odX2W8jbKpREB8ZkpSZeQcxv9paBgBre-7YSM6i8YQ0ZIWoxxXZZ5KWDbnncJk4Ve7Z5AWKAVA-HrWWQtDClyr5J4zcQ4h8sxYBvlw4aFWdmaDyeScvPrr2Zffk5inHLkwZB0SKJI-rOZ5Oxhk9OoDzHNUHchPOxAfJvuq2zrQYRoEI-GsLNdR2qq3JFWoR"/>
+</div>
+</div>
+</div>
+<section class="mt-20 mb-24">
+<div class="flex justify-between items-end mb-10">
+<div>
+<h2 class="text-2xl md:text-3xl font-bold text-text-main tracking-tight">Complete the Look</h2>
+<p class="text-text-muted text-sm mt-2">Selected essentials to complement your style</p>
+</div>
+<div class="flex gap-2">
+<button class="w-10 h-10 rounded-full border border-primary/20 flex items-center justify-center hover:bg-white transition-colors text-primary">
+<span class="material-icons-outlined">chevron_left</span>
+</button>
+<button class="w-10 h-10 rounded-full border border-primary/20 flex items-center justify-center hover:bg-white transition-colors text-primary">
+<span class="material-icons-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden">
+<div class="relative aspect-[3/4] overflow-hidden">
+<img alt="Premium Chino Trousers" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuASrCAqkCBaIQ-xAnOShcj0Hsg-HShs8qqjE4tH43-ai6JwxXD_5LJKpQiRLuDl1HMvJzfwBcAwudd_6odX2W8jbKpREB8ZkpSZeQcxv9paBgBre-7YSM6i8YQ0ZIWoxxXZZ5KWDbnncJk4Ve7Z5AWKAVA-HrWWQtDClyr5J4zcQ4h8sxYBvlw4aFWdmaDyeScvPrr2Zffk5inHLkwZB0SKJI-rOZ5Oxhk9OoDzHNUHchPOxAfJvuq2zrQYRoEI-GsLNdR2qq3JFWoR"/>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300 flex items-center justify-center">
+<button class="opacity-0 group-hover:opacity-100 bg-primary text-white text-sm font-bold px-6 py-2.5 rounded-full transition-all transform translate-y-4 group-hover:translate-y-0">
+                                Quick View
+                            </button>
+</div>
+</div>
+<div class="p-5 flex flex-col gap-2">
+<h4 class="font-semibold text-text-main line-clamp-1">Tailored Cotton Chinos</h4>
+<div class="flex items-center justify-between mt-1">
+<div class="flex flex-col">
+<span class="text-lg font-bold">$72.00</span>
+<span class="text-[10px] text-text-muted line-through">MRP $90.00</span>
+</div>
+<span class="text-[10px] font-bold text-white bg-red-500 px-2 py-0.5 rounded-full">Save 20%</span>
+</div>
+</div>
+</div>
+<div class="group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden">
+<div class="relative aspect-[3/4] overflow-hidden">
+<img alt="Canvas Weekend Bag" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQhSzCuxw4Q3gVPoYa-Z15XDQQAl064Tm38l9SpqYe0lGWnOrRGCfvmv-cPg_takQ5esNYWEC4FMr7T4GozuphQu4Og85qju3_zYegLZUnex9rfMzvtLncwVzQvfEUJANvqjAz2nPRfqpEfwlRVvuUE6sFHf4yLLvsynxnOpf35A5elt1WNTXLsH3BAwWCARqZmoEwMsZwBKIKRSZyhxbrmmhcxFeEASf0BsYWqs-Q9bwOin-RDLJd9VF_r4mRF1AFWHov9pB1fNc1"/>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300 flex items-center justify-center">
+<button class="opacity-0 group-hover:opacity-100 bg-primary text-white text-sm font-bold px-6 py-2.5 rounded-full transition-all transform translate-y-4 group-hover:translate-y-0">
+                                Quick View
+                            </button>
+</div>
+</div>
+<div class="p-5 flex flex-col gap-2">
+<h4 class="font-semibold text-text-main line-clamp-1">Heavy Canvas Weekender</h4>
+<div class="flex items-center justify-between mt-1">
+<div class="flex flex-col">
+<span class="text-lg font-bold">$120.00</span>
+<span class="text-[10px] text-text-muted line-through">MRP $150.00</span>
+</div>
+<span class="text-[10px] font-bold text-white bg-red-500 px-2 py-0.5 rounded-full">Save 20%</span>
+</div>
+</div>
+</div>
+<div class="group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden">
+<div class="relative aspect-[3/4] overflow-hidden">
+<img alt="Minimalist Watch" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGPBPta4ni2bEyW9P2IPByIP-8oWMiQSiFGg1211hMaioHhJjXXItGzqlr5JkTm6Vo4jZhotX39cO0O_dWMPzo04EZb12B1uALUMdPR_hQ6Zh4PevqgSEeYbWLnJNPnoFnOukYQ7-U8M1uTC0bXi_XeiXgM8k1WR1R-eaFQz8F8bl7SDq0TPnjW0UD5FokLZJnitcb1OKG_6df0CSzFaODVVc276PcpVDVb7rA8INaRquFA0Vc4q2aPvLt5C_eyZjHMf-OWCcvozg4"/>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300 flex items-center justify-center">
+<button class="opacity-0 group-hover:opacity-100 bg-primary text-white text-sm font-bold px-6 py-2.5 rounded-full transition-all transform translate-y-4 group-hover:translate-y-0">
+                                Quick View
+                            </button>
+</div>
+</div>
+<div class="p-5 flex flex-col gap-2">
+<h4 class="font-semibold text-text-main line-clamp-1">Slate Edition Timepiece</h4>
+<div class="flex items-center justify-between mt-1">
+<div class="flex flex-col">
+<span class="text-lg font-bold">$144.00</span>
+<span class="text-[10px] text-text-muted line-through">MRP $180.00</span>
+</div>
+<span class="text-[10px] font-bold text-white bg-red-500 px-2 py-0.5 rounded-full">Save 20%</span>
+</div>
+</div>
+</div>
+<div class="group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden">
+<div class="relative aspect-[3/4] overflow-hidden">
+<img alt="Leather Loafers" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-zSi6vud9IIry33Z38O97vbhYJ8G0lFys7fFpQk5-5ORGYPRxho2_33f2bf8cVBF-exPbNPyTwskAIGRi06e-eFSOP68lJyHZqykm_bdX6aKHQZzt38Mb_4CvK9pUHKNPbx04RE-AwqAh4eblRKsPIovSikfOPRTQQMH879FDUWuAJwPl8cAE-RCqfovYZE2TR72E164toph_WIPgBpOtpOPiMLxpMNrNPd1TqHqUV27EyiJWuejA7UTO_LHFuv2m_6e4vVI1rHA5"/>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300 flex items-center justify-center">
+<button class="opacity-0 group-hover:opacity-100 bg-primary text-white text-sm font-bold px-6 py-2.5 rounded-full transition-all transform translate-y-4 group-hover:translate-y-0">
+                                Quick View
+                            </button>
+</div>
+</div>
+<div class="p-5 flex flex-col gap-2">
+<h4 class="font-semibold text-text-main line-clamp-1">Classic Pebble Grain Loafers</h4>
+<div class="flex items-center justify-between mt-1">
+<div class="flex flex-col">
+<span class="text-lg font-bold">$88.00</span>
+<span class="text-[10px] text-text-muted line-through">MRP $110.00</span>
+</div>
+<span class="text-[10px] font-bold text-white bg-red-500 px-2 py-0.5 rounded-full">Save 20%</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-footer-bg pt-16 pb-8 border-t border-gray-200">
+<div class="container mx-auto px-4 md:px-6">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+<div>
+<a class="flex items-center gap-2 mb-6" href="#">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-lg">
+                            B
+                        </div>
+<span class="text-xl font-bold tracking-tight text-text-main">BuyNext</span>
+</a>
+<p class="text-text-muted text-sm leading-relaxed mb-6">
+                        Your premium destination for curated lifestyle essentials. We believe in quality, sustainability, and timeless design.
+                    </p>
+<div class="flex gap-4">
+<a class="text-gray-400 hover:text-primary transition-colors" href="#"><span class="material-icons-outlined">facebook</span></a>
+<a class="text-gray-400 hover:text-primary transition-colors" href="#"><span class="material-icons-outlined">photo_camera</span></a>
+</div>
+</div>
+<div>
+<h4 class="font-bold text-text-main mb-6">Company</h4>
+<ul class="space-y-3 text-sm text-text-muted">
+<li><a class="hover:text-primary transition-colors" href="#">About Us</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Careers</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Sustainability</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-text-main mb-6">Support</h4>
+<ul class="space-y-3 text-sm text-text-muted">
+<li><a class="hover:text-primary transition-colors" href="#">Help Center</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Shipping &amp; Returns</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Order Status</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-text-main mb-6">Contact</h4>
+<ul class="space-y-4 text-sm text-text-muted">
+<li class="flex items-start gap-3">
+<span class="material-icons-outlined text-primary mt-0.5">location_on</span>
+<span>123 Innovation Drive,<br/>Tech City, TC 94000</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-icons-outlined text-primary">phone</span>
+<span>+1 (555) 123-4567</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="border-t border-gray-300 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-sm text-text-muted">© 2023 BuyNext Inc. All rights reserved.</p>
+<div class="flex gap-6 text-sm text-text-muted">
+<a class="hover:text-primary" href="#">Privacy Policy</a>
+<a class="hover:text-primary" href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+</footer>
+
+</body></html>

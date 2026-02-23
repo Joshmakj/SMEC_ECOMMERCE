@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Order Success - BuyNext</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#A2AF9B", // Sage Green
+                        "primary-dark": "#8d9c85", 
+                        "primary-light": "#eff2ee",
+                        "background-light": "#FAF9EE",
+                        "background-dark": "#191a18",
+                        "footer-bg": "#EEEEEE",
+                        "input-border": "#EEEEEE",
+                        "text-main": "#2D302C",
+                        "text-muted": "#6B7280",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem", 
+                        "lg": "1rem", 
+                        "xl": "1.5rem",
+                        "2xl": "2rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer base {
+            .success-icon-bg {
+                background: radial-gradient(circle, rgba(162, 175, 155, 0.15) 0%, rgba(162, 175, 155, 0) 70%);
+            }
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-main antialiased transition-colors duration-300 min-h-screen">
+<nav class="sticky top-0 z-50 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-primary/10">
+<div class="container mx-auto px-4 md:px-6 h-20 flex items-center justify-between gap-8">
+<a class="flex items-center gap-2 group" href="#">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-lg group-hover:bg-primary-dark transition-colors">
+                B
+            </div>
+<span class="text-xl font-bold tracking-tight text-text-main dark:text-white">BuyNext</span>
+</a>
+<div class="hidden md:flex flex-1 max-w-xl relative">
+<input class="w-full pl-12 pr-4 py-3 rounded-full bg-white dark:bg-zinc-800 border-none ring-1 ring-primary/20 focus:ring-2 focus:ring-primary shadow-sm text-sm placeholder-gray-400 transition-shadow" placeholder="Search for premium essentials..." type="text"/>
+<span class="material-icons-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary">search</span>
+</div>
+<div class="flex items-center gap-4 text-text-main dark:text-white">
+<button class="flex items-center gap-2 hover:text-primary transition-colors">
+<span class="material-icons-outlined text-2xl">person_outline</span>
+<span class="hidden lg:block text-sm font-medium">Account</span>
+</button>
+<button class="relative flex items-center gap-2 hover:text-primary transition-colors">
+<span class="material-icons-outlined text-2xl">shopping_bag</span>
+<span class="absolute -top-1 -right-1 w-4 h-4 bg-primary text-white text-[10px] flex items-center justify-center rounded-full font-bold">0</span>
+</button>
+</div>
+</div>
+</nav>
+<main class="container mx-auto px-4 md:px-6 py-12 flex flex-col items-center">
+<div class="text-center mb-12">
+<div class="success-icon-bg w-32 h-32 flex items-center justify-center mx-auto mb-6 rounded-full">
+<span class="material-symbols-outlined text-primary text-7xl font-light">check_circle</span>
+</div>
+<h1 class="text-4xl font-bold text-text-main dark:text-white mb-4">Thank You for Your Order!</h1>
+<p class="text-lg text-text-muted max-w-lg mx-auto leading-relaxed">Your purchase was successful and we're getting it ready for shipment. You'll receive a confirmation email shortly.</p>
+</div>
+<div class="w-full max-w-3xl space-y-6">
+<div class="bg-white dark:bg-zinc-900 rounded-xl p-8 border border-gray-100 dark:border-zinc-800 shadow-sm text-center">
+<div class="inline-block px-4 py-1.5 rounded-full bg-primary-light text-primary font-bold text-xs tracking-widest uppercase mb-4">
+                Confirmed
+            </div>
+<p class="text-sm text-text-muted mb-1">Order Number</p>
+<h2 class="text-2xl font-bold text-text-main dark:text-white mb-6">#BN-892345091</h2>
+<div class="flex flex-col sm:flex-row gap-4 justify-center mt-4">
+<button class="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-xl font-bold text-sm tracking-widest transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-3">
+                    TRACK YOUR ORDER
+                    <span class="material-symbols-outlined text-[20px]">local_shipping</span>
+</button>
+<button class="bg-white dark:bg-zinc-800 border border-primary/20 hover:bg-primary-light dark:hover:bg-zinc-700 text-primary px-8 py-4 rounded-xl font-bold text-sm tracking-widest transition-all">
+                    CONTINUE SHOPPING
+                </button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+<div class="lg:col-span-3 bg-white dark:bg-zinc-900 rounded-xl p-8 border border-gray-100 dark:border-zinc-800 shadow-sm">
+<h3 class="text-lg font-bold text-text-main dark:text-white mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">inventory_2</span>
+                    Items Purchased
+                </h3>
+<div class="space-y-6">
+<div class="flex gap-4 items-center">
+<div class="w-20 h-20 rounded-lg overflow-hidden bg-gray-50 border border-gray-100 flex-shrink-0">
+<img alt="Product" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGuZAugTc0XkztBMac4gkseHyVbee6pjL_TPzjGMV4dYv4IQDrjpRXMWk6prtNVnC_hRhTgCnFkUrAaCw4PwDQIlpRU2RSgZBf1-SDObiOY6HLHw5l1l2J0a5DE8kZGhTfRE5PrvL03dIK6WxF8Lrcv-nAOuxwLDChBYefsVYx4RlavdJkE2qZFWIT1GcBX7xVy5cltTgIrf_oksUlesrrPNG9IVDkrM1Uh2xjN147mBp5RYyVJQseuohxXJADojML9moVMvM_oxGY"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-bold text-text-main dark:text-white truncate">Premium Linen Tailored Shirt</p>
+<p class="text-sm text-text-muted">Qty: 1 • Sage Green</p>
+</div>
+<span class="font-bold text-text-main dark:text-white">$85.00</span>
+</div>
+<div class="flex gap-4 items-center pt-6 border-t border-gray-50 dark:border-zinc-800">
+<div class="w-20 h-20 rounded-lg overflow-hidden bg-gray-50 border border-gray-100 flex-shrink-0">
+<img alt="Product" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbD7Wou1PWfmvUHVIGUTGVK3scX6BS4fyqqujnTIwUapuNKNkt5gqZNAGQHNzjH51AQuk2XqOd9dt64QAkTKq3FwpfA55mtazH-vVFGNbd7AbeCz06QmkevXfSb2YAv_NOKpbvWwM4YhhAVZzUEpiiy5qgjFW_EGjZ04HpTVLCLzZzN3mKfyWM1k7Yw9A9PpcPl7vUm7am1wNDT5PqpSQwQ_9A1cN1_4wczpnKwCDKpAVey-hMwP7JsQdBSRIlcIYM95lTTxFoek3k"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-bold text-text-main dark:text-white truncate">Essential Slim-Fit Chinos</p>
+<p class="text-sm text-text-muted">Qty: 1 • Sandstone</p>
+</div>
+<span class="font-bold text-text-main dark:text-white">$72.00</span>
+</div>
+</div>
+</div>
+<div class="lg:col-span-2 bg-white dark:bg-zinc-900 rounded-xl p-8 border border-gray-100 dark:border-zinc-800 shadow-sm">
+<h3 class="text-lg font-bold text-text-main dark:text-white mb-6">Order Summary</h3>
+<div class="space-y-4 mb-8">
+<div class="flex justify-between text-sm text-text-muted">
+<span>Subtotal</span>
+<span class="text-text-main dark:text-white font-medium">$157.00</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-text-muted">Discount</span>
+<span class="text-primary font-medium">-$12.00</span>
+</div>
+<div class="flex justify-between text-sm text-text-muted">
+<span>Shipping</span>
+<span class="text-text-main dark:text-white font-medium">$5.00</span>
+</div>
+<div class="border-t border-gray-100 dark:border-zinc-800 pt-4 mt-4">
+<div class="flex justify-between items-center">
+<span class="text-base font-bold text-text-main dark:text-white">Total</span>
+<span class="text-xl font-bold text-text-main dark:text-white">$150.00</span>
+</div>
+<p class="text-[10px] text-text-muted mt-1 text-right italic">Payment processed via Credit Card</p>
+</div>
+</div>
+<div class="p-4 bg-primary-light/50 dark:bg-primary/10 rounded-lg">
+<p class="text-xs text-text-main dark:text-white font-medium mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">info</span>
+                        Delivery Estimate
+                    </p>
+<p class="text-xs text-text-muted">Expected by Monday, Oct 23rd</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="bg-footer-bg dark:bg-zinc-900 pt-16 pb-8 border-t border-gray-200 dark:border-zinc-800 mt-20">
+<div class="container mx-auto px-4 md:px-6">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+<div>
+<a class="flex items-center gap-2 mb-6" href="#">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-lg">B</div>
+<span class="text-xl font-bold tracking-tight text-text-main dark:text-white">BuyNext</span>
+</a>
+<p class="text-text-muted text-sm leading-relaxed mb-6">
+                    Your premium destination for curated lifestyle essentials. We believe in quality, sustainability, and timeless design.
+                </p>
+<div class="flex gap-4">
+<a class="text-gray-400 hover:text-primary transition-colors" href="#"><i class="material-icons-outlined">facebook</i></a>
+<a class="text-gray-400 hover:text-primary transition-colors" href="#"><i class="material-icons-outlined">photo_camera</i></a>
+<a class="text-gray-400 hover:text-primary transition-colors" href="#"><i class="material-icons-outlined">alternate_email</i></a>
+</div>
+</div>
+<div>
+<h4 class="font-bold text-text-main dark:text-white mb-6">Company</h4>
+<ul class="space-y-3 text-sm text-text-muted">
+<li><a class="hover:text-primary transition-colors" href="#">About Us</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Careers</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Sustainability</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-text-main dark:text-white mb-6">Support</h4>
+<ul class="space-y-3 text-sm text-text-muted">
+<li><a class="hover:text-primary transition-colors" href="#">Help Center</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Shipping &amp; Returns</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Contact Us</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-text-main dark:text-white mb-6">Contact</h4>
+<ul class="space-y-4 text-sm text-text-muted">
+<li class="flex items-start gap-3">
+<span class="material-icons-outlined text-primary mt-0.5">location_on</span>
+<span>123 Innovation Drive,<br/>Tech City, TC 94000</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-icons-outlined text-primary">email</span>
+<span>support@buynext.com</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="border-t border-gray-300 dark:border-zinc-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-sm text-text-muted">© 2023 BuyNext Inc. All rights reserved.</p>
+<div class="flex gap-6 text-sm text-text-muted">
+<a class="hover:text-primary" href="#">Privacy Policy</a>
+<a class="hover:text-primary" href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+</footer>
+
+</body></html>

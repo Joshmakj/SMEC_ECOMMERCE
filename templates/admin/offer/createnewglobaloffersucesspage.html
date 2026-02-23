@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin Campaign Live Success Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#a3b09c", 
+              "primary-dark": "#8f9c88",
+              "background-light": "#FAF9EE", // Overriding based on context description
+              "background-dark": "#191a18",
+              "surface-light": "#FFFFFF",
+              "surface-dark": "#242523",
+              "taupe": "#DCCFC0",
+              "taupe-light": "#EAE5DE",
+              "accent-gray": "#EEEEEE",
+              "text-main": "#2C3329",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {
+              "DEFAULT": "0.5rem", 
+              "lg": "1rem", 
+              "xl": "1.5rem", 
+              "full": "9999px"
+            },
+            boxShadow: {
+              'soft': '0 4px 20px -2px rgba(163, 176, 156, 0.15)',
+              'inner-soft': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.02)'
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-main dark:text-gray-100 min-h-screen flex font-display overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 bg-surface-light dark:bg-surface-dark border-r border-taupe/30 dark:border-gray-800 flex flex-col h-screen fixed left-0 top-0 z-20 hidden md:flex">
+<div class="p-6 flex items-center gap-3">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white font-bold text-xl">B</div>
+<span class="font-bold text-lg tracking-tight text-gray-800 dark:text-white">BuyNext</span>
+</div>
+<nav class="flex-1 px-4 py-6 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-gray-500 dark:text-gray-400 hover:bg-primary/10 hover:text-primary rounded-lg transition-colors" href="#">
+<span class="material-icons text-xl">dashboard</span>
+<span class="font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary/15 text-primary-dark dark:text-primary rounded-lg transition-colors" href="#">
+<span class="material-icons text-xl">campaign</span>
+<span class="font-medium">Campaigns</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-500 dark:text-gray-400 hover:bg-primary/10 hover:text-primary rounded-lg transition-colors" href="#">
+<span class="material-icons text-xl">analytics</span>
+<span class="font-medium">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-500 dark:text-gray-400 hover:bg-primary/10 hover:text-primary rounded-lg transition-colors" href="#">
+<span class="material-icons text-xl">people</span>
+<span class="font-medium">Customers</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-500 dark:text-gray-400 hover:bg-primary/10 hover:text-primary rounded-lg transition-colors" href="#">
+<span class="material-icons text-xl">settings</span>
+<span class="font-medium">Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-taupe/30 dark:border-gray-800">
+<div class="flex items-center gap-3 px-2 py-2">
+<img alt="User Profile" class="w-10 h-10 rounded-full" data-alt="User avatar placeholder" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4FBoMQJYP-ehO2Sw8D8_oii8H5_PBAurKxTYoe_8nX-gTWyo1acbi6BnOEH3aqtGUhSSDSH2enReXYhe4nF7Zuj4USZXNADSP5ulAdtiLV8rhr21Sa15KBsRI3J2vUQdABYqzP3FKABrA6sEAuCn7Sj0vPp9eKPm0U_w-QxnWfyR4gLF6p9nQuDvDURq6k7jdzJC4GzxoRkZO7HDYgCK1R-UmQyWgMBMVv4rTwMYvucDA1KDtobCs8YkJmOlG5YUMs37gb63ct7mK"/>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-semibold text-gray-800 dark:text-white truncate">Elena Rossi</p>
+<p class="text-xs text-gray-500 dark:text-gray-400 truncate">elena@buynext.com</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 md:ml-64 flex flex-col h-screen relative overflow-y-auto">
+<!-- Header -->
+<header class="bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-sm sticky top-0 z-10 px-8 py-5 flex items-center justify-between border-b border-taupe/20 dark:border-gray-800">
+<div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+<span class="hover:text-primary cursor-pointer">Campaigns</span>
+<span class="material-icons text-xs">chevron_right</span>
+<span class="hover:text-primary cursor-pointer">Global Launch</span>
+<span class="material-icons text-xs">chevron_right</span>
+<span class="font-semibold text-primary">Live Status</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg">search</span>
+<input class="pl-10 pr-4 py-2 bg-white dark:bg-surface-dark border border-taupe/30 dark:border-gray-700 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 w-64 shadow-sm" placeholder="Search..." type="text"/>
+</div>
+<button class="p-2 text-gray-400 hover:text-primary transition-colors relative">
+<span class="material-icons">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-400 rounded-full"></span>
+</button>
+</div>
+</header>
+<!-- Content Body -->
+<div class="flex-1 px-8 py-10 max-w-7xl mx-auto w-full flex flex-col items-center">
+<!-- Success Hero Section -->
+<div class="text-center mb-12 animate-fade-in-up">
+<div class="w-24 h-24 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl shadow-primary/20">
+<span class="material-icons text-6xl">check</span>
+</div>
+<h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-3">Campaign is now Live!</h1>
+<p class="text-gray-500 dark:text-gray-400 text-lg max-w-2xl mx-auto">
+                    Global Offer #2944 has been successfully deployed and is active across North America and EMEA regions.
+                </p>
+</div>
+<!-- Metrics Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mb-10 animate-fade-in-up delay-100">
+<!-- Card 1 -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-soft border border-taupe/20 dark:border-gray-800 flex flex-col items-start relative overflow-hidden group hover:border-primary/30 transition-all duration-300">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons text-8xl text-primary">visibility</span>
+</div>
+<div class="flex items-center gap-2 mb-2">
+<span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+<span class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Real-time Impressions</span>
+</div>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="text-4xl font-light text-gray-900 dark:text-white">12,402</span>
+<span class="text-sm font-medium text-green-600 flex items-center bg-green-50 dark:bg-green-900/20 px-2 py-0.5 rounded-full">
+<span class="material-icons text-sm mr-0.5">trending_up</span> +12%
+                        </span>
+</div>
+<p class="text-xs text-gray-400 mt-2">Since launch 45m ago</p>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-soft border border-taupe/20 dark:border-gray-800 flex flex-col items-start relative overflow-hidden group hover:border-primary/30 transition-all duration-300">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons text-8xl text-primary">redeem</span>
+</div>
+<div class="flex items-center gap-2 mb-2">
+<span class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Current Redemptions</span>
+</div>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="text-4xl font-light text-gray-900 dark:text-white">432</span>
+</div>
+<div class="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-1.5 mt-4">
+<div class="bg-primary h-1.5 rounded-full" style="width: 15%"></div>
+</div>
+<p class="text-xs text-gray-400 mt-2">15% of daily goal reached</p>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-soft border border-taupe/20 dark:border-gray-800 flex flex-col items-start relative overflow-hidden group hover:border-primary/30 transition-all duration-300">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons text-8xl text-primary">attach_money</span>
+</div>
+<div class="flex items-center gap-2 mb-2">
+<span class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Projected Revenue</span>
+</div>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="text-4xl font-light text-gray-900 dark:text-white">$45,000</span>
+</div>
+<p class="text-xs text-gray-400 mt-2">Based on current velocity</p>
+</div>
+</div>
+<!-- Campaign Details Card -->
+<div class="w-full bg-surface-light dark:bg-surface-dark rounded-xl shadow-soft border border-taupe/20 dark:border-gray-800 p-8 mb-10 animate-fade-in-up delay-200">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 pb-6 border-b border-gray-100 dark:border-gray-700">
+<div>
+<h3 class="text-lg font-semibold text-gray-900 dark:text-white">Campaign Details</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400">Summary of active rules and configurations</p>
+</div>
+<span class="px-3 py-1 bg-primary/10 text-primary-dark text-xs font-semibold rounded-full border border-primary/20 mt-2 md:mt-0">
+                        ID: GL-2944-Q4
+                    </span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-lg bg-accent-gray dark:bg-gray-800 flex items-center justify-center text-gray-500 shrink-0">
+<span class="material-icons">calendar_today</span>
+</div>
+<div>
+<p class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-medium">Duration</p>
+<p class="font-medium text-gray-900 dark:text-white mt-1">Oct 24, 2023 — Nov 01, 2023</p>
+<p class="text-xs text-primary mt-1">Ends in 8 days</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-lg bg-accent-gray dark:bg-gray-800 flex items-center justify-center text-gray-500 shrink-0">
+<span class="material-icons">group</span>
+</div>
+<div>
+<p class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-medium">Target Audience</p>
+<div class="flex flex-wrap gap-2 mt-1">
+<span class="text-sm font-medium text-gray-900 dark:text-white">Premium Users</span>
+<span class="w-1 h-1 bg-gray-300 rounded-full self-center"></span>
+<span class="text-sm font-medium text-gray-900 dark:text-white">New Signups</span>
+</div>
+<p class="text-xs text-gray-400 mt-1">Approx. 450k users</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-lg bg-accent-gray dark:bg-gray-800 flex items-center justify-center text-gray-500 shrink-0">
+<span class="material-icons">rule</span>
+</div>
+<div>
+<p class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-medium">Active Rule</p>
+<p class="font-medium text-gray-900 dark:text-white mt-1">Flat 15% Discount</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded text-gray-600 dark:text-gray-300">Min Cart: $50</span>
+<span class="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded text-gray-600 dark:text-gray-300">Cat: Electronics</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-col md:flex-row gap-4 w-full md:w-auto animate-fade-in-up delay-300">
+<button class="bg-primary hover:bg-primary-dark text-white px-8 py-3.5 rounded-lg shadow-lg shadow-primary/20 font-medium transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2 min-w-[200px]">
+<span class="material-icons text-sm">analytics</span>
+                    View Full Analytics
+                </button>
+<button class="bg-white dark:bg-surface-dark border border-taupe hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200 px-8 py-3.5 rounded-lg font-medium transition-colors flex items-center justify-center min-w-[200px]">
+                    Return to Dashboard
+                </button>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BuyNext Review Submission Page</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#A2AF9B", // Sage Green from request
+                        "primary-dark": "#8a9683", 
+                        "primary-light": "#eff2ee",
+                        "background-light": "#FAF9EE", // Cream background from request
+                        "background-dark": "#191a18",
+                        "footer-bg": "#EEEEEE",
+                        "border-light": "#EEEEEE",
+                        "text-main": "#2D302C", 
+                        "text-muted": "#6B7280",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem", 
+                        "lg": "1rem", 
+                        "xl": "1.5rem",
+                        "2xl": "2rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .star-active {
+                @apply text-primary;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-main antialiased transition-colors duration-300 min-h-screen flex flex-col">
+<nav class="sticky top-0 z-50 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-primary/10">
+<div class="container mx-auto px-4 md:px-6 h-20 flex items-center justify-between gap-8">
+<a class="flex items-center gap-2 group" href="#">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-lg group-hover:bg-primary-dark transition-colors">
+                B
+            </div>
+<span class="text-xl font-bold tracking-tight text-text-main dark:text-white">BuyNext</span>
+</a>
+<div class="hidden md:flex flex-1 max-w-xl relative">
+<input class="w-full pl-12 pr-4 py-3 rounded-full bg-white dark:bg-zinc-800 border-none ring-1 ring-primary/20 focus:ring-2 focus:ring-primary shadow-sm text-sm placeholder-gray-400 transition-shadow" placeholder="Search for premium essentials..." type="text"/>
+<span class="material-icons-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary">search</span>
+</div>
+<div class="flex items-center gap-4 text-text-main dark:text-white">
+<button class="md:hidden p-2 hover:bg-primary/10 rounded-full">
+<span class="material-icons-outlined">search</span>
+</button>
+<button class="flex items-center gap-2 hover:text-primary transition-colors">
+<span class="material-icons-outlined text-2xl">person_outline</span>
+<span class="hidden lg:block text-sm font-medium">Account</span>
+</button>
+<button class="flex items-center gap-2 hover:text-primary transition-colors">
+<span class="material-icons-outlined text-2xl">favorite_border</span>
+</button>
+<button class="relative flex items-center gap-2 hover:text-primary transition-colors">
+<span class="material-icons-outlined text-2xl">shopping_bag</span>
+<span class="absolute -top-1 -right-1 w-4 h-4 bg-primary text-white text-[10px] flex items-center justify-center rounded-full font-bold">2</span>
+<span class="hidden lg:block text-sm font-medium">Cart</span>
+</button>
+</div>
+</div>
+</nav>
+<main class="flex-grow flex items-center justify-center py-12 px-4">
+<div class="max-w-2xl w-full bg-white dark:bg-zinc-900 rounded-xl shadow-sm border border-primary/5 overflow-hidden">
+<div class="p-8 md:p-12">
+<div class="flex items-center gap-4 mb-10 pb-8 border-b border-border-light dark:border-zinc-800">
+<div class="w-20 h-20 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
+<img alt="Product image for review" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-zSi6vud9IIry33Z38O97vbhYJ8G0lFys7fFpQk5-5ORGYPRxho2_33f2bf8cVBF-exPbNPyTwskAIGRi06e-eFSOP68lJyHZqykm_bdX6aKHQZzt38Mb_4CvK9pUHKNPbx04RE-AwqAh4eblRKsPIovSikfOPRTQQMH879FDUWuAJwPl8cAE-RCqfovYZE2TR72E164toph_WIPgBpOtpOPiMLxpMNrNPd1TqHqUV27EyiJWuejA7UTO_LHFuv2m_6e4vVI1rHA5"/>
+</div>
+<div>
+<p class="text-xs font-semibold text-primary uppercase tracking-wider mb-1">Writing a review for</p>
+<h1 class="text-xl font-bold text-text-main dark:text-white">Organic Cotton Knit Sweater</h1>
+</div>
+</div>
+<form class="space-y-8">
+<div class="text-center">
+<label class="block text-sm font-medium text-text-muted mb-4">Overall Rating</label>
+<div class="flex justify-center gap-2">
+<button class="group" type="button">
+<span class="material-symbols-outlined text-4xl star-active">star</span>
+</button>
+<button class="group" type="button">
+<span class="material-symbols-outlined text-4xl star-active">star</span>
+</button>
+<button class="group" type="button">
+<span class="material-symbols-outlined text-4xl star-active">star</span>
+</button>
+<button class="group" type="button">
+<span class="material-symbols-outlined text-4xl star-active">star</span>
+</button>
+<button class="group" type="button">
+<span class="material-symbols-outlined text-4xl text-gray-200 hover:text-primary transition-colors">star</span>
+</button>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-text-muted mb-2" for="comment">Detailed Review</label>
+<textarea class="w-full p-4 rounded-xl border border-border-light dark:border-zinc-800 dark:bg-zinc-800 focus:ring-2 focus:ring-primary focus:border-primary placeholder-gray-400 text-text-main dark:text-gray-200 transition-shadow resize-none" id="comment" placeholder="Share your experience with this product..." rows="6"></textarea>
+</div>
+<div>
+<label class="block text-sm font-medium text-text-muted mb-2">Add Photos (Optional)</label>
+<div class="border-2 border-dashed border-border-light dark:border-zinc-700 rounded-xl p-8 flex flex-col items-center justify-center group hover:border-primary transition-colors cursor-pointer bg-gray-50/50 dark:bg-zinc-800/50">
+<span class="material-symbols-outlined text-3xl text-gray-400 group-hover:text-primary mb-2 transition-colors">add_photo_alternate</span>
+<p class="text-sm text-text-muted group-hover:text-text-main transition-colors">Click to upload or drag and drop</p>
+<p class="text-xs text-gray-400 mt-1">PNG, JPG up to 10MB</p>
+<input accept="image/*" class="hidden" multiple="" type="file"/>
+</div>
+</div>
+<div class="pt-4 flex flex-col md:flex-row items-center gap-6">
+<button class="w-full md:flex-1 bg-primary hover:bg-primary-dark text-white font-bold py-4 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5" type="submit">
+                        Submit Review
+                    </button>
+<a class="text-text-muted hover:text-text-main font-medium transition-colors text-sm" href="#">Cancel and Return</a>
+</div>
+</form>
+</div>
+</div>
+</main>
+<footer class="bg-footer-bg dark:bg-zinc-900 pt-16 pb-8 border-t border-gray-200 dark:border-zinc-800 mt-auto">
+<div class="container mx-auto px-4 md:px-6">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+<div>
+<a class="flex items-center gap-2 mb-6" href="#">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-lg">
+                        B
+                    </div>
+<span class="text-xl font-bold tracking-tight text-text-main dark:text-white">BuyNext</span>
+</a>
+<p class="text-text-muted text-sm leading-relaxed mb-6">
+                    Your premium destination for curated lifestyle essentials. We believe in quality, sustainability, and timeless design.
+                </p>
+<div class="flex gap-4">
+<a class="text-gray-400 hover:text-primary transition-colors" href="#"><span class="material-icons-outlined">facebook</span></a>
+<a class="text-gray-400 hover:text-primary transition-colors" href="#"><span class="material-icons-outlined">photo_camera</span></a>
+<a class="text-gray-400 hover:text-primary transition-colors" href="#"><span class="material-icons-outlined">alternate_email</span></a>
+</div>
+</div>
+<div>
+<h4 class="font-bold text-text-main dark:text-white mb-6">Company</h4>
+<ul class="space-y-3 text-sm text-text-muted">
+<li><a class="hover:text-primary transition-colors" href="#">About Us</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Careers</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Press</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Sustainability</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-text-main dark:text-white mb-6">Support</h4>
+<ul class="space-y-3 text-sm text-text-muted">
+<li><a class="hover:text-primary transition-colors" href="#">Help Center</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Shipping &amp; Returns</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Order Status</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Contact Us</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-text-main dark:text-white mb-6">Contact</h4>
+<ul class="space-y-4 text-sm text-text-muted">
+<li class="flex items-start gap-3">
+<span class="material-icons-outlined text-primary mt-0.5">location_on</span>
+<span>123 Innovation Drive,<br/>Tech City, TC 94000</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-icons-outlined text-primary">phone</span>
+<span>+1 (555) 123-4567</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-icons-outlined text-primary">email</span>
+<span>support@buynext.com</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="border-t border-gray-300 dark:border-zinc-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-sm text-text-muted">© 2023 BuyNext Inc. All rights reserved.</p>
+<div class="flex gap-6 text-sm text-text-muted">
+<a class="hover:text-primary" href="#">Privacy Policy</a>
+<a class="hover:text-primary" href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+</footer>
+
+</body></html>

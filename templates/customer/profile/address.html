@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BuyNext Address Management</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#A2AF9B",
+                        "primary-dark": "#8d9c85",
+                        "primary-light": "#eff2ee",
+                        "background-light": "#FAF9EE",
+                        "background-dark": "#191a18",
+                        "footer-bg": "#EEEEEE",
+                        "input-border": "#EEEEEE",
+                        "text-main": "#2D302C",
+                        "text-muted": "#6B7280",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "2xl": "2rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer base {
+            input, select {
+                @apply border-input-border focus:border-primary focus:ring-primary focus:ring-opacity-20 transition-all rounded-lg text-sm h-12;
+            }
+            label {
+                @apply block text-xs font-semibold uppercase tracking-wider text-text-muted mb-2;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-main antialiased transition-colors duration-300 min-h-screen">
+<nav class="sticky top-0 z-50 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-primary/10">
+<div class="container mx-auto px-4 md:px-6 h-20 flex items-center justify-between gap-8">
+<a class="flex items-center gap-2 group" href="#">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-lg group-hover:bg-primary-dark transition-colors">
+                B
+            </div>
+<span class="text-xl font-bold tracking-tight text-text-main dark:text-white">BuyNext</span>
+</a>
+<div class="hidden md:flex flex-1 max-w-xl relative">
+<input class="w-full pl-12 pr-4 py-3 rounded-full bg-white dark:bg-zinc-800 border-none ring-1 ring-primary/20 focus:ring-2 focus:ring-primary shadow-sm text-sm placeholder-gray-400 transition-shadow" placeholder="Search for premium essentials..." type="text"/>
+<span class="material-icons-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary">search</span>
+</div>
+<div class="flex items-center gap-4 text-text-main dark:text-white">
+<button class="flex items-center gap-2 text-primary font-semibold transition-colors">
+<span class="material-icons-outlined text-2xl">person_outline</span>
+<span class="hidden lg:block text-sm font-medium">Account</span>
+</button>
+<button class="flex items-center gap-2 hover:text-primary transition-colors">
+<span class="material-icons-outlined text-2xl">favorite_border</span>
+</button>
+<button class="relative flex items-center gap-2 hover:text-primary transition-colors">
+<span class="material-icons-outlined text-2xl">shopping_bag</span>
+<span class="absolute -top-1 -right-1 w-4 h-4 bg-primary text-white text-[10px] flex items-center justify-center rounded-full font-bold">2</span>
+<span class="hidden lg:block text-sm font-medium">Cart</span>
+</button>
+</div>
+</div>
+</nav>
+<main class="container mx-auto px-4 md:px-6 py-12">
+<div class="flex flex-col lg:flex-row gap-12">
+<aside class="w-full lg:w-64 space-y-2 shrink-0">
+<div class="mb-8">
+<h1 class="text-2xl font-bold text-text-main dark:text-white">Settings</h1>
+<p class="text-text-muted text-sm">Manage your account preferences</p>
+</div>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-text-muted hover:text-primary hover:bg-white dark:hover:bg-zinc-800 transition-all rounded-xl group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">person</span>
+                    Profile
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-text-muted hover:text-primary hover:bg-white dark:hover:bg-zinc-800 transition-all rounded-xl group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">local_shipping</span>
+                    Orders
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 bg-white dark:bg-zinc-800 border border-primary/20 rounded-xl text-primary font-bold shadow-sm" href="#">
+<span class="material-symbols-outlined text-[20px]">location_on</span>
+                    Addresses
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-text-muted hover:text-primary hover:bg-white dark:hover:bg-zinc-800 transition-all rounded-xl group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">shield</span>
+                    Security
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-text-muted hover:text-primary hover:bg-white dark:hover:bg-zinc-800 transition-all rounded-xl group border-t border-gray-100 dark:border-zinc-800 mt-4" href="#">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+                    Sign Out
+                </a>
+</nav>
+</aside>
+<div class="flex-1">
+<div class="mb-8">
+<h2 class="text-2xl font-bold text-text-main dark:text-white">Saved Addresses</h2>
+<p class="text-text-muted text-sm mt-1">Manage your delivery locations for a faster checkout experience.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+<button class="group relative flex flex-col items-center justify-center p-8 bg-white/50 dark:bg-zinc-900/50 border-2 border-dashed border-primary/30 rounded-xl hover:border-primary hover:bg-white dark:hover:bg-zinc-900 transition-all min-h-[280px]">
+<div class="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform mb-4">
+<span class="material-symbols-outlined text-3xl">add</span>
+</div>
+<span class="font-bold text-text-main dark:text-white">Add New Address</span>
+<p class="text-xs text-text-muted mt-2 text-center px-4">Save a new shipping or billing address to your account.</p>
+</button>
+<div class="bg-white dark:bg-zinc-900 rounded-xl border border-primary shadow-sm hover:shadow-md transition-shadow flex flex-col min-h-[280px]">
+<div class="p-6 flex-1">
+<div class="flex justify-between items-start mb-4">
+<h3 class="font-bold text-text-main dark:text-white">Alex Thompson</h3>
+<span class="bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded">Default</span>
+</div>
+<div class="space-y-1 text-sm text-text-muted leading-relaxed">
+<p>123 Innovation Drive</p>
+<p>Suite 450, Tech Tower</p>
+<p>San Francisco, CA 94105</p>
+<p>United States</p>
+<div class="flex items-center gap-2 mt-4 text-text-main dark:text-zinc-300 font-medium">
+<span class="material-icons-outlined text-sm">phone</span>
+                                +1 555-0123-4567
+                            </div>
+</div>
+</div>
+<div class="px-6 py-4 border-t border-gray-100 dark:border-zinc-800 flex items-center gap-6">
+<button class="flex items-center gap-1.5 text-xs font-bold text-primary hover:text-primary-dark transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+                            EDIT
+                        </button>
+<button class="flex items-center gap-1.5 text-xs font-bold text-primary hover:text-primary-dark transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+                            DELETE
+                        </button>
+</div>
+</div>
+<div class="bg-white dark:bg-zinc-900 rounded-xl border border-gray-100 dark:border-zinc-800 shadow-sm hover:shadow-md transition-shadow flex flex-col min-h-[280px]">
+<div class="p-6 flex-1">
+<div class="flex justify-between items-start mb-4">
+<h3 class="font-bold text-text-main dark:text-white">Office HQ</h3>
+</div>
+<div class="space-y-1 text-sm text-text-muted leading-relaxed">
+<p>888 Market Street</p>
+<p>Floor 12</p>
+<p>Seattle, WA 98101</p>
+<p>United States</p>
+<div class="flex items-center gap-2 mt-4 text-text-main dark:text-zinc-300 font-medium">
+<span class="material-icons-outlined text-sm">phone</span>
+                                +1 555-9876-5432
+                            </div>
+</div>
+</div>
+<div class="px-6 py-4 border-t border-gray-100 dark:border-zinc-800 flex items-center gap-6">
+<button class="flex items-center gap-1.5 text-xs font-bold text-primary hover:text-primary-dark transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+                            EDIT
+                        </button>
+<button class="flex items-center gap-1.5 text-xs font-bold text-primary hover:text-primary-dark transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+                            DELETE
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="bg-footer-bg dark:bg-zinc-900 pt-16 pb-8 border-t border-gray-200 dark:border-zinc-800 mt-20">
+<div class="container mx-auto px-4 md:px-6">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+<div>
+<a class="flex items-center gap-2 mb-6" href="#">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-lg">B</div>
+<span class="text-xl font-bold tracking-tight text-text-main dark:text-white">BuyNext</span>
+</a>
+<p class="text-text-muted text-sm leading-relaxed mb-6">
+                    Your premium destination for curated lifestyle essentials. We believe in quality, sustainability, and timeless design.
+                </p>
+<div class="flex gap-4">
+<a class="text-gray-400 hover:text-primary transition-colors" href="#"><i class="material-icons-outlined">facebook</i></a>
+<a class="text-gray-400 hover:text-primary transition-colors" href="#"><i class="material-icons-outlined">photo_camera</i></a>
+<a class="text-gray-400 hover:text-primary transition-colors" href="#"><i class="material-icons-outlined">alternate_email</i></a>
+</div>
+</div>
+<div>
+<h4 class="font-bold text-text-main dark:text-white mb-6">Company</h4>
+<ul class="space-y-3 text-sm text-text-muted">
+<li><a class="hover:text-primary transition-colors" href="#">About Us</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Careers</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Sustainability</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-text-main dark:text-white mb-6">Support</h4>
+<ul class="space-y-3 text-sm text-text-muted">
+<li><a class="hover:text-primary transition-colors" href="#">Help Center</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Shipping &amp; Returns</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Contact Us</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-text-main dark:text-white mb-6">Contact</h4>
+<ul class="space-y-4 text-sm text-text-muted">
+<li class="flex items-start gap-3">
+<span class="material-icons-outlined text-primary mt-0.5">location_on</span>
+<span>123 Innovation Drive,<br/>Tech City, TC 94000</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-icons-outlined text-primary">email</span>
+<span>support@buynext.com</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="border-t border-gray-300 dark:border-zinc-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-sm text-text-muted">© 2023 BuyNext Inc. All rights reserved.</p>
+<div class="flex gap-6 text-sm text-text-muted">
+<a class="hover:text-primary" href="#">Privacy Policy</a>
+<a class="hover:text-primary" href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+</footer>
+
+</body></html>

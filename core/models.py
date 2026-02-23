@@ -1,0 +1,196 @@
+import uuid
+from django.db import models
+from django.contrib.auth.models import AbstractUser
+from django.utils.text import slugify
+
+
+class User(AbstractUser):
+
+    public_id = models.UUIDField(
+        default=uuid.uuid4,
+        editable=False,
+        unique=True,
+        db_index=True,
+        help_text="Public UUID for profile links"
+    )
+    ROLE_CHOICES = (
+        ('ADMIN', 'Admin'),
+        ('SELLER', 'Seller'),
+        ('CUSTOMER', 'Customer')
+    )
+    phone_number = models.CharField(max_length=15, unique=True, null=True, blank=True)
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='CUSTOMER')
+    profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
+    is_verified = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['public_id']),
+            models.Index(fields=['role', 'is_verified']),
+        ]
+
+    def __str__(self):
+        return f"{self.username} ({self.get_role_display()})"
+
+
+class Address(models.Model):
+    ADDRESS_TYPE_CHOICES = (
+        ('HOME', 'Home'),
+        ('WORK', 'Work'),
+        ('OTHER', 'Other')
+    )
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="addresses")
+    full_name = models.CharField(max_length=100)
+    phone_number = models.CharField(max_length=15)
+    pincode = models.CharField(max_length=10)
+    locality = models.CharField(max_length=255)
+    house_info = models.CharField(max_length=255, help_text="House/Flat/Building number")
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    country = models.CharField(max_length=100, default="India")
+    landmark = models.CharField(max_length=255, blank=True)
+    address_type = models.CharField(max_length=20, choices=ADDRESS_TYPE_CHOICES, default='HOME')
+    is_default = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = "Addresses"
+        ordering = ['-is_default', '-created_at']
+        indexes = [
+            models.Index(fields=['user', 'is_default']),
+        ]
+
+    def __str__(self):
+        return f"{self.full_name} - {self.city} ({self.address_type})"
+
+    def save(self, *args, **kwargs):
+        if self.is_default:
+            Address.objects.filter(user=self.user, is_default=True).update(is_default=False)
+        super().save(*args, **kwargs)
+
+
+class Notification(models.Model):
+
+    NOTIFICATION_TYPES = (
+        ('ORDER', 'Order Update'),
+        ('PROMO', 'Promotion'),
+        ('SYSTEM', 'System'),
+        ('ACCOUNT', 'Account'),
+    )
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="notifications")
+    title = models.CharField(max_length=255)
+    message = models.TextField()
+    notification_type = models.CharField(max_length=20, choices=NOTIFICATION_TYPES, default='SYSTEM')
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['user', 'is_read', '-created_at']),
+        ]
+
+    def __str__(self):
+        return f"{self.title} - {self.user.username}"
+
+
+class Category(models.Model):
+
+    name = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=150, unique=True, blank=True)
+    description = models.TextField(blank=True)
+    image = models.ImageField(upload_to='categories/', blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+    display_order = models.IntegerField(default=0, help_text="Order in which to display")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = "Categories"
+        ordering = ['display_order', 'name']
+        indexes = [
+            models.Index(fields=['slug']),
+            models.Index(fields=['is_active', 'display_order']),
+        ]
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+
+class SubCategory(models.Model):
+
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="subcategories")
+    name = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=150, unique=True, blank=True)
+    description = models.TextField(blank=True)
+    image = models.ImageField(upload_to='subcategories/', blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+    display_order = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = "SubCategories"
+        ordering = ['display_order', 'name']
+        unique_together = [['category', 'name']]
+        indexes = [
+            models.Index(fields=['slug']),
+            models.Index(fields=['category', 'is_active']),
+        ]
+
+    def __str__(self):
+        return f"{self.category.name} > {self.name}"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(self.name)
+            slug = base_slug
+            counter = 1
+            while SubCategory.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
+        super().save(*args, **kwargs)
+
+
+class Banner(models.Model):
+
+    BANNER_POSITIONS = (
+        ('HERO', 'Hero Banner'),
+        ('MIDDLE', 'Middle Banner'),
+        ('FOOTER', 'Footer Banner'),
+    )
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    image = models.ImageField(upload_to='banners/')
+    redirect_url = models.URLField(blank=True, null=True, help_text="URL to redirect when banner is clicked")
+    position = models.CharField(max_length=20, choices=BANNER_POSITIONS, default='HERO')
+    display_order = models.IntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+    start_date = models.DateTimeField(null=True, blank=True)
+    end_date = models.DateTimeField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['position', 'display_order', '-created_at']
+        indexes = [
+            models.Index(fields=['is_active', 'position', 'display_order']),
+        ]
+
+    def __str__(self):
+        return f"{self.title} ({self.get_position_display()})"
