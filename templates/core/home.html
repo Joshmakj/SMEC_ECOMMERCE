@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>BuyNext | Premium Marketplace</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "brand-bg": "#FAF9EE",
+                        "brand-primary": "#556B2F",
+                        "brand-accent": "#DCCFC0",
+                        "brand-muted": "#EEEEEE",
+                        "text-main": "#1A1C19",
+                    },
+                    fontFamily: { "display": ["Plus Jakarta Sans", "sans-serif"] },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .dropdown:hover .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-content {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.2s ease-in-out;
+        }
+
+        .group:hover .quick-add {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="bg-brand-bg font-display text-text-main antialiased">
+
+    <nav class="sticky top-0 z-50 bg-brand-bg/95 backdrop-blur-md border-b border-brand-primary/10">
+        <div class="container mx-auto px-6 h-20 flex items-center justify-between gap-4">
+
+            <a class="flex items-center gap-3 flex-shrink-0" href="/">
+                <div class="w-10 h-10 rounded-xl bg-white shadow-md flex items-center justify-center">
+                    <span class="material-icons-outlined text-brand-primary text-xl">shopping_bag</span>
+                </div>
+                <span class="text-2xl font-extrabold tracking-tight hidden sm:block">
+                    <span class="text-blue-600">Buy</span><span class="text-orange-500">Next</span>
+                </span>
+                <span class="text-lg font-extrabold sm:hidden">
+                    <span class="text-blue-600">Buy</span><span class="text-orange-500">Next</span>
+                </span>
+            </a>
+
+            {% if request.user.is_authenticated %}
+            <div class="hidden lg:flex items-center gap-8 flex-shrink-0">
+                <div class="dropdown relative h-20 flex items-center">
+                    <button
+                        class="flex items-center gap-1 text-xs font-bold uppercase tracking-widest text-brand-primary hover:opacity-70 transition-all">
+                        Categories <span class="material-icons-outlined text-sm">expand_more</span>
+                    </button>
+                    <div
+                        class="dropdown-content absolute top-full left-0 w-56 bg-white shadow-2xl rounded-b-2xl border border-brand-muted p-4 overflow-hidden">
+                        <a href="#" class="flex items-center gap-3 p-3 hover:bg-brand-bg rounded-xl transition-colors">
+                            <span class="material-icons-outlined text-brand-primary">checkroom</span>
+                            <span class="text-sm font-semibold">Fashion</span>
+                        </a>
+                        <a href="#" class="flex items-center gap-3 p-3 hover:bg-brand-bg rounded-xl transition-colors">
+                            <span class="material-icons-outlined text-brand-primary">chair</span>
+                            <span class="text-sm font-semibold">Interior</span>
+                        </a>
+                        <a href="#" class="flex items-center gap-3 p-3 hover:bg-brand-bg rounded-xl transition-colors">
+                            <span class="material-icons-outlined text-brand-primary">devices</span>
+                            <span class="text-sm font-semibold">Electronics</span>
+                        </a>
+                    </div>
+                </div>
+                <a href="#" class="text-xs font-bold uppercase tracking-widest flex items-center gap-2">
+                    New Arrivals <span class="w-2 h-2 rounded-full bg-brand-primary"></span>
+                </a>
+                <a href="#" class="text-xs font-bold uppercase tracking-widest text-orange-600 animate-pulse-slow">
+                    Exclusive Deals
+                </a>
+            </div>
+            {% endif %}
+
+            <div class="flex-1 max-w-md relative hidden md:block">
+                <input type="text" placeholder="Search brands..."
+                    class="w-full bg-brand-muted border-none rounded-2xl px-12 py-2 text-sm focus:ring-2 focus:ring-brand-primary/20 transition-all">
+                <span
+                    class="material-icons-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+            </div>
+
+            <div class="flex items-center gap-4 sm:gap-6">
+                {% if request.user.is_authenticated %}
+                <div class="hidden md:flex items-center gap-4">
+                    <a href="#" class="relative group">
+                        <span
+                            class="material-icons-outlined text-2xl group-hover:text-brand-primary transition-colors">favorite_border</span>
+                        <span
+                            class="absolute -top-1 -right-1 bg-brand-primary text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full font-bold border-2 border-brand-bg">3</span>
+                    </a>
+
+                    <a href="#" class="relative group">
+                        <span
+                            class="material-icons-outlined text-2xl group-hover:text-brand-primary transition-colors">shopping_cart</span>
+                        <span
+                            class="absolute -top-1 -right-1 bg-blue-600 text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full font-bold border-2 border-brand-bg">2</span>
+                    </a>
+
+                    <button class="relative group">
+                        <span
+                            class="material-icons-outlined text-2xl group-hover:text-brand-primary transition-colors">notifications</span>
+                        <span
+                            class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full border-2 border-brand-bg"></span>
+                    </button>
+                </div>
+
+                <div class="relative dropdown">
+
+                    <!-- Profile Button -->
+                    <button
+                        class="relative w-10 h-10 rounded-full overflow-hidden border-2 border-transparent hover:border-brand-primary transition-all shadow-sm">
+
+                        {% if user.profile_image %}
+                        <img src="{{ user.profile_image.url }}" class="w-full h-full object-cover" alt="Profile">
+                        {% else %}
+                        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=300"
+                            class="w-full h-full object-cover" alt="Profile">
+                        {% endif %}
+
+                    </button>
+
+                    <!-- Dropdown -->
+                    <div class="dropdown-content absolute right-0 top-full pt-4 w-60 z-50">
+                        <div class="bg-white rounded-[1.5rem] shadow-2xl border border-brand-muted overflow-hidden">
+                            <div class="p-4 bg-brand-muted/30 border-b border-brand-muted">
+                                <p class="text-[10px] font-black uppercase tracking-widest text-brand-primary/50">
+                                    Account
+                                </p>
+                                <p class="text-sm font-extrabold text-brand-primary">
+                                    <span>{{user.first_name}}</span>
+                                    <span class="ml-2">{{user.last_name}}</span>
+                                </p>
+                            </div>
+
+                            <div class="p-2">
+                                <a href="{% url 'profile' %}"
+                                    class="flex items-center gap-3 p-3 text-sm font-bold text-gray-600 hover:bg-brand-bg hover:text-brand-primary rounded-xl transition-colors">
+                                    <span class="material-icons-outlined text-lg">account_circle</span> Profile
+                                </a>
+
+                                <a href="#"
+                                    class="flex items-center gap-3 p-3 text-sm font-bold text-gray-600 hover:bg-brand-bg hover:text-brand-primary rounded-xl transition-colors">
+                                    <span class="material-icons-outlined text-lg">shopping_cart</span> My Cart
+                                </a>
+                                <a href="#"
+                                    class="flex items-center gap-3 p-3 text-sm font-bold text-gray-600 hover:bg-brand-bg hover:text-brand-primary rounded-xl transition-colors">
+                                    <span class="material-icons-outlined text-lg">favorite_border</span> My Wishlist
+                                </a>
+                                <a href="#"
+                                    class="flex items-center gap-3 p-3 text-sm font-bold text-gray-600 hover:bg-brand-bg hover:text-brand-primary rounded-xl transition-colors">
+                                    <span class="material-icons-outlined text-lg">inventory_2</span> Order History
+                                </a>
+
+                                <div class="px-2 pt-2">
+                                    <a href="{% url 'user_seller' %}" class="flex items-center justify-center gap-2 
+               bg-orange-500 text-white 
+               p-3 rounded-xl text-[10px] font-bold uppercase tracking-widest 
+               hover:bg-orange-600 hover:shadow-lg hover:scale-[1.02] 
+               transition-all duration-200">
+                                        <span class="material-icons-outlined text-sm">storefront</span>
+                                        Sell on BuyNext
+                                    </a>
+                                </div>
+
+                                <div class="h-px bg-brand-muted my-2 mx-2"></div>
+                                <a href="{% url 'logout' %}"
+                                    class="flex items-center gap-3 p-3 text-sm font-bold text-red-500 hover:bg-red-50 rounded-xl transition-colors">
+                                    <span class="material-icons-outlined text-lg">logout</span> Sign Out
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                {% else %}
+                <div class="hidden md:flex items-center gap-4">
+
+                    <!-- Login -->
+                    <a href="{% url 'login' %}" class="text-sm font-semibold text-brand-primary 
+              px-4 py-2 rounded-xl 
+              hover:bg-brand-bg transition-all">
+                        Login
+                    </a>
+
+                    <!-- Sign Up -->
+                    <a href="{% url 'register' %}" class="text-sm font-semibold bg-brand-primary text-white 
+              px-5 py-2 rounded-xl 
+              hover:shadow-md hover:scale-[1.02] 
+              transition-all duration-200">
+                        Sign Up
+                    </a>
+
+                    <!-- Premium CTA -->
+                    <a href="{% url 'user_seller' %}" class="flex items-center gap-2 
+              bg-gradient-to-r from-orange-500 to-orange-600 
+              text-white px-5 py-2.5 rounded-xl 
+              text-xs font-bold uppercase tracking-widest 
+              shadow-md hover:shadow-xl 
+              hover:scale-[1.03] 
+              transition-all duration-300">
+
+                        <span class="material-icons-outlined text-sm">storefront</span>
+                        Sell on BuyNext
+                    </a>
+
+                </div>
+                {% endif %}
+
+                <button id="mobileMenuToggle"
+                    class="md:hidden p-2 rounded-lg bg-white/60 hover:bg-white border border-transparent shadow-sm ml-2">
+                    <span class="material-icons-outlined">menu</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile menu (toggled) -->
+    <div id="mobileMenu" class="md:hidden bg-white border-t border-brand-muted shadow-lg hidden">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center gap-3 mb-3">
+                <div class="w-10 h-10 rounded-xl bg-white shadow-md flex items-center justify-center">
+                    <span class="material-icons-outlined text-brand-primary">shopping_bag</span>
+                </div>
+                <div class="flex-1">
+                    <input type="text" placeholder="Search brands..."
+                        class="w-full bg-brand-muted border-none rounded-2xl px-4 py-2 text-sm focus:ring-2 focus:ring-brand-primary/20">
+                </div>
+                <button id="mobileMenuClose" class="p-2 ml-2 rounded-lg bg-white border hover:bg-brand-muted">
+                    <span class="material-icons-outlined">close</span>
+                </button>
+            </div>
+            <nav class="flex flex-col gap-3">
+                {% if request.user.is_authenticated %}
+
+                <!-- Authenticated Mobile Menu -->
+                <a href="#" class="py-3 px-4 rounded-xl hover:bg-brand-bg font-bold">Categories</a>
+                <a href="#" class="py-3 px-4 rounded-xl hover:bg-brand-bg font-bold">New Arrivals</a>
+                <a href="#" class="py-3 px-4 rounded-xl hover:bg-brand-bg font-bold">Exclusive Deals</a>
+
+                <a href="{% url 'user_seller' %}"
+                    class="py-3 px-4 rounded-xl font-bold flex items-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white">
+                    <span class="material-icons-outlined text-sm">storefront</span> Sell on BuyNext
+                </a>
+
+                <div class="h-px bg-brand-muted my-2"></div>
+
+                <a href="{% url 'profile' %}" class="py-3 px-4 rounded-xl hover:bg-brand-bg font-bold">Profile</a>
+                <a href="#" class="py-3 px-4 rounded-xl hover:bg-brand-bg font-bold">My Cart</a>
+                <a href="#" class="py-3 px-4 rounded-xl hover:bg-brand-bg font-bold">My Wishlist</a>
+                <a href="{% url 'logout' %}" class="py-3 px-4 rounded-xl hover:bg-red-50 text-red-500 font-bold">Sign
+                    Out</a>
+
+                {% else %}
+
+                <!-- Guest Mobile Menu -->
+                <a href="{% url 'login' %}" class="py-3 px-4 rounded-xl hover:bg-brand-bg font-bold">Login</a>
+                <a href="{% url 'register' %}" class="py-3 px-4 rounded-xl hover:bg-brand-bg font-bold">Sign Up</a>
+
+                <a href="{% url 'user_seller' %}"
+                    class="py-3 px-4 rounded-xl font-bold flex items-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white">
+                    <span class="material-icons-outlined text-sm">storefront</span> Sell on BuyNext
+                </a>
+
+                {% endif %}
+            </nav>
+        </div>
+    </div>
+
+    <section class="container mx-auto px-6 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div
+                class="lg:col-span-2 relative h-[450px] bg-brand-muted rounded-[2.5rem] overflow-hidden group shadow-xl">
+                <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&q=80&w=2070"
+                    class="absolute inset-0 w-full h-full object-cover grayscale-[30%] group-hover:scale-105 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-r from-brand-primary/80 to-transparent"></div>
+                <div class="absolute inset-0 flex flex-col justify-center p-12 text-white">
+                    <span class="font-bold tracking-[0.4em] uppercase text-[10px] mb-4">Summer Drops 2026</span>
+                    <h1 class="text-5xl font-extrabold tracking-tighter leading-tight mb-8">The Modern <br>Minimalist.
+                    </h1>
+                    <button
+                        class="w-fit bg-white text-brand-primary px-8 py-4 rounded-2xl font-bold uppercase tracking-widest text-xs hover:bg-brand-accent transition-colors">Shop
+                        The Drop</button>
+                </div>
+            </div>
+
+            <div
+                class="bg-brand-accent rounded-[2.5rem] p-10 flex flex-col justify-between items-start text-brand-primary relative overflow-hidden shadow-xl">
+                <div class="relative z-10">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="material-icons-outlined">sell</span>
+                        <span class="font-bold uppercase tracking-widest text-xs">Limited Offer</span>
+                    </div>
+                    <h2 class="text-3xl font-extrabold tracking-tight mb-2">Weekend <br>Clearance</h2>
+                    <p class="font-semibold opacity-70">Save up to 60% on Home Architecture.</p>
+                </div>
+                <button
+                    class="z-10 bg-brand-primary text-white w-full py-4 rounded-2xl font-bold flex items-center justify-center gap-2 group">
+                    Browse Deals <span
+                        class="material-icons-outlined text-sm group-hover:translate-x-2 transition-transform">east</span>
+                </button>
+                <span
+                    class="material-icons-outlined absolute -right-4 -top-4 text-[12rem] opacity-10">local_offer</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="container mx-auto px-6 py-6">
+        <div
+            class="bg-brand-primary rounded-[2.5rem] p-8 md:p-12 text-brand-bg flex flex-col md:flex-row items-center justify-between gap-8 shadow-lg">
+            <div>
+                <h2 class="text-3xl font-extrabold mb-2 tracking-tight">Flash Sale ends in:</h2>
+                <div class="flex gap-4">
+                    <div class="text-center"><span class="text-3xl font-bold">08</span>
+                        <p class="text-[10px] uppercase font-bold opacity-60">Hrs</p>
+                    </div>
+                    <div class="text-3xl font-bold">:</div>
+                    <div class="text-center"><span class="text-3xl font-bold">42</span>
+                        <p class="text-[10px] uppercase font-bold opacity-60">Min</p>
+                    </div>
+                    <div class="text-3xl font-bold">:</div>
+                    <div class="text-center"><span class="text-3xl font-bold">19</span>
+                        <p class="text-[10px] uppercase font-bold opacity-60">Sec</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-1 overflow-x-auto no-scrollbar flex gap-6">
+                <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl min-w-[200px] flex items-center gap-4">
+                    <div class="w-16 h-16 bg-white/20 rounded-lg flex-shrink-0 flex items-center justify-center">
+                        <span class="material-icons-outlined text-white">watch</span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold">Studio Watch</p>
+                        <p class="text-xs font-bold text-brand-accent line-through opacity-50">$200</p>
+                        <p class="text-sm font-extrabold text-white">$149</p>
+                    </div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl min-w-[200px] flex items-center gap-4">
+                    <div class="w-16 h-16 bg-white/20 rounded-lg flex-shrink-0 flex items-center justify-center">
+                        <span class="material-icons-outlined text-white">headphones</span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold">Acoustic Pro</p>
+                        <p class="text-sm font-extrabold text-white">$85</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container mx-auto px-6 py-16">
+        <div class="flex items-end justify-between mb-12">
+            <div>
+                <span class="text-brand-primary font-bold text-xs uppercase tracking-[0.3em] mb-2 block">Our
+                    Favorites</span>
+                <h2 class="text-4xl font-extrabold tracking-tight">Trending Now</h2>
+            </div>
+            <button
+                class="bg-brand-muted px-6 py-3 rounded-xl font-bold text-xs uppercase hover:bg-brand-accent transition-colors">View
+                All</button>
+        </div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+
+            <div class="group cursor-pointer">
+
+    <div class="relative aspect-[4/5] bg-brand-muted rounded-[2rem] overflow-hidden mb-6">
+
+        <!-- Product Image -->
+        <img src="https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&q=80&w=600"
+            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+
+        <!-- Wishlist Button -->
+        <button class="absolute top-4 right-4 w-10 h-10 
+            bg-white/80 backdrop-blur-md 
+            rounded-full flex items-center justify-center 
+            shadow-md
+            opacity-0 translate-y-3
+            group-hover:opacity-100 group-hover:translate-y-0
+            transition-all duration-300">
+
+            <span class="material-icons-outlined 
+                text-gray-600 hover:text-red-500 
+                transition-colors">
+                favorite_border
+            </span>
+        </button>
+
+        <!-- Quick Add -->
+        <div class="quick-add absolute bottom-4 left-4 right-4 translate-y-full opacity-0 transition-all duration-300">
+            <button
+                class="w-full bg-white py-3 rounded-xl font-bold text-xs uppercase shadow-xl hover:bg-brand-primary hover:text-white transition-colors">
+                Add to Cart
+            </button>
+        </div>
+
+    </div>
+
+    <h3 class="font-bold text-lg mb-1 group-hover:text-brand-primary transition-colors">
+        Heritage Canvas High
+    </h3>
+
+    <p class="text-brand-primary font-extrabold">$110.00</p>
+
+</div>
+                <div class="group cursor-pointer">
+                    <div class="relative aspect-[4/5] bg-brand-muted rounded-[2rem] overflow-hidden mb-6">
+
+                        <!-- Product Image -->
+                        <img src="https://images.unsplash.com/photo-1540574163026-643ea20ade25?auto=format&fit=crop&q=80&w=600"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+
+                        <!-- Wishlist Button (Hidden by default) -->
+                        <button class="absolute top-4 right-4 w-10 h-10 
+               bg-white/80 backdrop-blur-md 
+               rounded-full flex items-center justify-center 
+               shadow-md
+               opacity-0 translate-y-3
+               group-hover:opacity-100 group-hover:translate-y-0
+               transition-all duration-300">
+
+                            <span class="material-icons-outlined 
+                     text-gray-600 hover:text-red-500 
+                     transition-colors">
+                                favorite_border
+                            </span>
+                        </button>
+
+                        <!-- Quick Add -->
+                        <div
+                            class="quick-add absolute bottom-4 left-4 right-4 translate-y-full opacity-0 transition-all duration-300">
+                            <button
+                                class="w-full bg-white py-3 rounded-xl font-bold text-xs uppercase shadow-xl hover:bg-brand-primary hover:text-white transition-colors">
+                                Add to Cart
+                            </button>
+                        </div>
+
+                    </div>
+                    <h3 class="font-bold text-lg mb-1 group-hover:text-brand-primary transition-colors">Ceramic Handset
+                    </h3>
+                    <p class="text-brand-primary font-extrabold">$95.00</p>
+                </div>
+                <div class="group cursor-pointer">
+                    <div class="relative aspect-[4/5] bg-brand-muted rounded-[2rem] overflow-hidden mb-6">
+
+                        <!-- Product Image -->
+                        <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=80&w=600"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+
+                        <!-- Wishlist Button (Hidden by default) -->
+                        <button class="absolute top-4 right-4 w-10 h-10 
+               bg-white/80 backdrop-blur-md 
+               rounded-full flex items-center justify-center 
+               shadow-md
+               opacity-0 translate-y-3
+               group-hover:opacity-100 group-hover:translate-y-0
+               transition-all duration-300">
+
+                            <span class="material-icons-outlined 
+                     text-gray-600 hover:text-red-500 
+                     transition-colors">
+                                favorite_border
+                            </span>
+                        </button>
+
+                        <!-- Quick Add -->
+                        <div
+                            class="quick-add absolute bottom-4 left-4 right-4 translate-y-full opacity-0 transition-all duration-300">
+                            <button
+                                class="w-full bg-white py-3 rounded-xl font-bold text-xs uppercase shadow-xl hover:bg-brand-primary hover:text-white transition-colors">
+                                Add to Cart
+                            </button>
+                        </div>
+
+                    </div>
+                    <h3 class="font-bold text-lg mb-1 group-hover:text-brand-primary transition-colors">Pro Studio Audio
+                    </h3>
+                    <p class="text-brand-primary font-extrabold">$320.00</p>
+                </div>
+            </div>
+    </section>
+
+    <footer class="bg-brand-muted pt-20 pb-10">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-xl bg-white shadow-md flex items-center justify-center">
+                            <span class="material-icons-outlined text-brand-primary text-xl">shopping_bag</span>
+                        </div>
+
+                        <span class="text-2xl font-extrabold tracking-tight hidden sm:block">
+                            <span class="text-blue-600">Buy</span><span class="text-orange-500">Next</span>
+                        </span>
+                        <span class="text-lg font-extrabold sm:hidden">
+                            <span class="text-blue-600">Buy</span><span class="text-orange-500">Next</span>
+                        </span>
+                    </div>
+                    <p class="text-sm text-gray-500 leading-relaxed mb-6">The definitive marketplace for luxury items
+                        and independent creators.</p>
+                    <div class="flex gap-4">
+                        <div
+                            class="w-10 h-10 bg-brand-accent rounded-full flex items-center justify-center cursor-pointer hover:bg-brand-primary hover:text-white transition-colors">
+                            <span class="material-icons-outlined text-sm">camera</span>
+                        </div>
+                        <div
+                            class="w-10 h-10 bg-brand-accent rounded-full flex items-center justify-center cursor-pointer hover:bg-brand-primary hover:text-white transition-colors">
+                            <span class="material-icons-outlined text-sm">alternate_email</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold uppercase tracking-widest text-xs mb-6">Marketplace</h4>
+                    <ul class="space-y-4 text-sm text-gray-500">
+                        <li><a href="#" class="hover:text-brand-primary">Become a Seller</a></li>
+                        <li><a href="#" class="hover:text-brand-primary">Authenticity Policy</a></li>
+                        <li><a href="#" class="hover:text-brand-primary">Affiliate Program</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold uppercase tracking-widest text-xs mb-6">Help</h4>
+                    <ul class="space-y-4 text-sm text-gray-500">
+                        <li><a href="#" class="hover:text-brand-primary">Shipping & Returns</a></li>
+                        <li><a href="#" class="hover:text-brand-primary">Track Order</a></li>
+                        <li><a href="#" class="hover:text-brand-primary">Contact Support</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold uppercase tracking-widest text-xs mb-6">Journal</h4>
+                    <p class="text-sm text-gray-500 mb-4">Sign up for early access to drops.</p>
+                    <div class="flex gap-2">
+                        <input type="email" placeholder="Email"
+                            class="w-full bg-white border-none rounded-xl px-4 py-2 text-sm focus:ring-1 focus:ring-brand-primary shadow-sm">
+                        <button class="bg-brand-primary text-white p-2 rounded-xl px-4 hover:opacity-90"><span
+                                class="material-icons-outlined text-sm">east</span></button>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="pt-8 border-t border-gray-300 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-bold uppercase tracking-widest text-gray-400">
+                <p>&copy; 2026 BuyNext Marketplace.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-brand-primary">Privacy</a>
+                    <a href="#" class="hover:text-brand-primary">Terms</a>
+                    <a href="#" class="hover:text-brand-primary">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+            (function () {
+                const btn = document.getElementById('mobileMenuToggle');
+                const menu = document.getElementById('mobileMenu');
+                const closeBtn = document.getElementById('mobileMenuClose');
+                if (btn && menu) {
+                    btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+                }
+                if (closeBtn && menu) {
+                    closeBtn.addEventListener('click', () => menu.classList.add('hidden'));
+                }
+                window.addEventListener('resize', () => {
+                    if (window.innerWidth >= 768 && menu) menu.classList.add('hidden');
+                });
+            })();
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Sell on BuyNext | Premium Seller Program</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "brand-bg": "#FAF9EE",
+                        "brand-primary": "#556B2F",
+                        "brand-accent": "#DCCFC0",
+                        "brand-muted": "#EEEEEE",
+                        "text-main": "#1A1C19",
+                    },
+                    fontFamily: { "display": ["Plus Jakarta Sans", "sans-serif"] },
+                }
+            }
+        }
+    </script>
+    <style>
+        .dropdown:hover .dropdown-content { opacity: 1; visibility: visible; transform: translateY(0); }
+        .dropdown-content { opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.2s ease-in-out; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+
+<body class="bg-brand-bg font-display text-text-main antialiased">
+
+    <nav class="sticky top-0 z-50 bg-brand-bg/95 backdrop-blur-md border-b border-brand-primary/10">
+        <div class="container mx-auto px-6 h-20 flex items-center justify-between gap-4">
+            <a class="flex items-center gap-3 flex-shrink-0" href="/">
+                <div class="w-10 h-10 rounded-xl bg-white shadow-md flex items-center justify-center">
+                    <span class="material-icons-outlined text-brand-primary text-xl">shopping_bag</span>
+                </div>
+                <span class="text-2xl font-extrabold tracking-tight hidden sm:block">
+                    <span class="text-blue-600">Buy</span><span class="text-orange-500">Next</span>
+                </span>
+            </a>
+
+            <div class="hidden lg:flex items-center gap-8 flex-shrink-0">
+                <a href="#" class="text-xs font-bold uppercase tracking-widest text-brand-primary">How it works</a>
+                <a href="#" class="text-xs font-bold uppercase tracking-widest text-brand-primary">Fees</a>
+                <a href="#" class="text-xs font-bold uppercase tracking-widest text-brand-primary">Success Stories</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <a href="{% url 'login' %}" class="text-sm font-bold text-brand-primary px-4 py-2">Log In</a>
+                <a href="#register" class="bg-brand-primary text-white px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-widest hover:shadow-lg transition-all">
+                    Register as Seller
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="relative py-20 overflow-hidden">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-3xl">
+                <span class="text-orange-600 font-bold text-xs uppercase tracking-[0.3em] mb-4 block">Merchant Partnerships 2026</span>
+                <h1 class="text-5xl md:text-7xl font-extrabold tracking-tighter leading-tight mb-8">
+                    Turn your passion <br><span class="text-brand-primary">into a Global Brand.</span>
+                </h1>
+                <p class="text-lg text-gray-600 mb-10 max-w-xl leading-relaxed">
+                    Join over 5,000+ independent creators and luxury brands. BuyNext provides the tools, the audience, and the prestige to scale your business.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#register" class="bg-brand-primary text-white px-10 py-5 rounded-2xl font-bold uppercase tracking-widest text-sm text-center hover:scale-[1.02] transition-all shadow-xl">
+                        Start Selling Now
+                    </a>
+                    <a href="#benefits" class="bg-white text-brand-primary border border-brand-primary/20 px-10 py-5 rounded-2xl font-bold uppercase tracking-widest text-sm text-center hover:bg-brand-muted transition-all">
+                        View Benefits
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="absolute top-0 right-0 w-1/3 h-full bg-brand-accent/30 -skew-x-12 translate-x-1/4 hidden lg:block"></div>
+    </section>
+
+    <section class="container mx-auto px-6 py-12">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 bg-white p-12 rounded-[2.5rem] shadow-sm border border-brand-muted">
+            <div class="text-center">
+                <p class="text-4xl font-extrabold text-brand-primary mb-2">2M+</p>
+                <p class="text-xs font-bold uppercase tracking-widest text-gray-400">Monthly Visitors</p>
+            </div>
+            <div class="text-center">
+                <p class="text-4xl font-extrabold text-brand-primary mb-2">15%</p>
+                <p class="text-xs font-bold uppercase tracking-widest text-gray-400">Avg. Growth MoM</p>
+            </div>
+            <div class="text-center">
+                <p class="text-4xl font-extrabold text-brand-primary mb-2">0%</p>
+                <p class="text-xs font-bold uppercase tracking-widest text-gray-400">Listing Fees</p>
+            </div>
+            <div class="text-center">
+                <p class="text-4xl font-extrabold text-brand-primary mb-2">24h</p>
+                <p class="text-xs font-bold uppercase tracking-widest text-gray-400">Fast Payouts</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="benefits" class="container mx-auto px-6 py-24">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-extrabold tracking-tight mb-4">Why Sell on BuyNext?</h2>
+            <p class="text-gray-500 max-w-2xl mx-auto">We don't just host your products; we build your business infrastructure so you can focus on creating.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white p-10 rounded-[2rem] border border-brand-muted hover:border-brand-primary/30 transition-all group">
+                <div class="w-14 h-14 bg-brand-bg rounded-2xl flex items-center justify-center mb-8 group-hover:bg-brand-primary transition-colors">
+                    <span class="material-icons-outlined text-brand-primary group-hover:text-white">insights</span>
+                </div>
+                <h3 class="text-xl font-extrabold mb-4">Advanced Analytics</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Track your sales, customer demographics, and trending styles with our bespoke seller dashboard.</p>
+            </div>
+
+            <div class="bg-white p-10 rounded-[2rem] border border-brand-muted hover:border-brand-primary/30 transition-all group">
+                <div class="w-14 h-14 bg-brand-bg rounded-2xl flex items-center justify-center mb-8 group-hover:bg-brand-primary transition-colors">
+                    <span class="material-icons-outlined text-brand-primary group-hover:text-white">verified_user</span>
+                </div>
+                <h3 class="text-xl font-extrabold mb-4">Trusted Presence</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Leverage our "Premium Verified" badge to build instant trust with high-intent luxury shoppers.</p>
+            </div>
+
+            <div class="bg-white p-10 rounded-[2rem] border border-brand-muted hover:border-brand-primary/30 transition-all group">
+                <div class="w-14 h-14 bg-brand-bg rounded-2xl flex items-center justify-center mb-8 group-hover:bg-brand-primary transition-colors">
+                    <span class="material-icons-outlined text-brand-primary group-hover:text-white">local_shipping</span>
+                </div>
+                <h3 class="text-xl font-extrabold mb-4">Global Logistics</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Access our discounted shipping rates and worldwide fulfillment centers in over 40 countries.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="register" class="container mx-auto px-6 py-20">
+        <div class="bg-brand-primary rounded-[3rem] p-12 md:p-20 text-center text-white relative overflow-hidden">
+            <div class="relative z-10">
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight">Ready to launch your shop?</h2>
+                <p class="text-brand-accent mb-12 max-w-xl mx-auto font-medium">Registration takes less than 5 minutes. No credit card required to start.</p>
+                <a href="#" class="inline-flex items-center gap-3 bg-white text-brand-primary px-12 py-6 rounded-2xl font-black uppercase tracking-widest text-sm hover:bg-brand-accent hover:scale-105 transition-all shadow-2xl">
+                    <span class="material-icons-outlined">app_registration</span>
+                    Register as Seller
+                </a>
+            </div>
+            <span class="material-icons-outlined absolute -bottom-10 -right-10 text-[20rem] opacity-5">storefront</span>
+        </div>
+    </section>
+
+    <footer class="bg-brand-muted pt-20 pb-10">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <div class="col-span-1">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-xl bg-white shadow-md flex items-center justify-center">
+                            <span class="material-icons-outlined text-brand-primary text-xl">shopping_bag</span>
+                        </div>
+                        <span class="text-2xl font-extrabold tracking-tight">
+                            <span class="text-blue-600">Buy</span><span class="text-orange-500">Next</span>
+                        </span>
+                    </div>
+                    <p class="text-sm text-gray-500 leading-relaxed mb-6">Empowering creators to build the next generation of premium brands.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold uppercase tracking-widest text-xs mb-6">Resources</h4>
+                    <ul class="space-y-4 text-sm text-gray-500">
+                        <li><a href="#" class="hover:text-brand-primary">Seller Handbook</a></li>
+                        <li><a href="#" class="hover:text-brand-primary">Photography Guide</a></li>
+                        <li><a href="#" class="hover:text-brand-primary">Fee Structure</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold uppercase tracking-widest text-xs mb-6">Support</h4>
+                    <ul class="space-y-4 text-sm text-gray-500">
+                        <li><a href="#" class="hover:text-brand-primary">Seller Help Center</a></li>
+                        <li><a href="#" class="hover:text-brand-primary">Community Forum</a></li>
+                        <li><a href="#" class="hover:text-brand-primary">Safety & Trust</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold uppercase tracking-widest text-xs mb-6">Join the Community</h4>
+                    <p class="text-sm text-gray-500 mb-4">Tips and tricks for sellers.</p>
+                    <div class="flex gap-2">
+                        <input type="email" placeholder="Email" class="w-full bg-white border-none rounded-xl px-4 py-2 text-sm focus:ring-1 focus:ring-brand-primary shadow-sm">
+                        <button class="bg-brand-primary text-white p-2 rounded-xl px-4"><span class="material-icons-outlined text-sm">east</span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-gray-300 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-bold uppercase tracking-widest text-gray-400">
+                <p>&copy; 2026 BuyNext Merchant Services.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-brand-primary">Privacy</a>
+                    <a href="#" class="hover:text-brand-primary">Seller Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
