@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sell on BuyNext | Global Marketplace</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
     <script>
         tailwind.config = {
@@ -26,14 +28,17 @@
         }
     </script>
     <style>
-        html { scroll-behavior: smooth; }
+        html {
+            scroll-behavior: smooth;
+        }
     </style>
 </head>
+
 <body class="bg-brand-cream font-sans antialiased">
 
     <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-brand-olive/10">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-             <a class="flex items-center gap-3 flex-shrink-0" href="/">
+            <a class="flex items-center gap-3 flex-shrink-0" href="/">
                 <div class="w-10 h-10 rounded-xl bg-white shadow-md flex items-center justify-center">
                     <span class="material-icons-outlined text-brand-primary text-xl">shopping_bag</span>
                 </div>
@@ -44,32 +49,47 @@
                     <span class="text-blue-600">Buy</span><span class="text-orange-500">Next</span>
                 </span>
             </a>
-            
-            <a href="{% url 'home' %}" class="flex items-center gap-2 px-5 py-2.5 bg-brand-olive text-white rounded-xl text-sm font-bold hover:bg-black transition-all shadow-lg shadow-brand-olive/20">
-                <span class="material-icons-outlined text-base">arrow_back</span>
-                Back to Store
+{% if user.is_authenticated %}
+            <a href="{% url 'home' %}" 
+   class="flex items-center gap-2 px-5 py-2.5 bg-white border-2 border-brand-orange rounded-xl text-sm font-bold transition-all shadow-lg hover:bg-brand-orange/10 hover:border-brand-blue hover:scale-105">
+   <span class="material-icons-outlined text-base">arrow_back</span>
+   Go Back to 
+   <span class="font-extrabold">
+      <span class="text-brand-blue">Buy</span>
+      <span class="text-brand-orange">Next</span>
+   </span>
+</a>
+{% else %}
+            <a href="{% url 'login' %}"
+                class="px-5 py-2.5 bg-brand-orange text-white rounded-xl text-sm font-bold transition-all shadow-lg hover:bg-brand-orange/90 hover:scale-105">
+                Login
             </a>
+{% endif %}
         </div>
     </nav>
 
     <header id="hero" class="relative py-20 lg:py-32 overflow-hidden">
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div class="relative z-10">
-                <span class="inline-block px-4 py-1.5 rounded-full bg-brand-olive/10 text-brand-olive text-xs font-bold uppercase tracking-widest mb-6">
+                <span
+                    class="inline-block px-4 py-1.5 rounded-full bg-brand-olive/10 text-brand-olive text-xs font-bold uppercase tracking-widest mb-6">
                     Partner with us
                 </span>
                 <h1 class="text-5xl lg:text-7xl font-extrabold text-gray-900 leading-[1.1] mb-6">
                     Turn your passion into a <span class="text-brand-olive">Global Brand.</span>
                 </h1>
                 <p class="text-lg text-gray-600 mb-10 max-w-lg leading-relaxed">
-                    Join thousands of artisans and businesses reaching millions of customers daily. We provide the tools; you provide the craft.
+                    Join thousands of artisans and businesses reaching millions of customers daily. We provide the
+                    tools; you provide the craft.
                 </p>
-                
+
                 <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="/register-seller" class="px-8 py-4 bg-brand-orange text-white rounded-2xl font-bold text-center shadow-xl shadow-brand-orange/30 hover:brightness-110 transition-all">
+                    <a href="{% url 'seller_registration' %}"
+                        class="px-8 py-4 bg-brand-orange text-white rounded-2xl font-bold text-center shadow-xl shadow-brand-orange/30 hover:brightness-110 transition-all">
                         Apply to Become a Seller
                     </a>
-                    <a href="{% url 'login' %}" class="px-8 py-4 bg-white border-2 border-gray-200 text-gray-900 rounded-2xl font-bold text-center hover:border-brand-olive hover:text-brand-olive transition-all">
+                    <a href="{% url 'login' %}"
+                        class="px-8 py-4 bg-white border-2 border-gray-200 text-gray-900 rounded-2xl font-bold text-center hover:border-brand-olive hover:text-brand-olive transition-all">
                         Login to Seller Central
                     </a>
                 </div>
@@ -77,62 +97,72 @@
 
             <div class="relative">
                 <div class="absolute inset-0 bg-brand-sand/30 rounded-[3rem] rotate-3 -z-10"></div>
-                <img src="https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&q=80&w=1000" 
-                     alt="Seller working" 
-                     class="rounded-[3rem] shadow-2xl object-cover h-[500px] w-full">
+                <img src="https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&q=80&w=1000"
+                    alt="Seller working" class="rounded-[3rem] shadow-2xl object-cover h-[500px] w-full">
             </div>
         </div>
     </header>
 
     <section class="py-24 bg-white">
-       <div class="text-center mb-16">
-    <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900">
-        Why sell on 
-        <span class="tracking-tight">
-            <span class="text-brand-blue">Buy</span>
-            <span class="text-brand-orange">Next.</span>
-        </span>?
-    </h2>
-    <p class="text-gray-500 mt-4">
-        Everything you need to succeed in the modern economy.
-    </p>
-</div>
-</div>
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900">
+                Why sell on
+                <span class="tracking-tight">
+                    <span class="text-brand-blue">Buy</span>
+                    <span class="text-brand-orange">Next.</span>
+                </span>?
+            </h2>
+            <p class="text-gray-500 mt-4">
+                Everything you need to succeed in the modern economy.
+            </p>
+        </div>
+        </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="p-10 rounded-[2rem] bg-brand-cream border border-transparent hover:border-brand-sand transition-all group">
-                    <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-sm mb-6 group-hover:scale-110 transition-transform">
-                        <span class="material-icons-outlined text-brand-olive text-3xl">public</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Global Reach</h3>
-                    <p class="text-gray-600 leading-relaxed text-sm">List your products once and reach customers across 50+ countries with our integrated export tools.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div
+                class="p-10 rounded-[2rem] bg-brand-cream border border-transparent hover:border-brand-sand transition-all group">
+                <div
+                    class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-sm mb-6 group-hover:scale-110 transition-transform">
+                    <span class="material-icons-outlined text-brand-olive text-3xl">public</span>
                 </div>
-
-                <div class="p-10 rounded-[2rem] bg-brand-cream border border-transparent hover:border-brand-sand transition-all group">
-                    <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-sm mb-6 group-hover:scale-110 transition-transform">
-                        <span class="material-icons-outlined text-brand-olive text-3xl">payments</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Low Commissions</h3>
-                    <p class="text-gray-600 leading-relaxed text-sm">Keep more of what you earn. Our transparent fee structure is among the lowest in the industry.</p>
-                </div>
-
-                <div class="p-10 rounded-[2rem] bg-brand-cream border border-transparent hover:border-brand-sand transition-all group">
-                    <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-sm mb-6 group-hover:scale-110 transition-transform">
-                        <span class="material-icons-outlined text-brand-olive text-3xl">insights</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Premium Analytics</h3>
-                    <p class="text-gray-600 leading-relaxed text-sm">Understand your customers with deep data insights, heatmaps, and sales forecasting tools.</p>
-                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-3">Global Reach</h3>
+                <p class="text-gray-600 leading-relaxed text-sm">List your products once and reach customers across 50+
+                    countries with our integrated export tools.</p>
             </div>
+
+            <div
+                class="p-10 rounded-[2rem] bg-brand-cream border border-transparent hover:border-brand-sand transition-all group">
+                <div
+                    class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-sm mb-6 group-hover:scale-110 transition-transform">
+                    <span class="material-icons-outlined text-brand-olive text-3xl">payments</span>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-3">Low Commissions</h3>
+                <p class="text-gray-600 leading-relaxed text-sm">Keep more of what you earn. Our transparent fee
+                    structure is among the lowest in the industry.</p>
+            </div>
+
+            <div
+                class="p-10 rounded-[2rem] bg-brand-cream border border-transparent hover:border-brand-sand transition-all group">
+                <div
+                    class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-sm mb-6 group-hover:scale-110 transition-transform">
+                    <span class="material-icons-outlined text-brand-olive text-3xl">insights</span>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-3">Premium Analytics</h3>
+                <p class="text-gray-600 leading-relaxed text-sm">Understand your customers with deep data insights,
+                    heatmaps, and sales forecasting tools.</p>
+            </div>
+        </div>
         </div>
     </section>
 
     <section class="py-20 bg-brand-olive text-white overflow-hidden relative">
         <div class="max-w-7xl mx-auto px-6 flex flex-col items-center text-center">
             <h2 class="text-3xl md:text-5xl font-extrabold mb-8">Ready to grow your business?</h2>
-            <p class="text-white/70 max-w-xl mb-12 text-lg">Set up your shop in less than 10 minutes. Our support team is here to guide you through every step of the journey.</p>
-            
-            <a href="#hero" class="px-12 py-5 bg-white text-brand-olive rounded-2xl font-extrabold shadow-2xl hover:bg-brand-sand transition-all transform hover:-translate-y-1">
+            <p class="text-white/70 max-w-xl mb-12 text-lg">Set up your shop in less than 10 minutes. Our support team
+                is here to guide you through every step of the journey.</p>
+
+            <a href="#hero"
+                class="px-12 py-5 bg-white text-brand-olive rounded-2xl font-extrabold shadow-2xl hover:bg-brand-sand transition-all transform hover:-translate-y-1">
                 Start Selling Today
             </a>
         </div>
@@ -141,4 +171,5 @@
     </section>
 
 </body>
+
 </html>

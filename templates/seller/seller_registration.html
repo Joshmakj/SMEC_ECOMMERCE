@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Partner Registration | BuyNext</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.5.3/build/css/intlTelInput.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            olive: '#556B2F',
+                            cream: '#FAF9EE',
+                            sand: '#DCCFC0',
+                            blue: '#2874F0',
+                            orange: '#F97316',
+                        },
+                        inputBg: "#EEEEEE",
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .iti {
+            width: 100%;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #DCCFC0;
+            border-radius: 10px;
+        }
+
+        /* Tab sliding transition */
+        #tab-highlight {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+
+<body class="bg-brand-cream font-sans antialiased min-h-screen flex flex-col justify-center p-4 lg:p-8">
+
+    <div
+        class="max-w-7xl mx-auto w-full bg-white rounded-[2.5rem] shadow-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 ring-1 ring-black/5">
+
+        <div
+            class="lg:col-span-5 bg-brand-olive p-8 md:p-12 text-white flex flex-col justify-between relative overflow-hidden">
+            <div class="relative z-10">
+                <a href="/" class="flex items-center gap-2 mb-12 hover:opacity-80 transition-opacity">
+                    <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-lg">
+                        <span class="material-icons text-brand-olive">shopping_bag</span>
+                    </div>
+                    <span class="text-2xl font-extrabold tracking-tighter">
+                        <span class="text-white">Buy</span><span class="text-brand-sand">Next.</span>
+                    </span>
+                </a>
+                <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-6">Scale your brand with BuyNext.</h1>
+                <p class="text-white/70 text-lg font-medium leading-relaxed max-w-sm">Access millions of shoppers,
+                    premium analytics, and sustainable logistics tools.</p>
+            </div>
+            <div class="relative z-10 mt-12 space-y-6">
+                <div class="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/10">
+                    <div class="flex -space-x-2">
+                        <img class="w-8 h-8 rounded-full border-2 border-brand-olive"
+                            src="https://i.pravatar.cc/100?u=1" alt="Seller">
+                        <img class="w-8 h-8 rounded-full border-2 border-brand-olive"
+                            src="https://i.pravatar.cc/100?u=2" alt="Seller">
+                        <img class="w-8 h-8 rounded-full border-2 border-brand-olive"
+                            src="https://i.pravatar.cc/100?u=3" alt="Seller">
+                    </div>
+                    <p class="text-xs font-semibold text-brand-sand">Joined by 5,000+ global brands</p>
+                </div>
+            </div>
+            <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-32 -mt-32 blur-3xl"></div>
+            <div class="absolute bottom-0 left-0 w-48 h-48 bg-black/10 rounded-full -ml-24 -mb-24 blur-2xl"></div>
+        </div>
+
+        <div class="lg:col-span-7 p-8 md:p-12 lg:p-16 overflow-y-auto max-h-[90vh] custom-scrollbar bg-white">
+
+            <div class="mb-10 text-center lg:text-left">
+                <h2 class="text-3xl font-extrabold text-gray-900">Seller Onboarding</h2>
+                <p class="text-gray-500 mt-2 font-medium">Register your account and business profile</p>
+            </div>
+
+            <form id="registrationForm" action="" method="POST" enctype="multipart/form-data" class="space-y-10">
+                {% csrf_token %}
+
+                <div class="space-y-6">
+                    <div class="flex items-center gap-4">
+                        <span
+                            class="text-[10px] font-black uppercase tracking-[0.2em] text-brand-olive bg-brand-olive/10 px-3 py-1 rounded-full">
+                            Step 1: Account
+                        </span>
+                        <div class="h-px flex-1 bg-gray-100"></div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <label
+                            class="block text-xs font-bold text-gray-700 ml-1 uppercase tracking-wider">Identification
+                            Method</label>
+                        <div class="relative bg-gray-100 p-1 rounded-2xl flex w-full max-w-md">
+                            <div id="tab-highlight"
+                                class="absolute top-1 left-1 w-[calc(50%-4px)] h-[calc(100%-8px)] bg-white rounded-xl shadow-sm z-0">
+                            </div>
+                            <button type="button" onclick="switchIdentityTab('name')" id="btn-name"
+                                class="relative z-10 flex-1 py-2.5 text-sm font-bold transition-colors duration-200 text-brand-olive">Full
+                                Name</button>
+                            <button type="button" onclick="switchIdentityTab('username')" id="btn-username"
+                                class="relative z-10 flex-1 py-2.5 text-sm font-bold transition-colors duration-200 text-gray-500">Username</button>
+                        </div>
+                    </div>
+
+                    <div id="dynamicIdentityContainer" class="space-y-5">
+                        <div id="nameFields" class="grid grid-cols-1 sm:grid-cols-2 gap-5 transition-all duration-300">
+                            <div class="space-y-2">
+                                <label class="block text-xs font-bold text-gray-700 ml-1">First Name</label>
+                                <input type="text" name="first_name" placeholder="enter your first name"
+                                    value="{% if request.user.is_authenticated %}{{ request.user.first_name }}{% endif %}"
+                                    class="w-full bg-inputBg border-transparent focus:border-brand-olive focus:bg-white rounded-xl px-4 py-3 text-sm transition-all outline-none">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="block text-xs font-bold text-gray-700 ml-1">Last Name</label>
+                                <input type="text" name="last_name" placeholder="enter your last name "
+                                    value="{% if request.user.is_authenticated %}{{ request.user.last_name }}{% endif %}"
+                                    class="w-full bg-inputBg border-transparent focus:border-brand-olive focus:bg-white rounded-xl px-4 py-3 text-sm transition-all outline-none">
+                            </div>
+                        </div>
+
+                        <div id="usernameField" class="hidden transition-all duration-300">
+                            <div class="space-y-2">
+                                <label class="block text-xs font-bold text-gray-700 ml-1">Account Username</label>
+                                <input type="text" name="username" placeholder="enter your username" 
+                                {% if not request.user.is_authenticated %}required{% endif %} 
+                                    {% if request.user.is_authenticated %} value="{{ request.user.username }}" readonly {% endif %}
+                                     class="w-full bg-inputBg border-transparent focus:border-brand-olive focus:bg-white rounded-xl px-4 py-3 text-sm transition-all outline-none {% if request.user.is_authenticated %}cursor-not-allowed opacity-80{% endif %}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div class="space-y-2">
+                            <label class="block text-xs font-bold text-gray-700 ml-1">Work Email</label>
+                            <input type="email" name="email" placeholder="enter your email address" {% if notrequest.user.is_authenticated %}required{% endif %} {% if request.user.is_authenticated %}value="{{ request.user.email }}" readonly{% endif %}
+                                class="w-full bg-inputBg border-transparent focus:border-brand-olive focus:bg-white rounded-xl px-4 py-3 text-sm transition-all outline-none {% if request.user.is_authenticated %}cursor-not-allowed opacity-80{% endif %}">
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="block text-xs font-bold text-gray-700 ml-1">Buisness pnone Number</label>
+                            <input id="phone" type="tel" name="phone_display" placeholder="enter your phone number" 
+                            {% if not request.user.is_authenticated %}required{% endif %} 
+                                {% if request.user.is_authenticated %} value="{{ request.user.phone_number }}" readonly 
+                                {% endif %}
+                                class="w-full bg-inputBg border-transparent focus:border-brand-olive focus:bg-white rounded-xl px-4 py-3 text-sm transition-all outline-none {% if request.user.is_authenticated %}cursor-not-allowed opacity-80{% endif %}">
+                        </div>
+                    </div>
+
+                    {% if not request.user.is_authenticated %}
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div class="space-y-2">
+                            <label class="block text-xs font-bold text-gray-700 ml-1">Password</label>
+                            <div class="relative">
+                                <input type="password" name="password" id="password" required placeholder="••••••••"
+                                    class="w-full bg-inputBg border-transparent focus:border-brand-olive focus:bg-white rounded-xl px-4 py-3 text-sm transition-all outline-none">
+                                <button type="button" onclick="togglePassword('password','icon1')"
+                                    class="absolute right-3 top-3 text-gray-400">
+                                    <span class="material-icons text-xl" id="icon1">visibility_off</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-xs font-bold text-gray-700 ml-1">Confirm Password</label>
+                            <div class="relative">
+                                <input type="password" name="confirm_password" id="confirm_password" required
+                                    placeholder="••••••••"
+                                    class="w-full bg-inputBg border-transparent focus:border-brand-olive focus:bg-white rounded-xl px-4 py-3 text-sm transition-all outline-none">
+                                <button type="button" onclick="togglePassword('confirm_password','icon2')"
+                                    class="absolute right-3 top-3 text-gray-400">
+                                    <span class="material-icons text-xl" id="icon2">visibility_off</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="space-y-6">
+                    <div class="flex items-center gap-4">
+                        <span
+                            class="text-[10px] font-black uppercase tracking-[0.2em] text-brand-olive bg-brand-olive/10 px-3 py-1 rounded-full">Step
+                            2: Business</span>
+                        <div class="h-px flex-1 bg-gray-100"></div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div class="space-y-2">
+                            <label class="block text-xs font-bold text-gray-700 ml-1">Legal Store Name</label>
+                            <input type="text" name="store_name" required placeholder="The Artisan Hub"
+                                class="w-full bg-inputBg border-transparent focus:border-brand-olive focus:bg-white rounded-xl px-4 py-3 text-sm transition-all outline-none">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-xs font-bold text-gray-700 ml-1">GSTIN / Tax ID</label>
+                            <input type="text" name="gst_number" required placeholder="15-digit Alpha-numeric"
+                                class="w-full bg-inputBg border-transparent focus:border-brand-olive focus:bg-white rounded-xl px-4 py-3 text-sm transition-all outline-none uppercase font-mono tracking-wider">
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block text-xs font-bold text-gray-700 ml-1">Store Logo</label>
+                        <div class="relative group">
+                            <input type="file" name="logo"
+                                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                            <div
+                                class="w-full bg-inputBg border-2 border-dashed border-gray-200 group-hover:border-brand-olive group-hover:bg-white rounded-xl px-5 py-6 text-center transition-all">
+                                <span
+                                    class="material-icons-outlined text-gray-400 group-hover:text-brand-olive">add_a_photo</span>
+                                <p class="text-[10px] text-gray-500 font-bold mt-1 uppercase">Upload Brand Identity</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-4 pt-4">
+                    <button type="submit"
+                        class="w-full bg-brand-olive text-white py-4 rounded-xl font-bold text-sm uppercase tracking-widest shadow-xl shadow-brand-olive/20 hover:bg-black transition-all">
+                        Launch My Store
+                    </button>
+
+                    <div class="relative py-4 flex items-center justify-center">
+                        <span class="absolute inset-x-0 h-px bg-gray-100"></span>
+                        <span
+                            class="relative bg-white px-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Or
+                            fast-track with</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <button type="button"
+                            class="flex items-center justify-center gap-2 py-3 border border-gray-200 rounded-xl hover:bg-gray-50 transition-all text-sm font-semibold">
+                            <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-4 h-4"
+                                alt="Google"> Google
+                        </button>
+                        <button type="button"
+                            class="flex items-center justify-center gap-2 py-3 border border-gray-200 rounded-xl hover:bg-gray-50 transition-all text-sm font-semibold">
+                            <img src="https://www.svgrepo.com/show/475647/facebook-color.svg" class="w-4 h-4"
+                                alt="Facebook"> Facebook
+                        </button>
+                    </div>
+
+                    <p class="text-center text-[10px] text-gray-400 mt-6 leading-relaxed">
+                        By creating an account, you agree to our <a href="#"
+                            class="text-brand-olive font-bold underline">Seller Terms</a> and <a href="#"
+                            class="text-brand-olive font-bold underline">Privacy Policy</a>.
+                    </p>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.5.3/build/js/intlTelInput.min.js"></script>
+    <script>
+        // TAB SWITCH LOGIC
+        function switchIdentityTab(type) {
+            const nameFields = document.getElementById('nameFields');
+            const usernameField = document.getElementById('usernameField');
+            const highlight = document.getElementById('tab-highlight');
+            const btnName = document.getElementById('btn-name');
+            const btnUser = document.getElementById('btn-username');
+
+            if (type === 'name') {
+                nameFields.classList.remove('hidden');
+                usernameField.classList.add('hidden');
+                highlight.style.transform = 'translateX(0)';
+                btnName.classList.add('text-brand-olive');
+                btnName.classList.remove('text-gray-500');
+                btnUser.classList.add('text-gray-500');
+                btnUser.classList.remove('text-brand-olive');
+            } else {
+                nameFields.classList.add('hidden');
+                usernameField.classList.remove('hidden');
+                highlight.style.transform = 'translateX(100%)';
+                btnUser.classList.add('text-brand-olive');
+                btnUser.classList.remove('text-gray-500');
+                btnName.classList.add('text-gray-500');
+                btnName.classList.remove('text-brand-olive');
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const phoneInput = document.querySelector("#phone");
+            const form = document.getElementById("registrationForm");
+            let iti = null;
+
+            if (phoneInput && !phoneInput.readOnly) {
+                iti = window.intlTelInput(phoneInput, {
+                    initialCountry: "in",   // fallback only
+                    separateDialCode: true,
+                    utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.5.3/build/js/utils.js",
+                });
+            }
+
+            // Toggle Password Logic (Keep your existing code)
+            window.togglePassword = function (inputId, iconId) {
+                const field = document.getElementById(inputId);
+                const icon = document.getElementById(iconId);
+                field.type = field.type === "password" ? "text" : "password";
+                icon.textContent = field.type === "password" ? "visibility_off" : "visibility";
+            };
+
+            form.addEventListener("submit", function (e) {
+                if (iti && !phoneInput.readOnly) { // Only validate if the user can actually edit it
+                    if (!iti.isValidNumber()) {
+                        alert("Please enter a valid phone number.");
+                        e.preventDefault();
+                        return;
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
