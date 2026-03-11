@@ -60,7 +60,7 @@
 
                 <div class="flex items-center gap-3 mb-6">
                     <span id="price-selling" class="text-3xl font-bold text-gray-900">₹{{ default_variant.selling_price }}</span>
-                    <span id="price-mrp" class="text-gray-500 line-through">₹{{ default_variant.mrp }}</span>
+                    <span id="price-mrp" class="text-gray-500 line-through">${{ default_variant.mrp }}</span>
                     <span id="price-discount" class="text-green-700 font-bold">{% widthratio default_variant.selling_price default_variant.mrp 100 %}% off</span>
                 </div>
 

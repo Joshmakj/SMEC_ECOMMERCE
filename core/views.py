@@ -2,10 +2,11 @@ from django.shortcuts import render,redirect,get_object_or_404
 from .models import *
 from seller.models import *
 from customer.models import *
-from django.db.models import Avg, Prefetch,Min
+from django.db.models import Avg, Prefetch,Min,Max
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from .decorator import _dashboard_for_user,customer_required,admin_not_required
 # Create your views here.
 
@@ -145,6 +146,9 @@ def all_products(request):
 
         variant = product.variants.first()
         product.stock_quantity = variant.stock_quantity if variant else 0
+    paginator = Paginator(products, 2)   
+    page_number = request.GET.get("page")
+    products = paginator.get_page(page_number)
 
     context = {
         "products": products,
@@ -158,58 +162,83 @@ def all_products(request):
 
     return render(request, "core/all_products.html", context)
 
+
 @admin_not_required
 def subcategory_view(request, category_slug):
 
-    active_category = get_object_or_404(Category, slug=category_slug, is_active=True)
+    active_category = get_object_or_404(
+        Category,
+        slug=category_slug,
+        is_active=True
+    )
 
     all_categories = Category.objects.filter(
         is_active=True
     ).order_by("display_order", "name")
 
-    subcategories_qs = active_category.subcategories.filter(
+    subcategories = active_category.subcategories.filter(
         is_active=True
     ).order_by("display_order", "name")
-
-    total_subcategories = subcategories_qs.count()
-
-    show_all_subcategories = request.GET.get("show_all") == "1"
-    show_all_products = request.GET.get("products") == "1"
-
-
-    if show_all_subcategories:
-        subcategories = subcategories_qs
-    else:
-        subcategories = subcategories_qs[:6]
-
 
     selected_slug = request.GET.get("subcategory")
     selected_subcategory = None
 
     if selected_slug:
-        selected_subcategory = subcategories_qs.filter(slug=selected_slug).first()
+        selected_subcategory = subcategories.filter(slug=selected_slug).first()
+
+    sort = request.GET.get("sort", "newest")
 
     products = Product.objects.filter(
         is_active=True,
         approval_status="APPROVED",
         subcategory__category=active_category
-    ).prefetch_related("gallery", "variants", "subcategory")
+    ).select_related(
+        "seller",
+        "subcategory",
+        "subcategory__category"
+    ).prefetch_related(
+        "variants",
+        "variants__images",
+        "gallery"
+    )
 
     if selected_subcategory:
         products = products.filter(subcategory=selected_subcategory)
 
     products = products.annotate(
-        price=Min("variants__selling_price")
-    ).order_by("-created_at")
+        min_selling_price=Min("variants__selling_price"),
+        min_mrp=Min("variants__mrp"),            
+        stock_quantity=Max("variants__stock_quantity")
+    )
 
    
-    if not show_all_products:
-        products = products[:8]
+    if sort == "price_low_high":
+        products = products.order_by("min_selling_price")
 
-  
+    elif sort == "price_high_low":
+        products = products.order_by("-min_selling_price")
+
+    else:
+        products = products.order_by("-created_at")
+
+ 
     for product in products:
-        img = product.gallery.filter(is_primary=True).first()
-        product.primary_image = img.image if img else None
+
+        gallery = product.gallery.first()
+
+        if gallery:
+            product.primary_image = gallery.image
+
+        else:
+            variant = product.variants.first()
+
+            if variant and variant.images.first():
+                product.primary_image = variant.images.first().image
+            else:
+                product.primary_image = None
+    paginator = Paginator(products, 1)  # 12 products per page
+    page_number = request.GET.get("page")
+    products = paginator.get_page(page_number)
 
     context = {
         "all_categories": all_categories,
@@ -217,9 +246,7 @@ def subcategory_view(request, category_slug):
         "subcategories": subcategories,
         "selected_subcategory": selected_subcategory,
         "products": products,
-        "show_all": show_all_subcategories,
-        "show_all_products": show_all_products,
-        "total_subcategories": total_subcategories,
+        "sort": sort,
     }
 
     return render(request, "core/subcategory.html", context)

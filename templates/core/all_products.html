@@ -3,66 +3,87 @@
 {% block title %}BuyNext | All Products{% endblock %}
 
 {% block content %}
-<div class="bg-white min-h-screen"> 
-    
-   
+<div class="bg-slate-100 min-h-screen font-sans text-slate-900">
 
-    <div class="container mx-auto px-4 py-8">
-        <header class="mb-10">
-            <div class="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">
-                <a href="/">Home</a>
-                <span class="material-icons text-[10px]">chevron_right</span>
-                <span class="text-brand-primary">All Products</span>
+    <div class="container mx-auto px-4 py-10">
+        <header class="mb-12">
+            <div class="flex items-center gap-3 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">
+                <a href="/" class="hover:text-orange-500 transition-colors">Home</a>
+                <span class="text-slate-300">/</span>
+                <span class="text-orange-600">The Catalog</span>
             </div>
-            <h1 class="text-3xl font-black text-brand-primary tracking-tight">The Catalog</h1>
+            <div class="flex items-center gap-4">
+                <div class="h-10 w-1.5 bg-gradient-to-b from-orange-500 to-amber-600 rounded-full"></div>
+                <h1 class="text-4xl font-black text-slate-900 tracking-tighter">The Catalog</h1>
+            </div>
         </header>
 
-        <div class="flex flex-col lg:flex-row gap-8">
+        <div class="flex flex-col lg:flex-row gap-10">
             <aside class="w-full lg:w-72 flex-shrink-0">
-                <div class="bg-white shadow-sm rounded-3xl border border-brand-primary/5 sticky top-28 overflow-hidden">
-                    <div class="p-6 border-b border-brand-muted">
-                        <h2 class="font-bold text-lg text-brand-primary flex items-center gap-2">
-                            <span class="material-icons-outlined text-sm">tune</span> Filters
+                <div
+                    class="bg-white/70 backdrop-blur-md rounded-[2.5rem] border border-white p-8 sticky top-32 shadow-xl shadow-slate-200/50">
+                    <div class="mb-8 pb-4 border-b border-slate-50">
+                        <h2
+                            class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] flex items-center gap-2">
+                            <span class="material-icons-outlined text-sm text-orange-500">tune</span> Filter Lab
                         </h2>
                     </div>
-                    
-                    <form id="filterForm" method="get" class="divide-y divide-brand-muted">
+
+                    <form id="filterForm" method="get" class="space-y-10">
                         <input type="hidden" name="sort" id="sortInput" value="{{ sort_by }}">
-                        
-                        <div class="p-6">
-                            <h3 class="text-[10px] font-black uppercase text-brand-primary/40 mb-5 tracking-[0.2em]">Categories</h3>
+
+                        <div>
+                            <h3 class="text-[10px] font-black uppercase text-slate-900 mb-5 tracking-widest">Departments
+                            </h3>
                             <div class="space-y-4">
                                 {% for category in categories %}
                                 <label class="flex items-center group cursor-pointer">
-                                    <input name="categories" value="{{ category.id }}" type="checkbox" 
-                                           class="w-4 h-4 border-brand-muted rounded text-brand-primary focus:ring-brand-primary/20"
-                                        {% if category.id|stringformat:"s" in selected_categories %}checked{% endif %}>
-                                    <span class="ml-3 text-sm font-medium text-gray-500 group-hover:text-brand-primary transition-colors">{{ category.name }}</span>
+                                    <div class="relative flex items-center justify-center">
+                                        <input name="categories" value="{{ category.id }}" type="checkbox"
+                                            class="peer appearance-none w-5 h-5 border-2 border-slate-100 rounded-lg checked:bg-orange-500 checked:border-orange-500 transition-all cursor-pointer"
+                                            {% if category.id|stringformat:"s" in selected_categories %}checked{% endif %}>
+                                            
+                                        <span
+                                            class="material-icons text-white text-[14px] absolute pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity">check</span>
+                                    </div>
+                                    <span
+                                        class="ml-3 text-sm font-bold text-slate-500 group-hover:text-slate-900 transition-colors">
+                                        {{ category.name }}</span>
                                 </label>
                                 {% endfor %}
                             </div>
                         </div>
 
-                        <div class="p-6">
-                            <h3 class="text-[10px] font-black uppercase text-brand-primary/40 mb-5 tracking-[0.2em]">Price Range</h3>
+                        <div>
+                            <h3 class="text-[10px] font-black uppercase text-slate-900 mb-5 tracking-widest">Price Range
+                            </h3>
                             <div class="flex items-center gap-2 mb-4">
-                                <input type="number" name="min_price" id="minPrice" placeholder="Min" value="{{ min_price }}" 
-                                       class="w-full bg-brand-bg border-none rounded-xl py-3 px-4 text-xs focus:ring-2 focus:ring-brand-primary/20 outline-none">
-                                <span class="text-brand-primary/20">—</span>
-                                <input type="number" name="max_price" id="maxPrice" placeholder="Max" value="{{ max_price }}" 
-                                       class="w-full bg-brand-bg border-none rounded-xl py-3 px-4 text-xs focus:ring-2 focus:ring-brand-primary/20 outline-none">
+                                <input type="number" name="min_price" id="minPrice" placeholder="Min"
+                                    value="{{ min_price }}"
+                                    class="w-full bg-zinc-50 border-2 border-transparent rounded-2xl py-3 px-4 text-xs font-bold focus:border-orange-500/20 focus:bg-white transition-all outline-none">
+                                <span class="text-slate-200">—</span>
+                                <input type="number" name="max_price" id="maxPrice" placeholder="Max"
+                                    value="{{ max_price }}"
+                                    class="w-full bg-zinc-50 border-2 border-transparent rounded-2xl py-3 px-4 text-xs font-bold focus:border-orange-500/20 focus:bg-white transition-all outline-none">
                             </div>
-                            <button type="submit" class="w-full bg-brand-primary text-white text-[10px] font-bold py-4 rounded-xl hover:shadow-xl transition-all uppercase tracking-widest">
+                            <button type="submit"
+                                class="w-full bg-slate-950 text-white text-[10px] font-black py-4 rounded-2xl hover:bg-orange-600 hover:shadow-lg hover:shadow-orange-200 transition-all uppercase tracking-widest">
                                 Apply Price
                             </button>
                         </div>
 
-                        <div class="p-6">
+                        <div class="pt-6 border-t border-slate-50">
                             <label class="flex items-center cursor-pointer group">
-                                <input type="checkbox" name="in_stock" id="inStockOnly" value="1" 
-                                       class="w-4 h-4 border-brand-muted rounded text-brand-primary focus:ring-brand-primary/20" 
-                                       {% if in_stock %}checked{% endif %}>
-                                <span class="ml-3 text-sm text-gray-500 font-bold group-hover:text-brand-primary transition-colors">In Stock Only</span>
+                                <div class="relative flex items-center justify-center">
+                                    <input type="checkbox" name="in_stock" id="inStockOnly" value="1"
+                                        class="peer appearance-none w-5 h-5 border-2 border-slate-100 rounded-lg checked:bg-emerald-500 checked:border-emerald-500 transition-all cursor-pointer"
+                                        {% if in_stock %}checked{% endif %}>
+                                    <span
+                                        class="material-icons text-white text-[14px] absolute pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity">inventory_2</span>
+                                </div>
+                                <span
+                                    class="ml-3 text-sm text-slate-500 font-bold group-hover:text-slate-900 transition-colors">In
+                                    Stock Only</span>
                             </label>
                         </div>
                     </form>
@@ -70,85 +91,137 @@
             </aside>
 
             <main class="flex-grow">
-                <div class="bg-white p-2 px-6 mb-8 shadow-sm rounded-3xl border border-brand-primary/5 flex items-center gap-10 overflow-x-auto no-scrollbar">
-                    <span class="text-[9px] font-black uppercase text-brand-primary/30 tracking-[0.2em] whitespace-nowrap">Sort Collection</span>
-                    <div class="flex gap-10">
-                        <button onclick="updateSort('newest')" class="text-[10px] font-black uppercase tracking-widest whitespace-nowrap py-5 transition-all relative {% if sort_by == 'newest' %}text-brand-primary{% else %}text-gray-400 hover:text-brand-primary{% endif %}">
-                            Newest Arrivals
-                            {% if sort_by == 'newest' %}<span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-brand-primary rounded-full"></span>{% endif %}
-                        </button>
-                        <button onclick="updateSort('price_low_high')" class="text-[10px] font-black uppercase tracking-widest whitespace-nowrap py-5 transition-all relative {% if sort_by == 'price_low_high' %}text-brand-primary{% else %}text-gray-400 hover:text-brand-primary{% endif %}">
-                            Price: Low to High
-                            {% if sort_by == 'price_low_high' %}<span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-brand-primary rounded-full"></span>{% endif %}
-                        </button>
-                        <button onclick="updateSort('price_high_low')" class="text-[10px] font-black uppercase tracking-widest whitespace-nowrap py-5 transition-all relative {% if sort_by == 'price_high_low' %}text-brand-primary{% else %}text-gray-400 hover:text-brand-primary{% endif %}">
-                            Price: High to Low
-                            {% if sort_by == 'price_high_low' %}<span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-brand-primary rounded-full"></span>{% endif %}
-                        </button>
+                <div
+                    class="bg-slate-950 p-2 px-8 mb-10 shadow-2xl shadow-slate-200 rounded-full flex items-center justify-between overflow-x-auto no-scrollbar">
+                    <div class="flex items-center gap-10">
+                        <span
+                            class="text-[9px] font-black uppercase text-slate-500 tracking-[0.2em] whitespace-nowrap">Sort</span>
+                        <div class="flex gap-10">
+                            <button onclick="updateSort('newest')"
+                                class="text-[10px] font-black uppercase tracking-widest whitespace-nowrap py-5 transition-all relative {% if sort_by == 'newest' %}text-orange-400{% else %}text-slate-400 hover:text-white{% endif %}">
+                                Newest
+                                {% if sort_by == 'newest' %}<span
+                                    class="absolute bottom-3 left-1/2 -translate-x-1/2 w-1 h-1 bg-orange-400 rounded-full"></span>
+                               {% endif %}
+                            </button>
+                            <button onclick="updateSort('price_low_high')"
+                                class="text-[10px] font-black uppercase tracking-widest whitespace-nowrap py-5 transition-all relative {% if sort_by == 'price_low_high' %}text-orange-400{% else %}text-slate-400 hover:text-white{% endif %}">
+                                Low to High
+                                {% if sort_by == 'price_low_high' %}<span
+                                    class="absolute bottom-3 left-1/2 -translate-x-1/2 w-1 h-1 bg-orange-400 rounded-full"></span>
+                               {% endif %}
+                            </button>
+                            <button onclick="updateSort('price_high_low')"
+                                class="text-[10px] font-black uppercase tracking-widest whitespace-nowrap py-5 transition-all relative {% if sort_by == 'price_high_low' %}text-orange-400{% else %}text-slate-400 hover:text-white{% endif %}">
+                                High to Low
+                                {% if sort_by == 'price_high_low' %}<span
+                                    class="absolute bottom-3 left-1/2 -translate-x-1/2 w-1 h-1 bg-orange-400 rounded-full"></span>
+                                {% endif %}
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
                     {% for product in products %}
-                    <a href="{% url 'product_details' product.slug %}" class="bg-white p-5 group rounded-[2.5rem] border border-transparent hover:border-brand-primary/5 hover:shadow-2xl hover:shadow-brand-primary/5 transition-all duration-500 relative flex flex-col">
-                        <div class="relative aspect-square mb-6 overflow-hidden bg-brand-bg rounded-[2rem]">
+                    <a href="{% url 'product_details' product.slug %}"
+                        class="group relative bg-white rounded-[1.75rem] p-2.5 border border-slate-100 hover:border-orange-500/20 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.06)] transition-all duration-700 flex flex-col">
+
+                        <div
+                            class="relative aspect-square bg-zinc-50 rounded-[1.25rem] overflow-hidden p-6 flex items-center justify-center transition-all group-hover:bg-orange-50/30">
                             {% if product.primary_image %}
                             <img src="{{ product.primary_image.url }}" alt="{{ product.name }}"
-                                 class="w-full h-full object-contain mix-blend-multiply transform group-hover:scale-110 transition-transform duration-1000 p-8">
+                                class="w-full h-full object-contain mix-blend-multiply transform group-hover:scale-105 transition-transform duration-1000">
                             {% endif %}
-                            
-                            <button onclick="event.preventDefault();" class="absolute top-4 right-4 w-10 h-10 bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-white transition-all shadow-sm">
-                                <span class="material-icons-outlined text-lg">favorite_border</span>
+
+                            <button onclick="event.preventDefault();"
+                                class="absolute top-2.5 right-2.5 w-7 h-7 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center text-slate-300 hover:text-orange-500 hover:bg-white transition-all shadow-sm opacity-0 group-hover:opacity-100">
+                                <span class="material-icons-outlined text-xs">favorite_border</span>
                             </button>
                         </div>
 
-                        <div class="flex-grow px-2">
-                            <p class="text-[9px] font-black text-brand-primary uppercase tracking-[0.2em] mb-2">{{ product.brand|default:"BuyNext" }}</p>
-                            <h3 class="text-sm text-gray-900 font-bold group-hover:text-brand-primary mb-3 line-clamp-2 leading-snug">
-                                {{ product.name }}
-                            </h3>
-                            
-                            <div class="flex items-center gap-3 mb-4">
-                                <span class="flex items-center gap-1 text-[10px] font-bold text-white bg-orange-500 px-2 py-0.5 rounded shadow-sm">
-                                    4.4 <span class="material-icons text-[10px]">star</span>
+                        <div class="p-3 flex-grow">
+                            <div class="flex items-center justify-between mb-1.5">
+                                <span class="text-[6px] font-black text-slate-400 uppercase tracking-widest">
+                                    {{ product.brand|default:"BN Original" }}
                                 </span>
-                                <span class="text-[10px] font-bold text-blue-600 uppercase tracking-tighter">1,240 reviews</span>
+                                <span class="flex items-center gap-0.5 text-amber-500 font-bold text-[8px]">
+                                    <span class="material-icons text-[9px]">star</span> 4.4
+                                </span>
                             </div>
 
-                            <div class="flex items-baseline gap-2">
-                                <span class="text-lg font-black text-brand-primary">${{ product.min_selling_price }}</span>
-                                {% if product.min_mrp > product.min_selling_price %}
-                                <span class="text-xs text-black line-through">${{ product.min_mrp }}</span>
-                                {% endif %}
+                            <h3
+                                class="text-[11px] font-bold text-slate-900 group-hover:text-orange-600 mb-3 line-clamp-2 leading-tight transition-colors">
+                                {{ product.name }}
+                            </h3>
+
+                            <div class="flex items-center justify-between pt-2.5 border-t border-slate-50">
+                                <div class="flex flex-col">
+                                    <span class="text-base font-black text-slate-950 tracking-tighter leading-none">
+                                        ${{ product.min_selling_price }}
+                                    </span>
+                                    {% if product.min_mrp > product.min_selling_price %}
+                                    <span class="text-[8px] font-bold text-slate-400 line-through mt-0.5">
+                                        ${{ product.min_mrp }}
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                <div
+                                    class="h-7 w-7 rounded-lg bg-slate-950 text-white flex items-center justify-center group-hover:bg-orange-600 transition-all shadow-md">
+                                    <span class="material-icons text-[10px]">arrow_forward</span>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="mt-6 pt-5 border-t border-brand-muted flex items-center justify-between px-2">
-                            <span class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">By <span class="text-brand-primary italic">{{ product.seller.store_name }}</span></span>
-                            {% if product.stock_quantity < 10 and product.stock_quantity > 0 %}
-                            <span class="text-[9px] font-black text-orange-500">Only {{ product.stock_quantity }} left</span>
-                            {% endif %}
+                        <div class="px-3 pb-3 flex items-center justify-between">
+                            <span class="text-[6px] font-bold text-slate-400 uppercase tracking-widest">
+                                <span class="text-slate-800 italic font-black">{{ product.seller.store_name }}</span>
+                            </span>
+                            {% if product.stock_quantity > 0 and product.stock_quantity < 10 %} <span
+                                class="text-orange-600 text-[6px] font-black uppercase">
+                                Only {{ product.stock_quantity }}
+                                </span>
+                                {% endif %}
                         </div>
                     </a>
                     {% empty %}
-                    <div class="col-span-full bg-white rounded-[3rem] p-24 text-center border border-brand-muted/50">
-                        <span class="material-icons text-6xl text-brand-muted mb-4 opacity-20">inventory_2</span>
-                        <p class="text-gray-500 font-bold text-lg mb-2">No items found</p>
-                        <a href="." class="text-brand-primary text-xs font-black uppercase tracking-widest underline decoration-2 underline-offset-8">Clear filters</a>
+                    <div class="col-span-full py-20 text-center">
+                        <p class="text-slate-300 font-black text-[10px] uppercase tracking-[0.2em]">Inventory empty</p>
                     </div>
                     {% endfor %}
                 </div>
+                <div class="mt-20 flex justify-center pb-20">
+                    <div
+                        class="flex items-center gap-3 bg-white p-3 rounded-[2rem] shadow-xl shadow-slate-200/50 border border-white">
 
-                <div class="mt-16 flex justify-center pb-20">
-                    <div class="flex items-center gap-2 bg-white p-2 rounded-3xl shadow-sm border border-brand-muted">
-                        <button class="w-10 h-10 flex items-center justify-center rounded-2xl text-gray-400 hover:bg-brand-bg transition-colors">
+                        {% if products.has_previous %}
+                        <a href="?page={{ products.previous_page_number }}"
+                            class="w-12 h-12 flex items-center justify-center rounded-2xl text-slate-600 hover:bg-zinc-50">
                             <span class="material-icons text-sm">west</span>
-                        </button>
-                        <button class="w-10 h-10 flex items-center justify-center rounded-2xl bg-brand-primary text-white font-bold text-sm">1</button>
-                        <button class="w-10 h-10 flex items-center justify-center rounded-2xl text-gray-600 hover:bg-brand-bg font-bold text-sm transition-colors">2</button>
-                        <button class="w-10 h-10 flex items-center justify-center rounded-2xl text-gray-400 hover:bg-brand-bg transition-colors">
+                        </a>
+                        {% endif %}
+
+                        {% for num in products.paginator.page_range %}
+                        {% if products.number == num %}
+                        <span
+                            class="w-12 h-12 flex items-center justify-center rounded-2xl bg-slate-950 text-white font-black text-sm">
+                            {{ num }}
+                        </span>
+                        {% else %}
+                        <a href="?page={{ num }}"
+                            class="w-12 h-12 flex items-center justify-center rounded-2xl text-slate-600 hover:bg-zinc-50 font-black text-sm">
+                            {{ num }}
+                        </a>
+                        {% endif %}
+                        {% endfor %}
+
+                        {% if products.has_next %}
+                        <a href="?page={{ products.next_page_number }}"
+                            class="w-12 h-12 flex items-center justify-center rounded-2xl text-slate-600 hover:bg-zinc-50">
                             <span class="material-icons text-sm">east</span>
-                        </button>
+                        </a>
+                        {% endif %}
+
                     </div>
                 </div>
             </main>
@@ -162,7 +235,7 @@
         document.getElementById('filterForm').submit();
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const form = document.getElementById('filterForm');
         form.querySelectorAll('input[type="checkbox"]').forEach(cb => {
             cb.addEventListener('change', () => form.submit());
@@ -171,7 +244,10 @@
 </script>
 
 <style>
-    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
     .line-clamp-2 {
         display: -webkit-box;
         -webkit-line-clamp: 2;
