@@ -1,0 +1,278 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<div class="bg-gray-100 min-h-screen pb-16 lg:pb-0">
+    <div class="container mx-auto bg-white shadow-sm max-w-[1440px]">
+        <div class="flex flex-col lg:flex-row">
+            
+            <div class="w-full lg:w-[40%] p-4 lg:sticky lg:top-20 h-fit">
+                <div class="flex flex-col-reverse lg:flex-row gap-3">
+                    <div class="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-y-auto no-scrollbar max-h-[500px]">
+                        {% for img in gallery_images %}
+                        <div class="thumb-wrapper generic-thumb border hover:border-blue-600 cursor-pointer p-1 rounded-sm flex-shrink-0 w-16 h-16" onclick="changeMainImage('{{ img.image.url }}', this)">
+                            <img src="{{ img.image.url }}" class="w-full h-full object-contain">
+                        </div>
+                        {% endfor %}
+                        {% for variant in variants %}
+                            {% for v_img in variant.images.all %}
+                            <div class="thumb-wrapper variant-thumb border hover:border-blue-600 cursor-pointer p-1 rounded-sm flex-shrink-0 w-16 h-16 hidden" data-variant="{{ variant.id }}" onclick="changeMainImage('{{ v_img.image.url }}', this)">
+                                <img src="{{ v_img.image.url }}" class="w-full h-full object-contain">
+                            </div>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+
+                    <div class="flex-1 border border-gray-100 relative group overflow-hidden h-[400px] lg:h-[500px]">
+                        <img id="main-display-image" src="{{ default_variant.images.all.0.image.url|default:gallery_images.0.image.url }}" 
+                             class="w-full h-full object-contain p-4 transition-all duration-300">
+                        <button class="absolute top-4 right-4 bg-white shadow-md rounded-full p-2 text-gray-300 hover:text-red-500 transition-colors">
+                            <span class="material-icons-outlined">favorite</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="hidden lg:flex gap-3 mt-6">
+                    <button onclick="submitCartForm('add')" class="flex-1 bg-[#ff9f00] text-white py-4 px-2 rounded-sm font-bold flex items-center justify-center gap-2 hover:shadow-lg transition-all">
+                        <span class="material-icons">shopping_cart</span> ADD TO CART
+                    </button>
+                    <button onclick="submitCartForm('buy')" class="flex-1 bg-[#fb641b] text-white py-4 px-2 rounded-sm font-bold flex items-center justify-center gap-2 hover:shadow-lg transition-all">
+                        <span class="material-icons">bolt</span> BUY NOW
+                    </button>
+                </div>
+            </div>
+
+            <div class="w-full lg:w-[60%] p-6 lg:border-l border-gray-100">
+                <nav class="text-xs text-gray-500 mb-2">
+                    Home > {{ product.subcategory.category.name }} > {{ product.subcategory.name }}
+                </nav>
+
+                <div class="mb-4">
+                    <p class="text-gray-500 font-medium">{{ product.brand }}</p>
+                    <h1 class="text-xl lg:text-2xl text-gray-900 mb-2">{{ product.name }}</h1>
+                    
+                    <div class="flex items-center gap-3">
+                        <span class="bg-green-700 text-white text-xs font-bold px-2 py-0.5 rounded flex items-center gap-1">
+                            {{ average_rating }} <span class="material-icons text-[10px]">star</span>
+                        </span>
+                        <span class="text-gray-500 font-medium text-sm">{{ review_count }} Ratings & {{ review_count }} Reviews</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3 mb-6">
+                    <span id="price-selling" class="text-3xl font-bold text-gray-900">₹{{ default_variant.selling_price }}</span>
+                    <span id="price-mrp" class="text-gray-500 line-through">₹{{ default_variant.mrp }}</span>
+                    <span id="price-discount" class="text-green-700 font-bold">{% widthratio default_variant.selling_price default_variant.mrp 100 %}% off</span>
+                </div>
+
+                <div id="variant-selector" class="space-y-6 mb-8">
+                    {% regroup variants by color as color_list %} <div class="space-y-4">
+                        <h3 class="text-sm font-bold text-gray-500 uppercase">Available Variants</h3>
+                        <div class="flex flex-wrap gap-2">
+                            {% for v in variants %}
+                            <button 
+                                data-variant-id="{{ v.id }}"
+                                data-price="{{ v.selling_price }}"
+                                data-mrp="{{ v.mrp }}"
+                                data-stock="{{ v.stock_quantity }}"
+                                data-img="{% if v.images.all %}{{ v.images.all.0.image.url }}{% endif %}"
+                                class="variant-btn border px-4 py-2 text-sm font-bold rounded-sm hover:border-blue-600 transition-all
+                                {% if v.id == default_variant.id %}border-blue-600 text-blue-600 ring-1 ring-blue-600{% else %}text-gray-900 border-gray-300{% endif %}">
+                                {% if v.variant_attributes.all %}
+                                    {% for va in v.variant_attributes.all %}
+                                        {{ va.option.value }}{% if not forloop.last %} / {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    {{ v.sku_code }}
+                                {% endif %}
+                            </button>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div id="variant-attribute-display" class="border-t border-gray-100 pt-4 mb-8">
+                    <h3 class="text-sm font-bold text-gray-500 uppercase mb-2">Selected Variant Attributes</h3>
+                    <div id="attribute-list" class="text-sm text-gray-700 space-y-1">
+                        {% for va in default_variant.variant_attributes.all %}
+                        <div><span class="font-semibold">{{ va.option.attribute.name }}:</span> {{ va.option.value }}</div>
+                        {% empty %}
+                        <div class="text-gray-400">No attributes added for this variant.</div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <p id="stock-text" class="text-sm font-bold {% if default_variant.stock_quantity > 0 %}text-green-700{% else %}text-red-500{% endif %}">
+                        {% if default_variant.stock_quantity > 0 %}In Stock{% else %}Out of Stock{% endif %}
+                    </p>
+                </div>
+
+                <div class="border-t border-gray-100 pt-6 space-y-4">
+                    <h3 class="font-bold text-gray-900">Product Highlights</h3>
+                    <ul class="text-sm text-gray-700 space-y-2">
+                        <li><span class="text-gray-400 w-32 inline-block">Brand</span> {{ product.brand }}</li>
+                        <li><span class="text-gray-400 w-32 inline-block">Seller</span> <span class="text-blue-600 font-bold">{{ product.seller.store_name }}</span></li>
+                        <li><span class="text-gray-400 w-32 inline-block">Model</span> {{ default_variant.sku_code }}</li>
+                        <li><span class="text-gray-400 w-32 inline-block">Return Policy</span> 7 Days Replacement</li>
+                    </ul>
+                </div>
+
+                <div class="border-t border-gray-100 mt-6 pt-6">
+                    <h3 class="font-bold text-gray-900 mb-2">Description</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed">{{ product.description }}</p>
+                </div>
+
+                <div class="border-t border-gray-100 mt-8 pt-8">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-xl font-bold">Ratings & Reviews</h3>
+                        <button class="shadow border px-6 py-2 rounded-sm font-bold text-sm">Rate Product</button>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        {% for review in reviews %}
+                        <div class="border-b border-gray-50 pb-6">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="bg-green-700 text-white text-[10px] px-1.5 py-0.5 rounded flex items-center">
+                                    {{ review.rating }} <span class="material-icons text-[8px] ml-0.5">star</span>
+                                </span>
+                                <span class="font-bold text-sm">{{ review.user.username }}</span>
+                            </div>
+                            <p class="text-sm text-gray-700 mb-2">{{ review.comment }}</p>
+                            <p class="text-[10px] text-gray-400 uppercase font-bold">{{ review.created_at|date:"M, Y" }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form id="cart-form" action="#" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="variant_id" id="selected-variant-id" value="{{ default_variant.id }}">
+        <input type="hidden" name="action_type" id="action-type" value="add">
+    </form>
+
+    <div class="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 grid grid-cols-4 z-50 shadow-2xl">
+        <button class="col-span-1 border-r border-gray-100 py-3 flex items-center justify-center text-gray-400">
+            <span class="material-icons">favorite_border</span>
+        </button>
+        <button onclick="submitCartForm('add')" class="col-span-1.5 bg-white text-gray-900 font-bold text-xs uppercase tracking-tighter py-4">
+            Add to Cart
+        </button>
+        <button onclick="submitCartForm('buy')" class="col-span-1.5 bg-[#fb641b] text-white font-bold text-xs uppercase tracking-tighter py-4">
+            Buy Now
+        </button>
+    </div>
+</div>
+
+<script>
+    function changeMainImage(url, thumbElement) {
+        document.getElementById('main-display-image').src = url;
+        // Reset thumb styles
+        document.querySelectorAll('.thumb-wrapper').forEach(el => el.classList.remove('border-blue-600'));
+        thumbElement.classList.add('border-blue-600');
+    }
+
+    function submitCartForm(type) {
+        const form = document.getElementById('cart-form');
+        document.getElementById('action-type').value = type;
+        // Adjust action URL based on type if necessary
+        form.submit();
+    }
+
+    const variantAttributesData = {
+        {% for v in variants %}
+        "{{ v.id }}": {
+            {% for va in v.variant_attributes.all %}
+                "{{ va.option.attribute.name|escapejs }}": "{{ va.option.value|escapejs }}"{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    };
+
+    function updateVariantAttributes(variantId) {
+        const container = document.getElementById('attribute-list');
+        container.innerHTML = '';
+
+        const attributes = variantAttributesData[variantId] || {};
+
+        if (!Object.keys(attributes).length) {
+            container.innerHTML = '<div class="text-gray-400">No attributes added for this variant.</div>';
+            return;
+        }
+
+        for (const [name, value] of Object.entries(attributes)) {
+            const row = document.createElement('div');
+            row.innerHTML = `<span class="font-semibold">${name}:</span> ${value}`;
+            container.appendChild(row);
+        }
+    }
+
+    // Variant Switching Logic
+    document.querySelectorAll('.variant-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            // UI Toggle
+            document.querySelectorAll('.variant-btn').forEach(el => el.classList.remove('border-blue-600', 'text-blue-600', 'ring-1', 'ring-blue-600'));
+            this.classList.add('border-blue-600', 'text-blue-600', 'ring-1', 'ring-blue-600');
+
+            const data = this.dataset;
+            
+            // Update Prices
+            document.getElementById('price-selling').innerText = `₹${data.price}`;
+            document.getElementById('price-mrp').innerText = `₹${data.mrp}`;
+            document.getElementById('selected-variant-id').value = data.variantId;
+
+            // Update Stock
+            const stockText = document.getElementById('stock-text');
+            if (parseInt(data.stock) > 0) {
+                stockText.innerText = "In Stock";
+                stockText.className = "text-sm font-bold text-green-700";
+            } else {
+                stockText.innerText = "Out of Stock";
+                stockText.className = "text-sm font-bold text-red-500";
+            }
+
+            // Update Main Image & Filter Thumbnails
+            if (data.img) {
+                document.getElementById('main-display-image').src = data.img;
+            }
+
+            // Hide all generic gallery thumbs and show only selected variant thumbs
+            document.querySelectorAll('.generic-thumb').forEach(thumb => thumb.classList.add('hidden'));
+            document.querySelectorAll('.variant-thumb').forEach(thumb => {
+                if (thumb.dataset.variant === data.variantId) {
+                    thumb.classList.remove('hidden');
+                } else {
+                    thumb.classList.add('hidden');
+                }
+            });
+
+            // Update attributes listing
+            updateVariantAttributes(data.variantId);
+        });
+    });
+
+    // Initialize variant specific thumbs for default variant
+    window.onload = () => {
+        const defaultId = "{{ default_variant.id }}";
+
+        // show default variant thumbnails, hide gallery thumbs (on variant context mode initial setup)
+        document.querySelectorAll('.generic-thumb').forEach(thumb => thumb.classList.add('hidden'));
+        document.querySelectorAll('.variant-thumb').forEach(thumb => {
+            if (thumb.dataset.variant === defaultId) {
+                thumb.classList.remove('hidden');
+            } else {
+                thumb.classList.add('hidden');
+            }
+        });
+
+        updateVariantAttributes(defaultId);
+    }
+</script>
+
+<style>
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    #main-display-image { transition: opacity 0.2s ease-in-out; }
+</style>
+{% endblock %}

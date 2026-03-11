@@ -3,6 +3,7 @@ from .models import (
     SellerProfile,
     Product,
     ProductVariant,
+    ProductGallery,
     ProductImage,
     Attribute,
     AttributeOption,
@@ -13,6 +14,7 @@ from .models import (
 admin.site.register(SellerProfile)
 admin.site.register(Product)
 admin.site.register(ProductVariant)
+admin.site.register(ProductGallery)
 admin.site.register(ProductImage)
 admin.site.register(Attribute)
 admin.site.register(AttributeOption)

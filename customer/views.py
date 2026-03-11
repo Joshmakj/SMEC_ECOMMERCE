@@ -12,6 +12,12 @@ def user_profile_view(request):
         pro_image=request.FILES.get("profile_image")
 
         if pro_image:
+            if user_obj.profile_image:
+                user_obj.profile_image.delete(save=False)
             user_obj.profile_image=pro_image
         user_obj.save()
     return render(request,"customer/profile.html",{"user":user_obj})
+
+
+
+

@@ -240,8 +240,7 @@ def edit_product(request, product_id):
 def add_variant(request,product_id):
      product =get_object_or_404(Product,id=product_id,seller=request.user.seller_profile)
      attributes=Attribute.objects.filter(subcategories=product.subcategory).prefetch_related("options").order_by("display_order")
-     print(product.subcategory) 
-     print(Attribute.objects.filter(subcategories=product.subcategory))
+
      if request.method == "POST":
         mrp = request.POST.get("MRP") or 0
         selling_price = request.POST.get("selling_price")
@@ -311,9 +310,13 @@ def seller_profile(request):
         profile.description = request.POST.get("description")
 
         if request.FILES.get("logo"):
+            if profile.logo:
+                   profile.logo.delete(save=False)
             profile.logo = request.FILES.get("logo")
 
         if request.FILES.get("banner"):
+            if profile.banner:
+                  profile.banner.delete(save=False)
             profile.banner = request.FILES.get("banner")
 
         profile.save()

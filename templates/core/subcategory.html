@@ -1,0 +1,135 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<div class="bg-gray-50 min-h-screen">
+
+    <nav class="sticky top-0 z-40 bg-white border-b border-gray-200">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-center gap-8 overflow-x-auto no-scrollbar py-5">
+                {% for cat in all_categories %}
+                <a href="{% url 'subcategory' cat.slug %}"
+                    class="text-[11px] font-black uppercase tracking-[0.2em] whitespace-nowrap transition-all
+                   {% if cat == active_category %} text-brand-primary border-b-2 border-brand-primary pb-1 {% else %} text-gray-400 hover:text-brand-primary {% endif %}">
+                    {{ cat.name }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-10">
+
+        <header class="mb-12">
+            <h1 class="text-4xl font-black text-gray-900 tracking-tight mb-8">{{ active_category.name }}</h1>
+            <div class="flex justify-end mt-3">
+                {% if show_all %}
+                <a href="?"
+                    class="text-xs font-black text-blue-600 uppercase tracking-widest no-underline hover:text-blue-700">Show
+                    Less</a>
+                {% elif total_subcategories > 6 %}
+                <a href="?show_all=1"
+                    class="text-xs font-black text-blue-600 uppercase tracking-widest no-underline hover:text-blue-700">View
+                    All</a>
+                {% endif %}
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                {% for sub in subcategories %}
+                <a href="?subcategory={{ sub.slug }}"
+                    class="group p-4 rounded-3xl border transition-all text-center {% if selected_subcategory and sub.id == selected_subcategory.id %}bg-orange-100 border-orange-400 hover:border-orange-500 hover:shadow-orange-200/50{% else %}bg-white border-gray-100 hover:border-brand-primary/20 hover:shadow-xl hover:shadow-brand-primary/5{% endif %}">
+                    <div
+                        class="aspect-square {% if selected_subcategory and sub.id == selected_subcategory.id %}bg-orange-50{% else %}bg-gray-50{% endif %} rounded-2xl mb-3 overflow-hidden">
+                        {% if sub.image %}
+                        <img src="{{ sub.image.url }}"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        {% else %}
+                        <div class="w-full h-full flex items-center justify-center text-gray-300">
+                            <span class="material-icons text-4xl">inventory_2</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <p class="text-xs font-bold text-gray-700 group-hover:text-brand-primary">{{ sub.name }}</p>
+                </a>
+                {% endfor %}
+            </div>
+
+        </header>
+
+        <hr class="border-gray-200 mb-12">
+
+        <div class="flex justify-between items-end mb-8">
+            <div>
+                <h2 class="text-xl font-bold text-gray-900">
+                    {% if selected_subcategory %}{{ selected_subcategory.name }}{% else %}All
+                    {{ active_category.name }}{% endif %}
+                </h2>
+                <p class="text-sm text-gray-500">{{ products.count }} items found</p>
+            </div>
+            {% if selected_subcategory %}
+            {% if show_all_products %}
+            <a href="?subcategory={{ selected_subcategory.slug }}"
+                class="text-xs font-black text-blue-600 uppercase tracking-widest">
+                View Less Products
+            </a>
+            {% else %}
+            <a href="?subcategory={{ selected_subcategory.slug }}&products=1"
+                class="text-xs font-black text-blue-600 uppercase tracking-widest">
+                View All Products
+            </a>
+            {% endif %}
+            {% endif %}
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {% for product in products %}
+            <div
+                class="group bg-white rounded-[2.5rem] p-5 border border-transparent hover:border-gray-100 hover:shadow-2xl transition-all duration-500">
+                <div class="relative aspect-square rounded-[2rem] bg-gray-50 overflow-hidden mb-6">
+                    {% if product.primary_image %}
+                    <img src="{{ product.primary_image.url }}" alt="{{ product.name }}"
+                        class="w-full h-full object-contain p-6 mix-blend-multiply group-hover:scale-110 transition-transform duration-700">
+                    {% else %}
+                    <div class="w-full h-full flex items-center justify-center text-gray-300">
+                        <span class="material-icons text-4xl">image_not_supported</span>
+                    </div>
+                    {% endif %}
+                    <button
+                        class="absolute top-4 right-4 w-10 h-10 bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 transition-all">
+                        <span class="material-icons-outlined">favorite_border</span>
+                    </button>
+                </div>
+
+                <div class="px-2">
+                    <p class="text-[9px] font-black text-brand-accent uppercase tracking-widest mb-2">{{
+                        product.subcategory.name }}</p>
+                    <h3 class="font-bold text-gray-900 mb-2 truncate">{{ product.name }}</h3>
+
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="text-[10px] font-bold bg-green-50 text-green-700 px-2 py-0.5 rounded">4.5 ★</span>
+                        <span class="text-[10px] text-gray-400 font-bold uppercase">(2.1k)</span>
+                    </div>
+
+                    <div class="flex items-center justify-between mt-auto">
+                        <span class="text-lg font-black text-gray-900">${{ product.price }}</span>
+                        <a href="#"
+                            class="w-10 h-10 bg-brand-primary text-white rounded-2xl flex items-center justify-center hover:shadow-lg transition-all">
+                            <span class="material-icons text-sm">east</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-span-full py-20 text-center bg-white rounded-[3rem] border border-dashed border-gray-200">
+                <p class="text-gray-400 font-medium">No products available in this selection.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<style>
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+</style>
+{% endblock %}
