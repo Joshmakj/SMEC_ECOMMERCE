@@ -1,4 +1,6 @@
 from django.contrib import admin
+from .models import ReviewReply
+
 from .models import (
     SellerProfile,
     Product,
@@ -18,3 +20,4 @@ admin.site.register(Attribute)
 admin.site.register(AttributeOption)
 admin.site.register(VariantAttributeBridge)
 admin.site.register(InventoryLog)
+admin.site.register(ReviewReply)

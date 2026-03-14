@@ -4,8 +4,17 @@ from .models import *
 from bnadmin.models import *
 from django.contrib import messages
 from django.contrib.auth import login
-from django.db.models import  Q
 from core.decorator import seller_profile_required,verified_seller_required
+from django.db.models import Sum, Count, Q, F  
+from .models import SellerProfile, Product, ProductVariant, Order, InventoryLog
+from django.db.models import Avg, Count
+from django.contrib import messages
+from django.http import JsonResponse
+from customer.models import Review
+
+
+
+
 
 # Create your views here.
 def user_seller_bridge(request):
@@ -78,7 +87,19 @@ def seller_registration(request):
     return render(request,"seller/seller_registration.html",{"data":request.POST})
 @verified_seller_required
 def seller_dashboard(request):
-     return render(request,"seller/dashboard.html")
+
+    seller = request.user.seller_profile
+
+    total_products = Product.objects.filter(seller=seller).count()
+    total_orders = Order.objects.filter(seller=seller).count()
+
+    context = {
+        "total_products": total_products,
+        "total_orders": total_orders,
+    }
+
+    return render(request, "seller/dashboard.html", context)
+    
 @verified_seller_required
 def seller_products(request):
      seller=request.user.seller_profile
@@ -133,11 +154,9 @@ def activate_variant(request, id):
     variant.save()
     return redirect("seller_product")
 
-
-
 @verified_seller_required
 def add_products(request):
-     subcategory =SubCategory.objects.all
+     subcategory =SubCategory.objects.all()
      if request.method == "POST":
         name = request.POST.get("name")
         brand = request.POST.get("brand")
@@ -179,10 +198,12 @@ def add_products(request):
     )
          return redirect("product_status")
      return render(request,"seller/addproduct.html",{"subcategories":subcategory})
+
 @verified_seller_required
 def edit_product(request, product_id):
 
-    product = Product.objects.get(
+    product = get_object_or_404(
+        Product,
         id=product_id,
         seller=request.user.seller_profile
     )
@@ -200,26 +221,24 @@ def edit_product(request, product_id):
         product.is_cancellable = request.POST.get("is_cancellable") == "on"
         product.is_returnable = request.POST.get("is_returnable") == "on"
         product.return_days = request.POST.get("return_days") or 0
+
         status = request.POST.get("status")
+
         if status == "draft":
-            approval_status = "DRAFT"
+            product.approval_status = "DRAFT"
         else:
-            approval_status = "PENDING"
-
-
-        product.approval_status = approval_status
+            product.approval_status = "PENDING"
 
         product.save()
 
-
-        images = request.FILES.getlist("product_images[]")
+        images = request.FILES.getlist("product_images")
 
         if images:
 
-
+           
             ProductGallery.objects.filter(product=product).delete()
 
-            primary_index = int(request.POST.get("primary_image_index", 0))
+            primary_index = int(request.POST.get("primary_image_index") or 0)
 
             for index, image in enumerate(images):
 
@@ -236,6 +255,11 @@ def edit_product(request, product_id):
         "product": product,
         "subcategories": subcategories
     })
+def seller_product_preview(request, id):
+   
+    return render(request, "seller/product_preview.html", {"product": product})
+
+
 @verified_seller_required
 def add_variant(request,product_id):
      product =get_object_or_404(Product,id=product_id,seller=request.user.seller_profile)
@@ -283,25 +307,228 @@ def add_variant(request,product_id):
         return redirect("seller_product")
           
      return render(request,"seller/addvariant.html",{"product":product,"attributes":attributes})
+
+def seller_product_preview(request, product_id):
+
+    product = get_object_or_404(Product, id=product_id)
+
+    variants = ProductVariant.objects.filter(product=product)
+
+    gallery_images = ProductImage.objects.filter(variant__in=variants)
+
+    primary_variant = variants.first()
+
+    variant_cards = variants
+
+    return render(request, "seller/product_preview.html", {
+        "product": product,
+        "gallery_images": gallery_images,
+        "primary_variant": primary_variant,
+        "variant_cards": variant_cards
+    })
+
+
+def product_detail(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    gallery_images = product.images.all()  
+
+    if request.method == "POST" and request.FILES.getlist("product_images"):
+        for img_file in request.FILES.getlist("product_images"):
+            ProductImage.objects.create(product=product, image=img_file)
+        return redirect('product_detail', product_id=product.id)
+
+    context = {
+        'product': product,
+        'gallery_images': gallery_images,
+      
+    }
+    return render(request, "seller/product_detail.html", context)
+
 @verified_seller_required
 def product_status(request):
      products = Product.objects.filter(seller=request.user.seller_profile)
      return render(request,"seller/product_status.html",{"products":products})
+
+@verified_seller_required
+def inventory_dashboard(request):
+
+    variants = ProductVariant.objects.select_related('product').all()
+
+    low_stock_items = variants.filter(stock__lte=5)
+
+    recent_logs = InventoryLog.objects.select_related('variant')[:10]
+
+    total_value = variants.aggregate(
+        total=Sum(F('stock') * F('price'))
+    )['total'] or 0
+
+    context = {
+        "variants": variants,
+        "low_stock_count": low_stock_items.count(),
+        "recent_logs": recent_logs,
+        "total_value": total_value,
+    }
+
+    return render(request, "seller/inventory.html", context)
+
+from django.db.models import F, Sum
+
 @verified_seller_required
 def seller_inventory(request):
-     return render(request,"seller/inventory.html")
+    variants = ProductVariant.objects.select_related("product").all()
+    low_stock_items = variants.filter(stock_quantity__lte=F("low_stock_threshold"))
+    recent_logs = InventoryLog.objects.select_related("variant").order_by("-created_at")[:10]
+    total_value = variants.aggregate(
+        total=Sum(F("stock_quantity") * F("selling_price")))["total"] or 0
+
+    context = {
+        "variants": variants,
+        "low_stock_count": low_stock_items.count(),
+        "recent_logs": recent_logs,
+        "total_value": total_value,
+    }
+
+    return render(request, "seller/inventory.html", context)
+
+
+@verified_seller_required   
+def adjust_inventory(request):
+
+    if request.method == "POST":
+
+        variant_id = request.POST.get("variant_id")
+        adjustment_type = request.POST.get("adjustment_type")
+        quantity = int(request.POST.get("quantity"))
+        reason = request.POST.get("reason")
+
+        variant = get_object_or_404(ProductVariant, id=variant_id)
+
+        if adjustment_type == "add":
+            change = quantity
+            variant.stock_quantity += quantity
+
+        elif adjustment_type == "remove":
+            change = -quantity
+            variant.stock_quantity -= quantity
+
+        elif adjustment_type == "set":
+            change = quantity - variant.stock
+            variant.stock_quantity = quantity
+
+        variant.save()
+
+        InventoryLog.objects.create(
+            variant=variant,
+            change_amount=change,
+            reason="ADJUSTMENT",
+            note=reason
+        )
+
+        messages.success(request, "Inventory updated successfully")
+
+    return redirect("seller_inventory")
+
+
 @verified_seller_required
 def seller_order(request):
-     return render(request,"seller/seller_order.html")
+
+    orders = Order.objects.all()
+
+    active_orders = orders.filter(status="processing").count()
+
+    returns_pending = orders.filter(status="return_requested").count()
+
+    total_revenue = orders.aggregate(
+        total=Sum("amount")
+    )["total"] or 0
+
+    context = {
+        "active_orders": active_orders,
+        "returns_pending": returns_pending,
+        "total_revenue": total_revenue,
+        "orders": orders
+    }
+
+    return render(request, "seller/seller_order.html", context)
+
+
 @verified_seller_required
-def seller_earnings(request):
-     return render(request,"seller/earnings.html")
+def earnings_view(request):
+
+    seller = request.user.seller_profile
+
+    order_items = OrderItem.objects.filter(
+        seller=seller,
+        item_status="delivered"
+    )
+    total_earnings = order_items.aggregate(
+    total=Sum(F("price_at_purchase") * F("quantity")))["total"] or 0
+
+    orders_count = order_items.count()
+
+    context = {
+        "order_items": order_items,
+        "total_earnings": total_earnings,
+        "orders_count": orders_count
+    }
+
+    return render(request, "seller/earnings.html", context)
+    
+
+
 @verified_seller_required
 def offer_discount(request):
      return render(request,"seller/offeranddiscount.html")
+
 @verified_seller_required
 def seller_reviews(request):
-     return render(request,"seller/sellerreviews.html")
+
+    seller = request.user.seller_profile
+
+   
+    reviews = Review.objects.filter(
+        product__seller=seller,
+        is_approved=True
+    ).select_related("product", "user")
+
+    
+    avg_rating = Review.objects.filter(
+        product__seller=seller
+    ).aggregate(Avg("rating"))["rating__avg"]
+
+    
+    rating_counts = Review.objects.filter(
+        product__seller=seller
+    ).values("rating").annotate(count=Count("rating"))
+
+    context = {
+        "reviews": reviews,
+        "avg_rating": avg_rating,
+        "rating_counts": rating_counts
+    }
+
+    return render(request, "seller/sellerreviews.html", context)
+
+
+@verified_seller_required
+def reply_review(request, review_id):
+
+    review = Review.objects.get(id=review_id)
+
+    if request.method == "POST":
+
+        reply = request.POST.get("reply")
+
+        ReviewReply.objects.create(
+            review=review,
+            seller=request.user.seller_profile,
+            reply=reply
+        )
+
+    return redirect("seller_reviews")
+
+
+
 @seller_profile_required
 def seller_profile(request):
     profile = request.user.seller_profile
@@ -311,9 +538,13 @@ def seller_profile(request):
         profile.description = request.POST.get("description")
 
         if request.FILES.get("logo"):
+            if profile.logo:
+                   profile.logo.delete(save=False)
             profile.logo = request.FILES.get("logo")
 
         if request.FILES.get("banner"):
+            if profile.banner:
+                  profile.banner.delete(save=False)
             profile.banner = request.FILES.get("banner")
 
         profile.save()
@@ -324,3 +555,4 @@ def seller_profile(request):
 @verified_seller_required
 def seller_settings(request):
      return render(request,"seller/seller_settings.html")
+

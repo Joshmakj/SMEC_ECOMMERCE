@@ -1,4 +1,5 @@
 {% extends "seller/base.html" %}
+{% load humanize %}
 
 {% block title %}Inventory Management{% endblock %}
 {% block header_title %}Stock & Logistics{% endblock %}
@@ -13,14 +14,14 @@
             </div>
             <div>
                 <h3 class="text-xs font-black uppercase tracking-widest text-red-400">Critical Alerts</h3>
-                <p class="text-2xl font-black text-slate-800">4 Items are Low in Stock</p>
+                <p class="text-2xl font-black text-slate-800">{{ low_stock_count }} Items are Low in Stock</p>
                 <p class="text-sm font-bold text-slate-500">Restock soon to avoid losing sales momentum.</p>
             </div>
         </div>
 
         <div class="bg-brand-blue rounded-[2.5rem] p-8 text-white shadow-xl shadow-blue-100">
             <h3 class="text-[10px] font-black uppercase tracking-[0.2em] opacity-80">Total Inventory Value</h3>
-            <p class="text-4xl font-black mt-2">$24,850</p>
+           <p class="text-4xl font-black mt-2">₹{{ total_value|intcomma }}</p>
             <div class="mt-4 flex items-center gap-2 bg-white/10 w-fit px-3 py-1 rounded-full text-[10px] font-bold">
                 <span class="material-icons-outlined text-sm">trending_up</span> 12% vs last month
             </div>
@@ -48,32 +49,48 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100">
+                    {% for variant in variants %}
                     <tr class="group hover:bg-slate-50/50 transition-colors">
                         <td class="px-8 py-6">
                             <div class="flex items-center gap-4">
                                 <div class="w-12 h-12 bg-slate-100 rounded-xl overflow-hidden border border-slate-200">
-                                    <img src="/api/placeholder/48/48" alt="product">
+                                    <img src="/api/placeholder/48/48" alt="product"></div>
+                                    <div>
+                                        <p class="font-black text-slate-800">{{ variant.product.name }}</p>
+                                        <p class="text-[10px] font-bold text-slate-400 uppercase">SKU: {{ variant.sku_code }}</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <p class="font-black text-slate-800">Sony WH-1000XM5</p>
-                                    <p class="text-[10px] font-bold text-slate-400 uppercase">Color: Midnight Blue</p>
+                            </td>
+                            <td class="px-8 py-6 font-mono text-xs font-bold text-slate-500 tracking-tighter">{{ variant.sku_code }}</td>
+                            <td class="px-8 py-6">
+                                <div class="flex flex-col items-center">
+                                    <span class="px-4 py-1 bg-blue-50 text-blue-600 rounded-full text-sm font-black">{{ variant.stock_quantity }}
+
+                                    </span>
+                                    {% if variant.stock_quantity <= variant.low_stock_threshold %}
+                                    <span class="text-[8px] font-black text-red-400 uppercase mt-1">
+                                        Low Stock
+                                    </span>
+                                    {% endif %}
                                 </div>
-                            </div>
-                        </td>
-                        <td class="px-8 py-6 font-mono text-xs font-bold text-slate-500 tracking-tighter">SNY-XM5-BLU</td>
-                        <td class="px-8 py-6">
-                            <div class="flex flex-col items-center">
-                                <span class="px-4 py-1 bg-red-50 text-red-600 rounded-full text-sm font-black">3</span>
-                                <span class="text-[8px] font-black text-red-400 uppercase mt-1">Low Stock</span>
-                            </div>
-                        </td>
-                        <td class="px-8 py-6 text-sm font-bold text-slate-500">2 hours ago</td>
-                        <td class="px-8 py-6 text-right">
-                            <button onclick="openAdjustmentModal('Sony WH-1000XM5', 'SNY-XM5-BLU', 3)" class="p-3 bg-slate-100 text-slate-600 rounded-xl hover:bg-brand-blue hover:text-white transition-all">
-                                <span class="material-icons-outlined">edit_note</span>
+                            </td>
+                            <td class="px-8 py-6 text-sm font-bold text-slate-500">{{ variant.updated_at|timesince }} ago</td>
+                            <td class="px-8 py-6 text-right">
+                                <button
+                               onclick="openOrderDetails('{{ item.order.order_id }}','{{ item.order.customer_name }}','{{ item.order.status }}')"
+                               class="w-10 h-10 bg-slate-50 text-slate-400 hover:bg-brand-blue hover:text-white rounded-xl transition-all">
+                               <span class="material-icons-outlined">edit_note</span>
                             </button>
+                           
+                        </td>
+                     </tr>
+                     {% empty %}
+                     <tr>
+                        <td colspan="5" class="text-center py-10 text-slate-400 font-bold">
+                            No Inventory Items
                         </td>
                     </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
@@ -154,7 +171,7 @@
     function openAdjustmentModal(name, sku, currentStock) {
         document.getElementById('modalProductName').innerText = `${name} (${sku})`;
         document.getElementById('adjustmentModal').classList.remove('hidden');
-        document.body.style.overflow = 'hidden'; // Prevent scroll
+        document.body.style.overflow = 'hidden'; 
     }
 
     function closeAdjustmentModal() {
