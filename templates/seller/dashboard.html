@@ -10,7 +10,7 @@
             <span class="material-icons-outlined">inventory_2</span>
         </div>
         <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest">Total Products</p>
-        <h3 class="text-2xl font-black text-slate-800">248</h3>
+        <h3 class="text-2xl font-black text-slate-800">{{ total_products }}</h3>
     </div>
 
     <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 transition-transform hover:scale-[1.02]">
@@ -18,7 +18,7 @@
             <span class="material-icons-outlined">receipt</span>
         </div>
         <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest">Total Orders</p>
-        <h3 class="text-2xl font-black text-slate-800">1,240</h3>
+        <h3 class="text-2xl font-black text-slate-800">{{ total_orders }}</h3>
     </div>
 
     <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 transition-transform hover:scale-[1.02]">
@@ -26,7 +26,7 @@
             <span class="material-icons-outlined">currency_rupee</span>
         </div>
         <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest">Total Revenue</p>
-        <h3 class="text-2xl font-black text-slate-800">₹1,42,800</h3>
+        <h3 class="text-2xl font-black text-slate-800">₹{{ revenue }}</h3>
     </div>
 
     <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 transition-transform hover:scale-[1.02]">
@@ -34,7 +34,7 @@
             <span class="material-icons-outlined">hourglass_top</span>
         </div>
         <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest">Pending Orders</p>
-        <h3 class="text-2xl font-black text-slate-800">18</h3>
+        <h3 class="text-2xl font-black text-slate-800">{{ pending_orders }}</h3>
     </div>
 
     <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-red-100 bg-red-50/30 transition-transform hover:scale-[1.02]">
@@ -42,7 +42,7 @@
             <span class="material-icons-outlined">warning</span>
         </div>
         <p class="text-red-400 text-[10px] font-black uppercase tracking-widest">Low Stock Alerts</p>
-        <h3 class="text-2xl font-black text-red-600">05</h3>
+        <h3 class="text-2xl font-black text-red-600">{{ low_stock }}</h3>
     </div>
 </div>
 
@@ -118,15 +118,15 @@
                 </thead>
                 <tbody class="divide-y divide-slate-50">
                     <tr class="hover:bg-slate-50 transition-colors">
-                        <td class="px-8 py-5 font-bold text-brand-blue">#ORD-7721</td>
-                        <td class="px-8 py-5 text-sm font-semibold">Amit Khurana</td>
-                        <td class="px-8 py-5 font-bold">₹1,250</td>
+                        <td class="px-8 py-5 font-bold text-brand-blue">#ORD-9921</td>
+                        <td class="px-8 py-5 text-sm font-semibold">Lakshmi</td>
+                        <td class="px-8 py-5 font-bold">4000</td>
                         <td class="px-8 py-5"><span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-lg text-[10px] font-black uppercase">Shipped</span></td>
                     </tr>
                     <tr class="hover:bg-slate-50 transition-colors">
-                        <td class="px-8 py-5 font-bold text-brand-blue">#ORD-7722</td>
-                        <td class="px-8 py-5 text-sm font-semibold">Sneha Kapoor</td>
-                        <td class="px-8 py-5 font-bold">₹890</td>
+                        <td class="px-8 py-5 font-bold text-brand-blue">#ORD-9840</td>
+                        <td class="px-8 py-5 text-sm font-semibold">Akhila</td>
+                        <td class="px-8 py-5 font-bold">$1450.00</td>
                         <td class="px-8 py-5"><span class="px-3 py-1 bg-amber-100 text-amber-600 rounded-lg text-[10px] font-black uppercase">Pending</span></td>
                     </tr>
                 </tbody>

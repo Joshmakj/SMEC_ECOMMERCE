@@ -3,14 +3,7 @@ import string
 import random
 from django.db import models
 from django.utils.text import slugify
-from core.models import User, SubCategory
-
-
-def generate_unique_sku(instance):
-
-    brand_prefix = ''.join(filter(str.isalpha, instance.product.brand))[:3].upper()
-    random_str = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
-    return f"{brand_prefix}-{random_str}"
+from core.models import User, SubCategory 
 
 
 class SellerProfile(models.Model):
@@ -59,6 +52,46 @@ class SellerProfile(models.Model):
                 counter += 1
             self.store_slug = slug
         super().save(*args, **kwargs)
+
+
+
+class Order(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('processing', 'Processing'),
+        ('shipped', 'Shipped'),
+        ('completed', 'Completed'),
+        ('cancelled', 'Cancelled'),
+    ]
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    seller = models.ForeignKey('SellerProfile', on_delete=models.CASCADE, related_name='orders')
+    order_id = models.CharField(max_length=20, unique=True, blank=True)
+    customer_name = models.CharField(max_length=200)
+    customer_phone = models.CharField(max_length=15, blank=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        if not self.order_id:
+            self.order_id = f"ORD-{uuid.uuid4().hex[:6].upper()}"
+        super().save(*args, **kwargs)
+
+class OrderItem(models.Model):
+    order = models.ForeignKey('Order', on_delete=models.CASCADE, related_name='items')
+    product = models.ForeignKey('Product', on_delete=models.CASCADE) 
+    variant = models.ForeignKey('ProductVariant', on_delete=models.CASCADE)  
+    quantity = models.IntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+
+
+
+
+
+
+       
 
 
 class Product(models.Model):
@@ -191,11 +224,10 @@ class ProductVariant(models.Model):
         return f"{self.product.name} | SKU: {self.sku_code}"
 
     def save(self, *args, **kwargs):
-        # Auto-generate slug using product name + first 4 hex chars of UUID
+     
         if not self.slug:
             self.slug = slugify(f"{self.product.name}-{str(self.id.hex[:4])}")
 
-        # Auto-generate unique SKU
         if not self.sku_code:
             sku = generate_unique_sku(self)
             while ProductVariant.objects.filter(sku_code=sku).exists():
@@ -213,6 +245,10 @@ class ProductVariant(models.Model):
     @property
     def is_in_stock(self):
         return self.stock_quantity > 0
+
+    @property
+    def primary_image(self):
+        return self.images.filter(is_primary=True).first() or self.images.first()
 
 
 
@@ -238,7 +274,7 @@ class ProductImage(models.Model):
         return f"{'[Primary] ' if self.is_primary else ''}Image for {self.variant.sku_code}"
 
     def save(self, *args, **kwargs):
-        # Ensure only one primary image per variant
+        
         if self.is_primary:
             ProductImage.objects.filter(variant=self.variant, is_primary=True).exclude(
                 pk=self.pk
@@ -351,3 +387,25 @@ class InventoryLog(models.Model):
     def __str__(self):
         sign = '+' if self.change_amount > 0 else ''
         return f"{self.variant.sku_code} | {sign}{self.change_amount} ({self.reason})"
+
+
+class ReviewReply(models.Model):
+
+    review = models.ForeignKey(
+        "customer.Review",
+        on_delete=models.CASCADE,
+        related_name="replies"
+    )
+
+    seller = models.ForeignKey(
+        SellerProfile,
+        on_delete=models.CASCADE
+    )
+
+    reply = models.TextField()
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Reply by {self.seller.store_name}"
+

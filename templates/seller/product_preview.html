@@ -1,195 +1,265 @@
 {% extends "seller/base.html" %}
 
-{% block title %}Product Details{% endblock %}
-{% block header_title %}Product Details{% endblock %}
+{% block title %}Preview: {{ product.name }} | BuyNext Seller{% endblock %}
 
 {% block content %}
-<div class="max-w-6xl mx-auto pb-20">
-    <div class="flex flex-wrap items-start justify-between gap-4 mb-8">
-        <div>
-            <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Seller Console</p>
-            <h1 class="text-3xl font-black text-slate-800 mt-2">{{ product.name }}</h1>
-            <p class="text-sm text-slate-500 mt-1">
-                {{ product.brand|default:"Brand n/a" }}
-                {% if product.subcategory %} • {{ product.subcategory.name }}{% endif %}
-                {% if product.subcategory and product.subcategory.category %} • {{ product.subcategory.category.name }}{% endif %}
-            </p>
+<div class="max-w-7xl mx-auto pb-20 px-4 sm:px-6 lg:px-8 pt-8">
+
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 border-b border-slate-100 pb-8">
+        <div class="space-y-1">
+            <div class="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
+                <span class="material-icons-outlined text-xs">visibility</span>
+                Seller Preview Mode / {{ product.subcategory.name }}
+            </div>
+            <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">{{ product.name }}</h1>
+            <p class="text-slate-500 text-sm italic">Reviewing variant mapping and inventory status</p>
         </div>
-        <div class="flex flex-wrap gap-3">
-            <a href="{% url 'edit_product' product.id %}" class="px-5 py-3 rounded-2xl bg-brand-blue text-white text-sm font-bold shadow-lg shadow-blue-100 hover:bg-blue-600 transition-all">
-                Edit Product
+
+        <div class="flex gap-3">
+            <a href="{% url 'seller_product' %}"
+                class="flex items-center gap-2 px-6 py-3 rounded-xl bg-white border border-slate-200 text-slate-600 text-sm font-bold hover:bg-slate-50 transition-all">
+                <span class="material-icons-outlined text-sm">arrow_back</span> Back
             </a>
-            <a href="{% url 'seller_product' %}" class="px-5 py-3 rounded-2xl bg-white border border-slate-200 text-slate-600 text-sm font-bold hover:bg-slate-50 transition-all">
-                Back to Products
+            <a href="{% url 'edit_product' product.id %}"
+                class="flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-blue text-white text-sm font-bold shadow-lg shadow-blue-100 hover:scale-[1.02] transition-all">
+                <span class="material-icons-outlined text-sm">edit</span> Edit Product
             </a>
         </div>
     </div>
 
-    <div class="grid lg:grid-cols-2 gap-8">
-        <div class="space-y-4">
-            <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm p-5">
-                {% if gallery_images %}
-                <div class="aspect-square w-full rounded-3xl overflow-hidden bg-slate-100 flex items-center justify-center">
-                    <img id="sellerMainImage" src="{% if gallery_images.0.type != 'video' %}{{ gallery_images.0.url }}{% endif %}" alt="{{ gallery_images.0.alt|default:product.name }}" class="w-full h-full object-cover {% if gallery_images.0.type == 'video' %}hidden{% endif %}">
-                    <video id="sellerMainVideo" src="{% if gallery_images.0.type == 'video' %}{{ gallery_images.0.url }}{% endif %}" class="w-full h-full object-cover {% if gallery_images.0.type != 'video' %}hidden{% endif %}" controls playsinline></video>
-                </div>
-                {% else %}
-                <div class="aspect-square w-full rounded-3xl bg-slate-100 flex items-center justify-center text-slate-400 text-sm font-semibold">
-                    No product image
-                </div>
-                {% endif %}
-            </div>
+    <div class="grid lg:grid-cols-12 gap-12">
 
-            {% if gallery_images %}
-            <div class="flex gap-3 overflow-x-auto pb-2">
-                {% for image in gallery_images %}
-                <button type="button" class="bn-thumb rounded-2xl overflow-hidden bg-white border border-slate-200 shrink-0 {% if forloop.first %}ring-2 ring-brand-blue{% endif %}" data-preview-image="{{ image.url }}" data-preview-type="{{ image.type|default:'image' }}">
-                    {% if image.type == "video" %}
-                    <div class="h-20 w-20 bg-slate-900/80 flex items-center justify-center text-white">
-                        <span class="material-icons-outlined">play_arrow</span>
+        <div class="lg:col-span-5 space-y-6">
+            <div class="sticky top-8 space-y-6">
+                <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm p-4 relative overflow-hidden">
+                    <div
+                        class="aspect-square w-full rounded-[2rem] bg-slate-50 overflow-hidden flex items-center justify-center border border-slate-50">
+                        <img id="main-preview-img"
+                            src="{% if primary_variant.images.all %}{{ primary_variant.images.all.0.image.url }}{% elif gallery_images %}{{ gallery_images.0.url }}{% else %}https://via.placeholder.com/600{% endif %}"
+                            alt="Product preview image"
+                            class="w-full h-full object-contain p-8 transition-opacity duration-300">
                     </div>
-                    {% else %}
-                    <img src="{{ image.url }}" alt="{{ image.alt|default:product.name }}" class="h-20 w-20 object-cover">
-                    {% endif %}
-                </button>
-                {% endfor %}
+
+                    <div id="thumb-strip" class="flex gap-4 overflow-x-auto p-4 mt-2 no-scrollbar">
+                        {% for img in gallery_images %}
+                        <button type="button"
+                            class="bn-thumb shrink-0 w-20 h-20 rounded-2xl border-2 overflow-hidden transition-all 
+                                       {% if img.variant_id == primary_variant.id|stringformat:'s' %} block border-brand-blue ring-4 ring-brand-blue/10 {% else %} hidden border-transparent {% endif %}"
+                            data-variant="{{ img.variant_id }}" data-img-url="{{ img.url }}">
+                            <img src="{{ img.url }}" alt="Product variant thumbnail" class="w-full h-full object-cover">
+                        </button>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-[2rem] border border-slate-100 p-8">
+                    <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6">Configuration Specs
+                    </h3>
+                    <div id="attribute-container" class="space-y-3">
+                        {% for attr in primary_variant.variant_attributes.all %}
+                        <div class="flex justify-between items-center py-2 border-b border-slate-50">
+                            <span class="text-xs font-medium text-slate-400">{{ attr.option.attribute.name }}</span>
+                            <span class="text-xs font-black text-slate-800">{{ attr.option.value }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
-            {% endif %}
         </div>
 
-        <div class="space-y-6">
-            <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm p-6">
-                <div class="flex items-baseline gap-4 flex-wrap">
-                    <p class="text-3xl font-black text-brand-blue">
-                        {% if primary_variant %}Rs. {{ primary_variant.selling_price|floatformat:2 }}{% else %}Rs. 0.00{% endif %}
-                    </p>
-                    <p class="text-sm text-slate-400 line-through">
-                        {% if primary_variant %}Rs. {{ primary_variant.mrp|floatformat:2 }}{% else %}Rs. 0.00{% endif %}
-                    </p>
-                    {% if primary_variant %}
-                    <span class="text-xs font-black text-emerald-600">{{ primary_variant.discount_percentage }}% off</span>
-                    {% endif %}
-                </div>
+        <div class="lg:col-span-7 space-y-8">
 
-                <div class="grid sm:grid-cols-2 gap-3 text-xs text-slate-600 mt-4">
-                    <div>SKU: <span class="font-semibold text-slate-800">{% if primary_variant %}{{ primary_variant.sku_code }}{% else %}-{% endif %}</span></div>
-                    <div>Stock: <span class="font-semibold text-slate-800">{% if primary_variant %}{{ primary_variant.stock_quantity }}{% else %}-{% endif %}</span></div>
-                    <div>Status: <span class="font-semibold {% if primary_variant and primary_variant.is_in_stock %}text-emerald-600{% else %}text-rose-600{% endif %}">{% if primary_variant and primary_variant.is_in_stock %}In stock{% else %}Out of stock{% endif %}</span></div>
-                    <div>Active: <span class="font-semibold text-slate-800">{% if primary_variant and primary_variant.is_active %}Active{% else %}Inactive{% endif %}</span></div>
-                </div>
-            </div>
-
-            {% if latest_rejection %}
-            <div class="rounded-[2.5rem] border border-rose-200 bg-rose-50/60 p-6">
-                <h3 class="text-[10px] font-black text-rose-500 uppercase tracking-[0.2em]">Rejection Reason</h3>
-                <p class="text-sm text-rose-700 font-semibold mt-3">{{ latest_rejection.reason }}</p>
-                <p class="text-[11px] text-rose-500 mt-2">Recorded {{ latest_rejection.created_at|date:"M d, Y H:i" }}</p>
-            </div>
-            {% endif %}
-
-            <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm p-6">
-                <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Description</h3>
-                <p class="text-sm text-slate-500 mt-3">{{ product.description|default:"No description added yet." }}</p>
-            </div>
-
-            <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm p-6">
-                <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Product Details</h3>
-                <div class="grid sm:grid-cols-2 gap-4 text-sm text-slate-700 mt-4">
-                    <div>
-                        <p class="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-semibold">Seller</p>
-                        <p class="font-semibold">{{ product.seller.store_name }}</p>
-                        <p class="text-xs text-slate-500">@{{ product.seller.user.username }}</p>
-                    </div>
-                    <div>
-                        <p class="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-semibold">Model</p>
-                        <p class="font-semibold">{{ product.model_number|default:"-" }}</p>
-                        <p class="text-xs text-slate-500">Created {{ product.created_at|date:"M d, Y" }}</p>
-                    </div>
-                    <div>
-                        <p class="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-semibold">Return Policy</p>
-                        <p class="font-semibold">{% if product.is_returnable %}Returnable{% else %}Non-returnable{% endif %}</p>
-                        <p class="text-xs text-slate-500">{{ product.return_days }} day(s) window</p>
-                    </div>
-                    <div>
-                        <p class="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-semibold">Cancellation</p>
-                        <p class="font-semibold">{% if product.is_cancellable %}Cancellable{% else %}Non-cancellable{% endif %}</p>
-                        <p class="text-xs text-slate-500">Approval: {{ product.approval_status }}</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm p-6">
-                <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Variants</h3>
-                <div class="grid sm:grid-cols-2 gap-3 mt-4">
-                    {% for variant in variant_cards %}
-                    <div class="rounded-2xl border border-slate-100 bg-slate-50/60 p-4">
-                        <div class="flex items-center gap-3">
-                            <div class="h-12 w-12 rounded-xl bg-white border border-slate-100 overflow-hidden flex items-center justify-center">
-                                {% if variant.image_url %}
-                                <img src="{{ variant.image_url }}" alt="{{ variant.label }}" class="h-full w-full object-cover">
-                                {% else %}
-                                <span class="material-icons-outlined text-slate-300">image</span>
-                                {% endif %}
-                            </div>
-                            <div>
-                                <p class="text-sm font-bold text-slate-700">{{ variant.label }}</p>
-                                <p class="text-[10px] text-slate-400 font-bold uppercase">{{ variant.sku|default:"SKU pending" }}</p>
-                            </div>
-                        </div>
-                        <p class="text-xs text-slate-500 mt-2">
-                            {% if variant.attributes %}
-                                {% for detail in variant.attributes %}
-                                    {{ detail.name }}: {{ detail.value }}{% if not forloop.last %} · {% endif %}
-                                {% endfor %}
-                            {% else %}
-                                Standard configuration
-                            {% endif %}
-                        </p>
-                        <div class="flex items-center justify-between text-xs mt-3">
-                            <span class="font-bold text-brand-blue">Rs. {{ variant.price|floatformat:2 }}</span>
-                            <span class="font-bold {% if variant.is_in_stock %}text-emerald-600{% else %}text-rose-600{% endif %}">
-                                {% if variant.is_in_stock %}In stock{% else %}Out of stock{% endif %}
-                            </span>
+            <div
+                class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm p-8 bg-gradient-to-br from-white to-slate-50/50">
+                <div class="flex justify-between items-start mb-10">
+                    <div class="space-y-1">
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Active Variant
+                            Metrics</p>
+                        <div class="flex items-baseline gap-4">
+                            <span id="display-price" class="text-5xl font-black text-slate-900">
+                                Rs. {{ primary_variant.selling_price }}</span>
+                            <span id="display-mrp" class="text-xl text-slate-400 line-through font-medium">
+                                Rs. {{ primary_variant.mrp }}</span>
                         </div>
                     </div>
-                    {% empty %}
-                    <div class="text-sm text-slate-500">No variants available for this product.</div>
-                    {% endfor %}
+                    <span id="stock-badge"
+                        class="{% if primary_variant.stock_quantity > 0 %}bg-emerald-50 text-emerald-600{% else %}bg-rose-50 text-rose-600{% endif %} px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest">
+                        {% if primary_variant.stock_quantity > 0 %}In Stock{% else %}Out of Stock{% endif %}
+                    </span>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="flex justify-between items-end">
+                        <label class="text-[10px] font-black text-slate-900 uppercase tracking-widest">Select Variant to
+                            Inspect</label>
+                        <span class="text-[10px] font-mono font-bold text-brand-blue" id="display-sku">
+                            SKU: {{ primary_variant.sku_code }}</span>
+                    </div>
+                    <div id="variant-container" class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        {% for v in variants %}
+                        <button type="button"
+                            class="variant-btn p-4 rounded-2xl border-2 text-left transition-all group
+    {% if v.id == primary_variant.id %} border-brand-blue bg-blue-50/50 {% else %} border-slate-100 hover:border-slate-200 {% endif %}"
+                            data-variant-id="{{ v.id }}" data-price="Rs. {{ v.selling_price }}"
+                            data-mrp="Rs. {{ v.mrp }}" data-sku="SKU: {{ v.sku_code }}"
+                            data-stock="{{ v.stock_quantity }}" data-stock-quantity="{{ v.stock_quantity }}"
+                            data-img="{% with img=v.images.all|first %}{% if img %}{{ img.image.url }}{% else %}https://via.placeholder.com/600{% endif %}{% endwith %}"
+                            data-attributes='[
+                            {% for attr in v.variant_attributes.all %}
+                            {
+                            "n": "{{ attr.option.attribute.name|escapejs }}",
+                            "v": "{{ attr.option.value|escapejs }}"
+                            }{% if not forloop.last %},{% endif %}
+                            {% endfor %}
+                            ]'>
+
+                            <p class="text-[11px] font-black truncate
+        {% if v.id == primary_variant.id %} text-brand-blue {% else %} text-slate-700 {% endif %}">
+                                {{ v.sku_code }}
+                            </p>
+
+                            <p class="text-[10px] text-slate-400 mt-1">
+                                Qty: {{ v.stock_quantity }}
+                            </p>
+                        </button>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-[2rem] border border-slate-100 p-8">
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Stock Availability
+                    </p>
+                    <p id="display-qty" class="text-3xl font-black text-slate-800">{{ primary_variant.stock_quantity }}
+                        Units</p>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase mt-1">Total Warehouse Count</p>
+                </div>
+                <div class="bg-white rounded-[2rem] border border-slate-100 p-8">
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Platform Status</p>
+                    <p class="text-3xl font-black text-emerald-500">Active</p>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase mt-1">Visible to Customers</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-[2rem] border border-slate-100 p-8">
+                <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Description Text</h3>
+                <div class="prose prose-sm text-slate-500 max-w-none">
+                    {{ product.description|linebreaks }}
                 </div>
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
 
+{% block extra_js %}
 <script>
-    const mainImage = document.getElementById('sellerMainImage');
-    const mainVideo = document.getElementById('sellerMainVideo');
-    const thumbs = document.querySelectorAll('[data-preview-image]');
-    thumbs.forEach((thumb) => {
-        thumb.addEventListener('click', () => {
-            const url = thumb.getAttribute('data-preview-image');
-            const type = thumb.getAttribute('data-preview-type') || 'image';
-            if (type === 'video') {
-                if (mainVideo) {
-                    mainVideo.src = url || '';
-                    mainVideo.classList.remove('hidden');
-                }
-                if (mainImage) {
-                    mainImage.classList.add('hidden');
-                }
+    console.log("JS LOADED");
+document.addEventListener('DOMContentLoaded', () => {
+
+    const mainImg = document.getElementById('main-preview-img');
+    const priceTxt = document.getElementById('display-price');
+    const mrpTxt = document.getElementById('display-mrp');
+    const skuTxt = document.getElementById('display-sku');
+    const qtyTxt = document.getElementById('display-qty');
+    const stockBadge = document.getElementById('stock-badge');
+    const attrContainer = document.getElementById('attribute-container');
+
+    const variantContainer = document.getElementById('variant-container'); // parent
+    const thumbs = document.querySelectorAll('.bn-thumb');
+
+    // ✅ EVENT DELEGATION (BEST PRACTICE)
+    variantContainer.addEventListener('click', (e) => {
+
+        const btn = e.target.closest('.variant-btn');
+        if (!btn) return;
+
+        const data = btn.dataset;
+
+        console.log("CLICKED:", data); // debug
+
+        // ✅ TEXT UPDATES
+        priceTxt.textContent = data.price;
+        mrpTxt.textContent = data.mrp;
+        skuTxt.textContent = data.sku;
+        qtyTxt.textContent = data.stock + ' Units';
+
+        // ✅ STOCK BADGE
+        const stockQty = parseInt(data.stock || 0);
+        if (stockQty > 0) {
+            stockBadge.textContent = 'In Stock';
+            stockBadge.className = 'bg-emerald-50 text-emerald-600 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest';
+        } else {
+            stockBadge.textContent = 'Out of Stock';
+            stockBadge.className = 'bg-rose-50 text-rose-600 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest';
+        }
+
+        // ✅ IMAGE UPDATE (SAFE)
+        if (data.img && data.img.trim() !== "") {
+            mainImg.style.opacity = '0';
+            setTimeout(() => {
+                mainImg.src = data.img.trim();
+                mainImg.style.opacity = '1';
+            }, 100);
+        }
+
+        // ✅ ATTRIBUTES UPDATE (SAFE)
+        try {
+            const attrs = JSON.parse(data.attributes || '[]');
+            attrContainer.innerHTML = attrs.map(a => `
+                <div class="flex justify-between items-center py-2 border-b border-slate-50">
+                    <span class="text-xs font-medium text-slate-400">${a.n}</span>
+                    <span class="text-xs font-black text-slate-800">${a.v}</span>
+                </div>
+            `).join('');
+        } catch (err) {
+            console.error("JSON ERROR:", err);
+            attrContainer.innerHTML = '<p class="text-xs text-slate-400">No attributes</p>';
+        }
+
+        // ✅ THUMB FILTER
+        let firstThumb = null;
+        thumbs.forEach(t => {
+            if (t.dataset.variant == data.variantId) {
+                t.classList.remove('hidden');
+                if (!firstThumb) firstThumb = t;
             } else {
-                if (mainImage) {
-                    mainImage.src = url || '';
-                    mainImage.classList.remove('hidden');
-                }
-                if (mainVideo) {
-                    mainVideo.pause();
-                    mainVideo.classList.add('hidden');
-                }
+                t.classList.add('hidden');
             }
-            thumbs.forEach((btn) => btn.classList.remove('ring-2', 'ring-brand-blue'));
-            thumb.classList.add('ring-2', 'ring-brand-blue');
+        });
+
+        // highlight thumb
+        thumbs.forEach(t => t.classList.remove('border-brand-blue', 'ring-4', 'ring-brand-blue/10'));
+        if (firstThumb) {
+            firstThumb.classList.add('border-brand-blue', 'ring-4', 'ring-brand-blue/10');
+        }
+
+        // ✅ ACTIVE BUTTON UI
+        document.querySelectorAll('.variant-btn').forEach(b => {
+            b.classList.remove('border-brand-blue', 'bg-blue-50/50');
+            const p = b.querySelector('p');
+            if (p) {
+                p.classList.remove('text-brand-blue');
+                p.classList.add('text-slate-700');
+            }
+        });
+
+        btn.classList.add('border-brand-blue', 'bg-blue-50/50');
+        const activeP = btn.querySelector('p');
+        if (activeP) {
+            activeP.classList.remove('text-slate-700');
+            activeP.classList.add('text-brand-blue');
+        }
+    });
+
+    // ✅ THUMB CLICK
+    thumbs.forEach(thumb => {
+        thumb.addEventListener('click', function () {
+            mainImg.src = this.dataset.imgUrl;
         });
     });
+
+});
 </script>
 {% endblock %}

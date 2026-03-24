@@ -1,26 +1,28 @@
 {% extends "seller/base.html" %}
+{% load humanize %}
 
 {% block title %}Inventory Management{% endblock %}
 {% block header_title %}Stock & Logistics{% endblock %}
 
 {% block content %}
 <div class="max-w-6xl mx-auto pb-20 space-y-8">
-    
+
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="md:col-span-2 bg-white rounded-[2.5rem] p-8 border-2 border-red-100 shadow-sm flex items-center gap-6">
+        <div
+            class="md:col-span-2 bg-white rounded-[2.5rem] p-8 border-2 border-red-100 shadow-sm flex items-center gap-6">
             <div class="w-16 h-16 bg-red-50 text-red-500 rounded-3xl flex items-center justify-center animate-pulse">
                 <span class="material-icons-outlined text-3xl">priority_high</span>
             </div>
             <div>
                 <h3 class="text-xs font-black uppercase tracking-widest text-red-400">Critical Alerts</h3>
-                <p class="text-2xl font-black text-slate-800">4 Items are Low in Stock</p>
+                <p class="text-2xl font-black text-slate-800">{{ low_stock_count }} Items are Low in Stock</p>
                 <p class="text-sm font-bold text-slate-500">Restock soon to avoid losing sales momentum.</p>
             </div>
         </div>
 
         <div class="bg-brand-blue rounded-[2.5rem] p-8 text-white shadow-xl shadow-blue-100">
             <h3 class="text-[10px] font-black uppercase tracking-[0.2em] opacity-80">Total Inventory Value</h3>
-            <p class="text-4xl font-black mt-2">$24,850</p>
+            <p class="text-4xl font-black mt-2">₹{{ total_value|intcomma }}</p>
             <div class="mt-4 flex items-center gap-2 bg-white/10 w-fit px-3 py-1 rounded-full text-[10px] font-bold">
                 <span class="material-icons-outlined text-sm">trending_up</span> 12% vs last month
             </div>
@@ -31,8 +33,10 @@
         <div class="p-8 border-b border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4">
             <h2 class="text-xl font-black text-slate-800 uppercase tracking-tight">Active Inventory</h2>
             <div class="relative w-full md:w-96">
-                <span class="material-icons-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">search</span>
-                <input type="text" placeholder="Search by Product or SKU..." class="w-full pl-12 pr-6 py-3 bg-slate-50 border-2 border-slate-200 rounded-2xl outline-none focus:border-brand-blue font-bold text-sm transition-all">
+                <span
+                    class="material-icons-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+                <input type="text" placeholder="Search by Product or SKU..."
+                    class="w-full pl-12 pr-6 py-3 bg-slate-50 border-2 border-slate-200 rounded-2xl outline-none focus:border-brand-blue font-bold text-sm transition-all">
             </div>
         </div>
 
@@ -40,40 +44,75 @@
             <table class="w-full text-left border-collapse">
                 <thead>
                     <tr class="bg-slate-50/50">
-                        <th class="px-8 py-5 text-[10px] font-black uppercase text-slate-400 tracking-widest">Product & Variant</th>
+                        <th class="px-8 py-5 text-[10px] font-black uppercase text-slate-400 tracking-widest">Product &
+                            Variant</th>
                         <th class="px-8 py-5 text-[10px] font-black uppercase text-slate-400 tracking-widest">SKU</th>
-                        <th class="px-8 py-5 text-[10px] font-black uppercase text-slate-400 tracking-widest text-center">In Stock</th>
-                        <th class="px-8 py-5 text-[10px] font-black uppercase text-slate-400 tracking-widest">Last Updated</th>
-                        <th class="px-8 py-5 text-[10px] font-black uppercase text-slate-400 tracking-widest text-right">Actions</th>
+                        <th
+                            class="px-8 py-5 text-[10px] font-black uppercase text-slate-400 tracking-widest text-center">
+                            In Stock</th>
+                        <th class="px-8 py-5 text-[10px] font-black uppercase text-slate-400 tracking-widest">Last
+                            Updated</th>
+                        <th
+                            class="px-8 py-5 text-[10px] font-black uppercase text-slate-400 tracking-widest text-right">
+                            Actions</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100">
+                    {% for variant in variants %}
                     <tr class="group hover:bg-slate-50/50 transition-colors">
                         <td class="px-8 py-6">
                             <div class="flex items-center gap-4">
                                 <div class="w-12 h-12 bg-slate-100 rounded-xl overflow-hidden border border-slate-200">
-                                    <img src="/api/placeholder/48/48" alt="product">
+                                    {% if variant.primary_image %}
+                                    <img src="{{ variant.primary_image.image.url }}"
+                                        class="w-full h-full object-cover rounded-xl">
+                                    {% else %}
+                                    <img src="/static/images/no-image.png"
+                                        class="w-full h-full object-cover rounded-xl">
+                                    {% endif %}
                                 </div>
                                 <div>
-                                    <p class="font-black text-slate-800">Sony WH-1000XM5</p>
-                                    <p class="text-[10px] font-bold text-slate-400 uppercase">Color: Midnight Blue</p>
+                                    <p class="font-black text-slate-800">{{ variant.product.name }}</p>
+                                    <p class="text-[10px] font-bold text-slate-400 uppercase">SKU: {{ variant.sku_code    }}</p>
+                                     
+
+
                                 </div>
                             </div>
                         </td>
-                        <td class="px-8 py-6 font-mono text-xs font-bold text-slate-500 tracking-tighter">SNY-XM5-BLU</td>
+                        <td class="px-8 py-6 font-mono text-xs font-bold text-slate-500 tracking-tighter">
+                            {{ variant.sku_code }}</td>
                         <td class="px-8 py-6">
                             <div class="flex flex-col items-center">
-                                <span class="px-4 py-1 bg-red-50 text-red-600 rounded-full text-sm font-black">3</span>
-                                <span class="text-[8px] font-black text-red-400 uppercase mt-1">Low Stock</span>
+                                <span class="px-4 py-1 bg-blue-50 text-blue-600 rounded-full text-sm font-black">
+                                    {{variant.stock_quantity }}
+
+                                </span>
+                                {% if variant.stock_quantity <= variant.low_stock_threshold %} <span
+                                    class="text-[8px] font-black text-red-400 uppercase mt-1">
+                                    Low Stock
+                                    </span>
+                                    {% endif %}
                             </div>
                         </td>
-                        <td class="px-8 py-6 text-sm font-bold text-slate-500">2 hours ago</td>
+                        <td class="px-8 py-6 text-sm font-bold text-slate-500">{{ variant.updated_at|timesince }} ago
+                        </td>
                         <td class="px-8 py-6 text-right">
-                            <button onclick="openAdjustmentModal('Sony WH-1000XM5', 'SNY-XM5-BLU', 3)" class="p-3 bg-slate-100 text-slate-600 rounded-xl hover:bg-brand-blue hover:text-white transition-all">
+                            <button
+                                onclick="openAdjustmentModal('{{ variant.product.name }}','{{ variant.sku_code }}','{{ variant.stock_quantity }}','{{ variant.id }}')"
+                                class="w-10 h-10 bg-slate-50 text-slate-400 hover:bg-brand-blue hover:text-white rounded-xl transition-all">
                                 <span class="material-icons-outlined">edit_note</span>
                             </button>
+
                         </td>
                     </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-10 text-slate-400 font-bold">
+                            No Inventory Items
+                        </td>
+                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
@@ -86,16 +125,19 @@
             </div>
             <h2 class="text-xl font-black text-slate-800 uppercase tracking-tight">Recent Activity Log</h2>
         </div>
-        
+
         <div class="space-y-4">
             <div class="flex items-center justify-between p-5 bg-slate-50 rounded-2xl border border-slate-100">
                 <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center">
+                    <div
+                        class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center">
                         <span class="material-icons-outlined text-sm">add</span>
                     </div>
                     <div>
-                        <p class="text-sm font-black text-slate-800">+20 Units Added <span class="text-slate-400 font-bold ml-2">to SNY-XM5-BLU</span></p>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Reason: Restock from Supplier</p>
+                        <p class="text-sm font-black text-slate-800">+20 Units Added <span
+                                class="text-slate-400 font-bold ml-2">to SNY-XM5-BLU</span></p>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Reason: Restock from
+                            Supplier</p>
                     </div>
                 </div>
                 <p class="text-xs font-bold text-slate-400">Oct 24, 2:45 PM</p>
@@ -104,8 +146,10 @@
     </section>
 </div>
 
-<div id="adjustmentModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white w-full max-w-lg rounded-[2.5rem] shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+<div id="adjustmentModal"
+    class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div
+        class="bg-white w-full max-w-lg rounded-[2.5rem] shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
         <div class="p-8 bg-slate-50 border-b border-slate-100 flex justify-between items-center">
             <div>
                 <h3 class="text-xl font-black text-slate-800 uppercase tracking-tight">Adjust Stock</h3>
@@ -115,12 +159,15 @@
                 <span class="material-icons-outlined text-3xl">close</span>
             </button>
         </div>
-        
-        <form class="p-8 space-y-6">
+
+        <form method="POST" action="{% url 'adjust_inventory' %}" class="p-8 space-y-6">
+            {% csrf_token %}
+            <input type="hidden" name="variant_id" id="variantIdInput">
             <div class="grid grid-cols-2 gap-4">
                 <div class="space-y-2">
                     <label class="text-[10px] font-black uppercase text-slate-500 ml-2">Adjustment Type</label>
-                    <select class="w-full px-5 py-4 bg-white border-2 border-slate-300 rounded-2xl outline-none font-bold focus:border-brand-blue shadow-sm">
+                    <select name="adjustment_type"
+                        class="w-full px-5 py-4 bg-white border-2 border-slate-300 rounded-2xl outline-none font-bold focus:border-brand-blue shadow-sm">
                         <option value="add">Add Units (+)</option>
                         <option value="remove">Remove Units (-)</option>
                         <option value="set">Set Exact Count (=)</option>
@@ -128,13 +175,15 @@
                 </div>
                 <div class="space-y-2">
                     <label class="text-[10px] font-black uppercase text-slate-500 ml-2">Quantity</label>
-                    <input type="number" placeholder="e.g. 10" class="w-full px-5 py-4 bg-white border-2 border-slate-300 rounded-2xl outline-none font-bold focus:border-brand-blue shadow-sm">
+                    <input type="number" name="quantity" required placeholder="e.g. 10"
+                        class="w-full px-5 py-4 bg-white border-2 border-slate-300 rounded-2xl outline-none font-bold focus:border-brand-blue shadow-sm">
                 </div>
             </div>
 
             <div class="space-y-2">
                 <label class="text-[10px] font-black uppercase text-slate-500 ml-2">Reason for Adjustment</label>
-                <select class="w-full px-5 py-4 bg-white border-2 border-slate-300 rounded-2xl outline-none font-bold focus:border-brand-blue shadow-sm">
+                <select name="reason"
+                    class="w-full px-5 py-4 bg-white border-2 border-slate-300 rounded-2xl outline-none font-bold focus:border-brand-blue shadow-sm">
                     <option value="restock">New Stock / Restock</option>
                     <option value="return">Customer Return</option>
                     <option value="damage">Damaged / Expired</option>
@@ -143,7 +192,8 @@
                 </select>
             </div>
 
-            <button type="submit" class="w-full py-5 bg-brand-blue text-white rounded-2xl font-black text-sm uppercase tracking-widest shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all">
+            <button type="submit"
+                class="w-full py-5 bg-brand-blue text-white rounded-2xl font-black text-sm uppercase tracking-widest shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all">
                 Confirm Update
             </button>
         </form>
@@ -151,10 +201,11 @@
 </div>
 
 <script>
-    function openAdjustmentModal(name, sku, currentStock) {
+    function openAdjustmentModal(name, sku, currentStock, variantId) {
         document.getElementById('modalProductName').innerText = `${name} (${sku})`;
+        document.getElementById('variantIdInput').value = variantId;
         document.getElementById('adjustmentModal').classList.remove('hidden');
-        document.body.style.overflow = 'hidden'; // Prevent scroll
+        document.body.style.overflow = 'hidden';
     }
 
     function closeAdjustmentModal() {

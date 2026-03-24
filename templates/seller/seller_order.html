@@ -1,4 +1,4 @@
-{% extends "seller/base.html" %}
+ {% extends "seller/base.html" %}
 
 {% block title %}Manage Orders{% endblock %}
 {% block header_title %}Orders & Fulfillment{% endblock %}
@@ -12,7 +12,7 @@
             </div>
             <div>
                 <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Active Orders</p>
-                <h3 class="text-2xl font-black text-slate-800">12</h3>
+                <h3 class="text-2xl font-black text-slate-800">{{ active_orders }}</h3>
             </div>
         </div>
     </div>
@@ -23,7 +23,7 @@
             </div>
             <div>
                 <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Returns Pending</p>
-                <h3 class="text-2xl font-black text-slate-800">3</h3>
+                <h3 class="text-2xl font-black text-slate-800">{{ returns_pending }}</h3>
             </div>
         </div>
     </div>
@@ -34,7 +34,7 @@
             </div>
             <div>
                 <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total Revenue</p>
-                <h3 class="text-2xl font-black text-slate-800">$4,280.50</h3>
+                <h3 class="text-2xl font-black text-slate-800">INR {{ total_revenue }}</h3>
             </div>
         </div>
     </div>
@@ -81,96 +81,57 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-slate-50">
-                <tr class="hover:bg-slate-50/50 transition-all">
-                    <td class="px-8 py-5">
-                        <span class="text-sm font-black text-slate-800">#ORD-9921</span>
-                        <p class="text-[10px] text-slate-400 font-bold uppercase mt-1">Today, 10:45 AM</p>
-                    </td>
-                    <td class="px-8 py-5">
-                        <p class="font-bold text-slate-700 text-sm">Alex Thompson</p>
-                        <p class="text-[10px] text-slate-400">alex.t@email.com</p>
-                    </td>
-                    <td class="px-8 py-5">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 bg-slate-100 rounded-lg overflow-hidden flex-shrink-0">
-                                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100" class="w-full h-full object-cover">
-                            </div>
-                            <span class="text-sm font-bold text-slate-700">Studio Wireless Pro</span>
-                        </div>
-                    </td>
-                    <td class="px-8 py-5 text-sm font-black text-slate-600">x1</td>
-                    <td class="px-8 py-5 text-sm font-black text-brand-blue">$199.99</td>
-                    <td class="px-8 py-5">
-                        <span class="px-3 py-1 bg-blue-50 text-brand-blue rounded-lg text-[10px] font-black uppercase tracking-wider">Processing</span>
-                    </td>
-                    <td class="px-8 py-5 text-center">
-                        <button onclick="openOrderDetails('ORD-9921')" class="w-10 h-10 bg-slate-50 text-slate-400 hover:bg-brand-blue hover:text-white rounded-xl transition-all">
-                            <span class="material-icons-outlined text-xl">visibility</span>
-                        </button>
-                    </td>
-                </tr>
-
-                <tr class="hover:bg-slate-50/50 transition-all">
-                    <td class="px-8 py-5">
-                        <span class="text-sm font-black text-slate-800">#ORD-9840</span>
-                        <p class="text-[10px] text-slate-400 font-bold uppercase mt-1">Yesterday</p>
-                    </td>
-                    <td class="px-8 py-5">
-                        <p class="font-bold text-slate-700 text-sm">Sarah Jenkins</p>
-                    </td>
-                    <td class="px-8 py-5">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 bg-slate-100 rounded-lg overflow-hidden flex-shrink-0">
-                                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=100" class="w-full h-full object-cover">
-                            </div>
-                            <span class="text-sm font-bold text-slate-700">Minimalist Quartz</span>
-                        </div>
-                    </td>
-                    <td class="px-8 py-5 text-sm font-black text-slate-600">x1</td>
-                    <td class="px-8 py-5 text-sm font-black text-brand-blue">$145.00</td>
-                    <td class="px-8 py-5">
-                        <span class="px-3 py-1 bg-orange-50 text-brand-orange rounded-lg text-[10px] font-black uppercase tracking-wider">Return Requested</span>
-                    </td>
-                    <td class="px-8 py-5 text-center">
-                        <button class="w-10 h-10 bg-slate-50 text-slate-400 hover:bg-brand-blue hover:text-white rounded-xl transition-all">
-                            <span class="material-icons-outlined text-xl">visibility</span>
-                        </button>
-                    </td>
-                </tr>
-
                 {% for item in order_items %}
                 <tr class="hover:bg-slate-50/50 transition-all">
                     <td class="px-8 py-5">
                         <span class="text-sm font-black text-slate-800">#{{ item.order.order_number }}</span>
-                        <p class="text-[10px] text-slate-400 font-bold uppercase mt-1">{{ item.order.created_at|date:"d M, Y" }}</p>
+                        <p class="text-[10px] text-slate-400 font-bold uppercase mt-1">{{ item.order.ordered_at|date:"d M, Y" }}</p>
                     </td>
                     <td class="px-8 py-5">
-                        <p class="font-bold text-slate-700 text-sm">{{ item.order.customer_name }}</p>
+                        <p class="font-bold text-slate-700 text-sm">{{ item.order.user.username }}</p>
                     </td>
                     <td class="px-8 py-5">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 bg-slate-100 rounded-lg overflow-hidden flex-shrink-0">
-                                <img src="{{ item.product.primary_image.url }}" class="w-full h-full object-cover">
+                                {% if item.variant.primary_image %}
+                                <img src="{{ item.variant.primary_image.image.url }}" class="w-full h-full object-cover">
+                                {% else %}
+                                <img src="/static/images/no-product.png" class="w-full h-full object-cover">
+                                {% endif %}
                             </div>
-                            <span class="text-sm font-bold text-slate-700">{{ item.product.name }}</span>
+                            <span class="text-sm font-bold text-slate-700">{{ item.variant.product.name }}</span>
                         </div>
                     </td>
                     <td class="px-8 py-5 text-sm font-black text-slate-600">x{{ item.quantity }}</td>
                     <td class="px-8 py-5 text-sm font-black text-brand-blue">${{ item.price_at_purchase }}</td>
                     <td class="px-8 py-5">
-                        {% if item.status == 'cancelled' %}
-                            <span class="px-3 py-1 bg-red-50 text-red-500 rounded-lg text-[10px] font-black uppercase tracking-wider">Cancelled</span>
-                        {% elif item.status == 'shipped' %}
-                            <span class="px-3 py-1 bg-emerald-50 text-emerald-600 rounded-lg text-[10px] font-black uppercase tracking-wider">Shipped</span>
+                        {% if item.order.order_status == "PLACED" %}
+                        <span class="px-3 py-1 bg-yellow-50 text-yellow-600 rounded-lg text-[10px] font-black uppercase">Placed</span>
+                        {% elif item.order.order_status == "PROCESSING" %}
+                        <span class="px-3 py-1 bg-blue-50 text-brand-blue rounded-lg text-[10px] font-black uppercase">Processing</span>
+                        {% elif item.order.order_status == "SHIPPED" %}
+                        <span class="px-3 py-1 bg-emerald-50 text-emerald-600 rounded-lg text-[10px] font-black uppercase">Shipped</span>
+                        {% elif item.order.order_status == "OUT_FOR_DELIVERY" %}
+                        <span class="px-3 py-1 bg-indigo-50 text-indigo-600 rounded-lg text-[10px] font-black uppercase">Out for Delivery</span>
+                        {% elif item.order.order_status == "DELIVERED" %}
+                        <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-lg text-[10px] font-black uppercase">Delivered</span>
+                        {% elif item.order.order_status == "CANCELLED" %}
+                        <span class="px-3 py-1 bg-red-50 text-red-500 rounded-lg text-[10px] font-black uppercase">Cancelled</span>
+                        {% elif item.order.order_status == "RETURN_REQUESTED" %}
+                        <span class="px-3 py-1 bg-orange-50 text-orange-600 rounded-lg text-[10px] font-black uppercase">Return Requested</span>
                         {% else %}
-                            <span class="px-3 py-1 bg-blue-50 text-brand-blue rounded-lg text-[10px] font-black uppercase tracking-wider">{{ item.status }}</span>
+                        <span class="px-3 py-1 bg-slate-100 text-slate-600 rounded-lg text-[10px] font-black uppercase">{{ item.order.order_status|title }}</span>
                         {% endif %}
                     </td>
-                    <td class="px-8 py-5 text-center">
-                        <a href="#" class="w-10 h-10 inline-flex items-center justify-center bg-slate-50 text-slate-400 hover:bg-brand-blue hover:text-white rounded-xl transition-all">
-                            <span class="material-icons-outlined text-xl">visibility</span>
-                        </a>
-                    </td>
+
+<td class="px-8 py-5 text-center">
+<button 
+onclick="openOrderDetails('{{ item.order.order_number }}','{{ item.order.user.username }}','{{ item.order.order_status|lower }}')"
+class="w-10 h-10 bg-slate-50 text-slate-400 hover:bg-brand-blue hover:text-white rounded-xl transition-all">
+<span class="material-icons-outlined text-xl">visibility</span>
+</button>
+</td>
+                       
                 </tr>
                 {% empty %}
                 <tr>
@@ -198,7 +159,8 @@
                 <h3 class="text-2xl font-black text-slate-800" id="modalOrderTitle">Order Details</h3>
                 <p class="text-sm text-slate-500 font-medium">Customer and Shipping Information</p>
             </div>
-            <button onclick="closeOrderDetails()" class="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-400 hover:text-red-500 transition-colors">
+            <button onclick="closeOrderDetails()" 
+            class="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-400 hover:text-red-500 transition-colors">
                 <span class="material-icons">close</span>
             </button>
         </div>
@@ -210,46 +172,139 @@
                     123 Marketplace Ave<br>Tech City, TC 54321
                 </p>
             </div>
-            <div class="bg-slate-50 p-6 rounded-2xl">
-                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Order Status</p>
-                <select class="w-full bg-white border border-slate-200 rounded-xl py-2 px-3 text-sm font-bold text-slate-700 focus:ring-2 focus:ring-brand-blue/20 outline-none">
-                    <option>Processing</option>
-                    <option>Shipped</option>
-                    <option>Delivered</option>
-                    <option>Cancelled</option>
-                </select>
-            </div>
+          <div class="bg-slate-50 p-6 rounded-2xl">
+            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Order Status</p>
+            <select id="orderStatusSelect"
+            class="w-full bg-white border border-slate-200 rounded-xl py-2 px-3 text-sm font-bold text-slate-700 focus:ring-2 focus:ring-brand-blue/20 outline-none">
+            <option value="processing">Processing</option>
+            <option value="shipped">Shipped</option>
+            <option value="delivered">Delivered</option>
+            <option value="cancelled">Cancelled</option>
+        </select>
+    </div>
         </div>
-
+ 
         <div class="flex gap-3">
             <button onclick="closeOrderDetails()" class="flex-1 py-4 bg-slate-100 text-slate-600 rounded-2xl font-bold text-sm hover:bg-slate-200 transition-all">Close Window</button>
-            <button class="flex-1 py-4 bg-brand-blue text-white rounded-2xl font-bold text-sm shadow-lg shadow-blue-100 hover:bg-blue-600 transition-all">Save Changes</button>
-        </div>
+            <button 
+            onclick="saveChanges()"
+            class="flex-1 py-4 bg-brand-blue text-white rounded-2xl font-bold text-sm shadow-lg shadow-blue-100 hover:bg-blue-600 transition-all">
+            Save Changes
+        </button>
     </div>
 </div>
-
 <script>
-    function openOrderDetails(orderId) {
-        document.getElementById('modalOrderTitle').innerText = `Order #${orderId}`;
-        document.getElementById('orderModal').classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
+
+let currentOrderId = null;
+
+
+function openOrderDetails(orderId, customerName, status) {
+
+    currentOrderId = orderId;
+
+  
+    const title = document.getElementById("modalOrderTitle");
+    if(title){
+        title.innerText = "Order #" + orderId;
     }
 
-    function closeOrderDetails() {
-        document.getElementById('orderModal').classList.add('hidden');
-        document.body.style.overflow = 'auto';
+  
+    const statusSelect = document.getElementById("orderStatusSelect");
+    if(statusSelect){
+        statusSelect.value = status;
     }
 
-    // Auto-submit filter form on button click is handled by the "type=submit"
+   
+    const modal = document.getElementById("orderModal");
+    if(modal){
+        modal.classList.remove("hidden");
+    }
+
+    document.body.style.overflow = "hidden";
+}
+
+
+
+function closeOrderDetails() {
+
+    const modal = document.getElementById("orderModal");
+    if(modal){
+        modal.classList.add("hidden");
+    }
+
+    document.body.style.overflow = "auto";
+}
+
+
+function saveChanges(){
+    if (!currentOrderId) {
+        alert("Invalid order selected. Please open order details again.");
+        return;
+    }
+
+    const statusSelect = document.getElementById("orderStatusSelect");
+    const status = statusSelect.value;
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    fetch("/update-order-status/" + currentOrderId + "/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrftoken")
+        },
+        body: JSON.stringify({
+            status: status
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.text().then(body => {
+                throw new Error(`HTTP ${response.status}: ${body}`);
+            });
+        }
+
+        const contentType = response.headers.get("Content-Type") || "";
+        if (!contentType.includes("application/json")) {
+            return response.text().then(body => {
+                throw new Error("Expected JSON response, got: " + body);
+            });
+        }
+
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        } else {
+            const msg = data.error || "Failed to update order";
+            alert(msg);
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("Something went wrong: " + error.message);
+    });
+}
+
 </script>
 
-<style>
-    .no-scrollbar::-webkit-scrollbar {
-        display: none;
-    }
-    .no-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
-</style>
 {% endblock %}
+
+
+
+
+

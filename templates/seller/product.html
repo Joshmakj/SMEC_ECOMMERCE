@@ -1,6 +1,4 @@
-{% extends "seller/base.html" %}
-
-{% block title %}Products Management{% endblock %}
+{% extends "seller/base.html" %}{% block title %}Products Management{% endblock %}
 {% block header_title %}Products Management{% endblock %}
 
 {% block content %}
@@ -132,7 +130,7 @@
                     <td class="px-8 py-5" onclick="event.stopPropagation();">
                         <div class="flex items-center justify-center gap-2">
 
-                            <a href="#"
+                            <a href="{% url 'seller_product_preview' product.id %}"
                                 class="p-2 text-slate-400 hover:text-brand-blue hover:bg-blue-50 rounded-xl transition-all">
                                 <span class="material-icons-outlined text-xl">visibility</span>
                             </a>

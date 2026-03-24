@@ -3,229 +3,245 @@
 {% block title %}Review Insights | Seller Hub{% endblock %}
 
 {% block header_title %}
-    <div class="flex items-center gap-3">
-        <span class="p-2 bg-amber-50 text-amber-600 rounded-lg">
-            <span class="material-icons-outlined">insights</span>
-        </span>
-        <span>Review Insights</span>
-    </div>
+<div class="flex items-center gap-3">
+    <span class="p-2 bg-amber-50 text-amber-600 rounded-lg">
+        <span class="material-icons-outlined">insights</span>
+    </span>
+    <span>Review Insights</span>
+</div>
 {% endblock %}
 
 {% block content %}
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-    
-    <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 flex flex-col items-center justify-center text-center">
-        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Average Rating</p>
-        <h1 class="text-6xl font-black text-slate-800 mb-2">4.6</h1>
-        <div class="flex items-center gap-1 text-amber-400 mb-3">
-            <span class="material-icons text-2xl">star</span>
-            <span class="material-icons text-2xl">star</span>
-            <span class="material-icons text-2xl">star</span>
-            <span class="material-icons text-2xl">star</span>
-            <span class="material-icons text-2xl">star_half</span>
-        </div>
-        <p class="text-sm font-bold text-slate-500">Based on 142 reviews</p>
-    </div>
 
-    <div class="lg:col-span-2 bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100">
-        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6">Rating Distribution</p>
-        <div class="space-y-4">
-            <div class="flex items-center gap-4">
-                <span class="text-xs font-bold text-slate-600 w-8">5 ★</span>
-                <div class="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden">
-                    <div class="h-full bg-emerald-500 rounded-full" style="width: 75%"></div>
-                </div>
-                <span class="text-xs font-black text-slate-400 w-10 text-right">75%</span>
-            </div>
-            <div class="flex items-center gap-4">
-                <span class="text-xs font-bold text-slate-600 w-8">4 ★</span>
-                <div class="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden">
-                    <div class="h-full bg-blue-500 rounded-full" style="width: 15%"></div>
-                </div>
-                <span class="text-xs font-black text-slate-400 w-10 text-right">15%</span>
-            </div>
-            <div class="flex items-center gap-4">
-                <span class="text-xs font-bold text-slate-600 w-8">3 ★</span>
-                <div class="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden">
-                    <div class="h-full bg-amber-500 rounded-full" style="width: 7%"></div>
-                </div>
-                <span class="text-xs font-black text-slate-400 w-10 text-right">7%</span>
-            </div>
-            <div class="flex items-center gap-4">
-                <span class="text-xs font-bold text-slate-600 w-8">1-2★</span>
-                <div class="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden">
-                    <div class="h-full bg-red-400 rounded-full" style="width: 3%"></div>
-                </div>
-                <span class="text-xs font-black text-slate-400 w-10 text-right">3%</span>
-            </div>
-        </div>
-    </div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+
+<div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 flex flex-col items-center justify-center text-center">
+
+<p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">
+Average Rating
+</p>
+
+<h1 class="text-6xl font-black text-slate-800 mb-2">
+{{ avg_rating|default:0|floatformat:1 }}
+</h1>
+
+<div class="flex items-center gap-1 text-amber-400 mb-3">
+<span class="material-icons text-2xl">star</span>
 </div>
+
+<p class="text-sm font-bold text-slate-500">
+Based on {{ reviews|length }} reviews
+</p>
+
+</div>
+
+
+<div class="lg:col-span-2 bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100">
+
+<p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6">
+Rating Distribution
+</p>
+
+<div class="space-y-4">
+
+<div class="flex items-center gap-4">
+<span class="text-xs font-bold text-slate-600 w-8">5 ★</span>
+<div class="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden">
+<div class="h-full bg-emerald-500 rounded-full" style="width:100%"></div>
+</div>
+</div>
+
+<div class="flex items-center gap-4">
+<span class="text-xs font-bold text-slate-600 w-8">4 ★</span>
+<div class="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden">
+<div class="h-full bg-blue-500 rounded-full" style="width:70%"></div>
+</div>
+</div>
+
+<div class="flex items-center gap-4">
+<span class="text-xs font-bold text-slate-600 w-8">3 ★</span>
+<div class="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden">
+<div class="h-full bg-amber-500 rounded-full" style="width:40%"></div>
+</div>
+</div>
+
+<div class="flex items-center gap-4">
+<span class="text-xs font-bold text-slate-600 w-8">1-2 ★</span>
+<div class="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden">
+<div class="h-full bg-red-400 rounded-full" style="width:20%"></div>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+
 
 <div class="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden">
-    <div class="p-8 border-b border-slate-50 flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-            <h3 class="text-xl font-black text-slate-800">Recent Feedback</h3>
-            <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">Detailed breakdown by product and customer</p>
-        </div>
-        <div class="flex items-center gap-3">
-            <select class="px-4 py-2 bg-slate-50 border-none rounded-xl text-xs font-bold text-slate-600 outline-none">
-                <option>Newest First</option>
-                <option>Highest Rated</option>
-            </select>
-        </div>
-    </div>
 
-    <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse">
-            <thead class="bg-slate-50/50 text-[10px] uppercase font-black text-slate-400 tracking-widest">
-                <tr>
-                    <th class="px-8 py-6">Product</th>
-                    <th class="px-8 py-6">Customer</th>
-                    <th class="px-8 py-6">Rating</th>
-                    <th class="px-8 py-6">Content</th>
-                    <th class="px-8 py-6 text-center">Action</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-50">
-                
-                <tr class="hover:bg-slate-50/50 transition-all">
-                    <td class="px-8 py-6">
-                        <div class="flex items-center gap-3 w-48">
-                            <div class="w-10 h-10 rounded-lg bg-slate-200 flex-shrink-0"></div> <div class="overflow-hidden">
-                                <p class="font-bold text-slate-800 text-[11px] truncate">Ultra-Soft Cotton Hoodie</p>
-                                <p class="text-[9px] text-slate-400 font-bold uppercase">SKU: CLO-4421</p>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="px-8 py-6">
-                        <div>
-                            <p class="font-bold text-slate-800 text-sm">Alex Rivera</p>
-                            <span class="flex items-center gap-1 text-[9px] font-black text-emerald-500 uppercase tracking-tighter">
-                                <span class="material-icons text-[12px]">verified</span> Verified Purchase
-                            </span>
-                        </div>
-                    </td>
-                    <td class="px-8 py-6">
-                        <div class="flex text-amber-400">
-                            <span class="material-icons text-sm">star</span>
-                            <span class="material-icons text-sm">star</span>
-                            <span class="material-icons text-sm">star</span>
-                            <span class="material-icons text-sm">star</span>
-                            <span class="material-icons text-sm">star</span>
-                        </div>
-                        <p class="text-[10px] text-slate-400 font-bold mt-1">Mar 01, 2026</p>
-                    </td>
-                    <td class="px-8 py-6">
-                        <div class="max-w-xs lg:max-w-md">
-                            <p class="font-bold text-slate-800 text-sm mb-1">Perfect fit and feel!</p>
-                            <p class="text-xs text-slate-500 leading-relaxed line-clamp-2">The fabric is much thicker than I expected. Really happy with the color accuracy compared to the photos.</p>
-                        </div>
-                    </td>
-                    <td class="px-8 py-6 text-center">
-                        <div class="flex items-center justify-center gap-2">
-                            <button title="Reply" class="w-9 h-9 flex items-center justify-center bg-slate-50 hover:bg-amber-50 text-slate-400 hover:text-amber-600 rounded-xl transition-all">
-                                <span class="material-icons-outlined text-lg">reply</span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
+<div class="p-8 border-b border-slate-50 flex flex-col md:flex-row md:items-center justify-between gap-4">
 
-                <tr class="hover:bg-slate-50/50 transition-all">
-                    <td class="px-8 py-6">
-                        <div class="flex items-center gap-3 w-48">
-                            <div class="w-10 h-10 rounded-lg bg-slate-200 flex-shrink-0"></div>
-                            <div class="overflow-hidden">
-                                <p class="font-bold text-slate-800 text-[11px] truncate">Minimalist Ceramic Vase</p>
-                                <p class="text-[9px] text-slate-400 font-bold uppercase">SKU: HOM-9902</p>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="px-8 py-6">
-                        <div>
-                            <p class="font-bold text-slate-800 text-sm">Sarah Jenkins</p>
-                            <span class="text-[9px] font-bold text-slate-300 uppercase italic">Non-Verified</span>
-                        </div>
-                    </td>
-                    <td class="px-8 py-6">
-                        <div class="flex text-amber-400">
-                            <span class="material-icons text-sm">star</span>
-                            <span class="material-icons text-sm">star</span>
-                            <span class="material-icons text-sm">star</span>
-                            <span class="material-icons text-sm text-slate-200">star</span>
-                            <span class="material-icons text-sm text-slate-200">star</span>
-                        </div>
-                        <p class="text-[10px] text-slate-400 font-bold mt-1">Feb 24, 2026</p>
-                    </td>
-                    <td class="px-8 py-6">
-                        <div class="max-w-xs lg:max-w-md">
-                            <p class="font-bold text-slate-800 text-sm mb-1">Nice, but smaller than expected</p>
-                            <p class="text-xs text-slate-500 leading-relaxed line-clamp-2">It looks beautiful on my desk, but make sure to check the dimensions before buying. It's quite petite.</p>
-                        </div>
-                    </td>
-                    <td class="px-8 py-6 text-center">
-                        <div class="flex items-center justify-center gap-2">
-                            <button title="Reply" class="w-9 h-9 flex items-center justify-center bg-slate-50 hover:bg-amber-50 text-slate-400 hover:text-amber-600 rounded-xl transition-all">
-                                <span class="material-icons-outlined text-lg">reply</span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-
-                <tr class="hover:bg-slate-50/50 transition-all">
-                    <td class="px-8 py-6">
-                        <div class="flex items-center gap-3 w-48">
-                            <div class="w-10 h-10 rounded-lg bg-slate-200 flex-shrink-0"></div>
-                            <div class="overflow-hidden">
-                                <p class="font-bold text-slate-800 text-[11px] truncate">Wireless Noise Cancelling Headphones</p>
-                                <p class="text-[9px] text-slate-400 font-bold uppercase">SKU: ELE-1029</p>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="px-8 py-6">
-                        <div>
-                            <p class="font-bold text-slate-800 text-sm">Michael Chen</p>
-                            <span class="flex items-center gap-1 text-[9px] font-black text-emerald-500 uppercase tracking-tighter">
-                                <span class="material-icons text-[12px]">verified</span> Verified Purchase
-                            </span>
-                        </div>
-                    </td>
-                    <td class="px-8 py-6">
-                        <div class="flex text-amber-400">
-                            <span class="material-icons text-sm">star</span>
-                            <span class="material-icons text-sm">star</span>
-                            <span class="material-icons text-sm">star</span>
-                            <span class="material-icons text-sm">star</span>
-                            <span class="material-icons text-sm text-slate-200">star</span>
-                        </div>
-                        <p class="text-[10px] text-slate-400 font-bold mt-1">Feb 18, 2026</p>
-                    </td>
-                    <td class="px-8 py-6">
-                        <div class="max-w-xs lg:max-w-md">
-                            <p class="font-bold text-slate-800 text-sm mb-1">Great sound, slightly tight</p>
-                            <p class="text-xs text-slate-500 leading-relaxed line-clamp-2">Audio quality is top-notch for the price. The headband is a bit stiff, hoping it loosens up over time.</p>
-                        </div>
-                    </td>
-                    <td class="px-8 py-6 text-center">
-                        <div class="flex items-center justify-center gap-2">
-                            <button title="Reply" class="w-9 h-9 flex items-center justify-center bg-slate-50 hover:bg-amber-50 text-slate-400 hover:text-amber-600 rounded-xl transition-all">
-                                <span class="material-icons-outlined text-lg">reply</span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-
-            </tbody>
-        </table>
-    </div>
+<div>
+<h3 class="text-xl font-black text-slate-800">Recent Feedback</h3>
+<p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">
+Detailed breakdown by product and customer
+</p>
 </div>
 
+<div class="flex items-center gap-3">
+<select class="px-4 py-2 bg-slate-50 border-none rounded-xl text-xs font-bold text-slate-600 outline-none">
+<option>Newest First</option>
+<option>Highest Rated</option>
+</select>
+</div>
+
+</div>
+
+
+<div class="overflow-x-auto">
+
+<table class="w-full text-left border-collapse">
+
+<thead class="bg-slate-50/50 text-[10px] uppercase font-black text-slate-400 tracking-widest">
+<tr>
+<th class="px-8 py-6">Product</th>
+<th class="px-8 py-6">Customer</th>
+<th class="px-8 py-6">Rating</th>
+<th class="px-8 py-6">Content</th>
+<th class="px-8 py-6 text-center">Action</th>
+</tr>
+</thead>
+
+
+<tbody class="divide-y divide-slate-50">
+
+{% for review in reviews %}
+
+<tr class="hover:bg-slate-50/50 transition-all">
+
+<td class="px-8 py-6">
+
+<div class="flex items-center gap-3 w-48">
+
+<div class="w-10 h-10 rounded-lg bg-slate-200 flex-shrink-0"></div>
+
+<div class="overflow-hidden">
+
+<p class="font-bold text-slate-800 text-[11px] truncate">
+{{ review.product.name }}
+</p>
+
+</div>
+
+</div>
+
+</td>
+
+
+<td class="px-8 py-6">
+
+<div>
+
+<p class="font-bold text-slate-800 text-sm">
+{{ review.user.username }}
+</p>
+
+{% if review.is_verified_purchase %}
+<span class="flex items-center gap-1 text-[9px] font-black text-emerald-500 uppercase tracking-tighter">
+<span class="material-icons text-[12px]">verified</span> Verified
+</span>
+{% endif %}
+
+</div>
+
+</td>
+
+
+<td class="px-8 py-6">
+
+<div class="flex text-amber-400">
+
+{% for i in "12345" %}
+
+{% if forloop.counter <= review.rating %}
+<span class="material-icons text-sm">star</span>
+{% endif %}
+
+{% endfor %}
+
+</div>
+
+<p class="text-[10px] text-slate-400 font-bold mt-1">
+{{ review.created_at|date:"M d, Y" }}
+</p>
+
+</td>
+
+
+<td class="px-8 py-6">
+
+<div class="max-w-xs lg:max-w-md">
+
+<p class="font-bold text-slate-800 text-sm mb-1">
+{{ review.title }}
+</p>
+
+<p class="text-xs text-slate-500 leading-relaxed line-clamp-2">
+{{ review.comment }}
+</p>
+
+</div>
+
+</td>
+
+
+<td class="px-8 py-6 text-center">
+
+<form method="POST" action="{% url 'reply_review' review.id %}">
+{% csrf_token %}
+
+<div class="flex flex-col items-center gap-2">
+
+<textarea
+name="reply"
+class="border border-slate-200 rounded-lg p-2 text-xs w-32 h-16 resize-none"
+placeholder="Reply to customer..."
+required>
+</textarea>
+
+<button
+type="submit"
+class="bg-blue-500 text-white text-xs px-3 py-1 rounded-md">
+Reply
+</button>
+
+</div>
+
+</form>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
 <style>
-    .line-clamp-2 {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
+.line-clamp-2{
+display:-webkit-box;
+-webkit-line-clamp:2;
+-webkit-box-orient:vertical;
+overflow:hidden;
+}
 </style>
+
 {% endblock %}

@@ -7,6 +7,7 @@ urlpatterns = [
           path("sellerproducts/",views.seller_products,name="seller_product"),
           path("product/<uuid:id>/deactivate/", views.deactivate_product, name="deactivate_product"),
           path("product/<uuid:id>/activate/", views.activate_product, name="activate_product"),
+          path('sellerproducts/<uuid:product_id>/view/', views.seller_product_preview, name='seller_product_preview'),
           path("variant/<uuid:id>/deactivate/", views.deactivate_variant, name="deactivate_variant"),
           path("variant/<uuid:id>/activate/", views.activate_variant, name="activate_variant"),
           path("addproduct/",views.add_products,name="add_product"),
@@ -15,12 +16,16 @@ urlpatterns = [
           path("productstatus/",views.product_status,name="product_status"),
           path("inventory/",views.seller_inventory,name="seller_inventory"),
           path("sellerorder/",views.seller_order,name="seller_orders"),
-          path("sellerearnings/",views.seller_earnings,name="seller_earnings"),
+          path("sellerearnings/", views.earnings_view, name="seller_earnings"),
           path("offerdiscount/",views.offer_discount,name="offer_discount"),
           path("sellerreviews/",views.seller_reviews,name="seller_reviews"),
+          path("review-reply/<uuid:review_id>/", views.reply_review, name="reply_review"),
           path("sellerprofile/",views.seller_profile,name="seller_profile"),
           path("sellersettings/",views.seller_settings,name="seller_settings"),
-        
+          path("inventory/", views.inventory_dashboard, name="seller_inventory"),
+          path("inventory/adjust/", views.adjust_inventory, name="adjust_inventory"),
+          path("update-order-status/<str:order_id>/",views.update_order_status,name="update_order_status"),
+          
 
 
 ]
